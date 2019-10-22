@@ -124,7 +124,6 @@ public class SlidingRuleView extends View {
     private String mValue;
 
     private DoGetValueListener doGetValueListener = null;
-    private boolean isFirst = true;
 
     public SlidingRuleView(Context context) {
         this(context, null);
@@ -269,10 +268,6 @@ public class SlidingRuleView extends View {
         mValue = decimalFormat.format((greenPointX + getScrollX() - mLeftOrder) / lineDegreeSpace);
         if (doGetValueListener != null) {
             doGetValueListener.doGetValue(mValue);
-        }
-        if (isFirst) {
-            scrollBy(0, 0);
-            isFirst = false;
         }
     }
 

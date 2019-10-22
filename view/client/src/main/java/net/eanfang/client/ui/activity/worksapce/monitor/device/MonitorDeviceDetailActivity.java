@@ -138,11 +138,12 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
     /**
      * 是否滑动分钟
      */
-    private boolean isScrollMinute = false;
+    private String isScrollMinute = "17.0";
     private int mHour = 1000;
     public String minute;
-    public Calendar mPlayTime;
-    public Calendar mPlayEndTime;
+    public Calendar mPlayTime = Calendar.getInstance();
+    public Calendar mPlayEndTime = Calendar.getInstance();
+    ;
 
     public MonitorDeviceDetailTimeAdapter monitorDeviceDetailTimeAdapter;
     private List<String> mTimeList = new ArrayList<>();
@@ -216,11 +217,11 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
     @Override
     public void doGetValue(String mValue) {
         Log.e("GG", "value" + mValue);
-        if (isScrollMinute) {
+        if (!isScrollMinute.equals(mValue)) {
             isPlayBack = true;
             stopRealPlay();
         } else {
-            isScrollMinute = true;
+            isScrollMinute = mValue;
         }
         minute = mValue;
     }
@@ -261,11 +262,12 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
                         return;
                     }
                     if (StrUtil.isEmpty(minute)) {
-                        mPlayTime = DateUtil.parseTimeToday(mHour + ":00").toCalendar();
-                        mPlayEndTime = DateUtil.parse(DateUtil.today() + " " + mHour + ":10:00", DatePattern.NORM_DATETIME_MINUTE_PATTERN).toCalendar();
+                        mPlayTime.setTime(DateUtil.parseTimeToday(mHour + ":00"));
+                        mPlayEndTime.setTime(DateUtil.parse(DateUtil.today() + " " + mHour + ":10:00", DatePattern.NORM_DATETIME_MINUTE_PATTERN));
                     } else {
-                        mPlayTime = DateUtil.parseTimeToday(mHour + ":" + minute).toCalendar();
-                        mPlayEndTime = DateUtil.parse(DateUtil.today() + " " + mHour + ":" + (Double.parseDouble(minute) + 10), DatePattern.NORM_DATETIME_MINUTE_PATTERN).toCalendar();
+
+                        mPlayTime.setTime(DateUtil.parseTimeToday(mHour + ":" + minute));
+                        mPlayEndTime.setTime(DateUtil.parse(DateUtil.today() + " " + mHour + ":" + (Double.parseDouble(minute) + 10), DatePattern.NORM_DATETIME_MINUTE_PATTERN));
                     }
                     try {
                         if (EZOpenSDK.getInstance().searchRecordFileFromDevice(mDeviceSerial, 1, mPlayTime, mPlayEndTime).size() <= 0) {
@@ -299,7 +301,9 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
                     ezPlayer.setSurfaceHold(mRealPlaySh);
                     setOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
                     monitorDeviceDetailBinding.llInclued.realplayLoading.setVisibility(View.VISIBLE);
-                    boolean isSuccess = ezPlayer.startPlayback(mPlayTime, DateUtil.parseTimeToday("23:59").toCalendar());
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(DateUtil.parseTimeToday("23:59"));
+                    boolean isSuccess = ezPlayer.startPlayback(mPlayTime, calendar);
                     Log.e("GG", "playback" + isSuccess);
                     isPlayBack = false;
                 } else {
