@@ -131,21 +131,33 @@
 
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/rl_time_line"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/color_white"
-                    android:paddingTop="@dimen/dimen_30"
-                    android:paddingBottom="@dimen/dimen_30">
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_40"
+                        android:paddingTop="@dimen/dimen_6"
+                        android:paddingStart="@dimen/dimen_10"
+                        android:text="选择下方时间可查看当天回放"
+                        android:textSize="12sp" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_time"
+                    <RelativeLayout
+                        android:id="@+id/rl_time_line"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:scrollbars="none" />
-                </RelativeLayout>
+                        android:background="@color/color_white"
+                        android:paddingTop="@dimen/dimen_30"
+                        android:paddingBottom="@dimen/dimen_30">
 
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:scrollbars="none" />
+                    </RelativeLayout>
+                </LinearLayout>
 
                 <net.eanfang.client.ui.widget.SlidingRuleView
                     android:id="@+id/view_timeLine"

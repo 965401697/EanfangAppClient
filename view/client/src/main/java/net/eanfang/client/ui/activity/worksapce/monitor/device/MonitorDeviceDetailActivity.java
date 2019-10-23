@@ -136,10 +136,17 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
      * 是否回放
      */
     private boolean isPlayBack = false;
-    /**
-     * 是否滑动分钟
-     */
-    private String isScrollMinute = "17.0";
+    MonitorDeviceDetailTimeAdapter.OnItemClickListener onItemClickListener = new MonitorDeviceDetailTimeAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(int posititon, String mTime) {
+            monitorDeviceDetailBinding.llInclued.realplayLoading.setVisibility(View.GONE);
+            isPlayBack = true;
+            stopRealPlay();
+            mHour = posititon;
+            monitorDeviceDetailBinding.llPlayControl.realplayBackBtn.setVisibility(View.VISIBLE);
+            monitorDeviceDetailBinding.viewTimeLine.setVisibility(View.VISIBLE);
+        }
+    };
     private int mHour = 1000;
     public String minute;
     public Calendar mPlayTime;
@@ -154,24 +161,10 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    protected void initView() {
-        super.initView();
-        setLeftBack(true);
-        mAudioPlayUtil = AudioPlayUtil.getInstance(ClientApplication.get());
-        mRecordRotateViewUtil = new RotateViewUtil();
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        mScreenOrientationHelper = new ScreenOrientationHelper(this, monitorDeviceDetailBinding.llPlayControl.fullscreenButton, null);
-        view = findViewById(R.id.layout_include);
-        mDevicePosition = getIntent().getIntExtra("position", 1000);
-        mDeviceList = (List<Ys7DevicesEntity>) getIntent().getSerializableExtra("deviceList");
-        mDeviceSerial = getIntent().getStringExtra("deviceSerial");
-        mDeviceName = getIntent().getStringExtra("mDeviceName");
-        init(mDeviceName, getIntent().getLongExtra("mDeviceId", 0));
-        monitorDeviceDetailBinding.viewTimeLine.setOnScrollListener(this);
-        initTimeAdapter();
-        initListener();
-    }
+    /**
+     * 是否滑动分钟
+     */
+    private String isScrollMinute = "17.0";
 
 
     private void init(String mDeviceName, Long mDeviceId) {
@@ -204,15 +197,25 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
         monitorDeviceDetailTimeAdapter.setNewData(mTimeList);
     }
 
-    MonitorDeviceDetailTimeAdapter.OnItemClickListener onItemClickListener = new MonitorDeviceDetailTimeAdapter.OnItemClickListener() {
-        @Override
-        public void onItemClick(int posititon, String mTime) {
-            monitorDeviceDetailBinding.llInclued.realplayLoading.setVisibility(View.GONE);
-            isPlayBack = true;
-            stopRealPlay();
-            mHour = posititon;
-        }
-    };
+    @Override
+    protected void initView() {
+        super.initView();
+        setLeftBack(true);
+        mAudioPlayUtil = AudioPlayUtil.getInstance(ClientApplication.get());
+        mRecordRotateViewUtil = new RotateViewUtil();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        mScreenOrientationHelper = new ScreenOrientationHelper(this, monitorDeviceDetailBinding.llPlayControl.fullscreenButton, null);
+        view = findViewById(R.id.layout_include);
+        mDevicePosition = getIntent().getIntExtra("position", 1000);
+        mDeviceList = (List<Ys7DevicesEntity>) getIntent().getSerializableExtra("deviceList");
+        mDeviceSerial = getIntent().getStringExtra("deviceSerial");
+        mDeviceName = getIntent().getStringExtra("mDeviceName");
+        init(mDeviceName, getIntent().getLongExtra("mDeviceId", 0));
+        monitorDeviceDetailBinding.viewTimeLine.setOnScrollListener(this);
+        monitorDeviceDetailBinding.viewTimeLine.setVisibility(View.GONE);
+        initTimeAdapter();
+        initListener();
+    }
 
     @Override
     public void doGetValue(String mValue) {
@@ -220,10 +223,12 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
         if (!isScrollMinute.equals(mValue)) {
             isPlayBack = true;
             stopRealPlay();
+            monitorDeviceDetailBinding.llPlayControl.realplayBackBtn.setVisibility(View.VISIBLE);
         } else {
             isScrollMinute = mValue;
         }
         minute = mValue;
+
     }
 
     private void initListener() {
@@ -250,8 +255,23 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
                 stopRealPlay();
 //                setRealPlayStopUI();
             } else {
-                startRealPlay();
+//                startRealPlay();
+                monitorDeviceDetailBinding.llInclued.realplayPlayIv.callOnClick();
             }
+        });
+        //回直播
+        monitorDeviceDetailBinding.llPlayControl.realplayBackBtn.setOnClickListener((v) -> {
+            stopRealPlay();
+            //回到直播
+            startRealPlay();
+
+            initTimeAdapter();
+            mHour = 1000;
+            isPlayBack = false;
+            monitorDeviceDetailBinding.llPlayControl.realplayBackBtn.setVisibility(View.GONE);
+            isScrollMinute = "17.0";
+            monitorDeviceDetailBinding.viewTimeLine.setVisibility(View.GONE);
+//            monitorDeviceDetailBinding.llPlayControl.realplayPlayBtn.setVisibility(View.VISIBLE);
         });
         // 暂停后 播放
         monitorDeviceDetailBinding.llInclued.realplayPlayIv.setOnClickListener((v) -> {
@@ -279,7 +299,11 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
                         return;
                     }
                     monitorDeviceDetailBinding.llInclued.realplayPlayIv.setVisibility(View.GONE);
+                    //如果是回放状态 显示回直播
+//                        monitorDeviceDetailBinding.llPlayControl.realplayPlayBtn.setVisibility(View.GONE);
                     monitorDeviceDetailBinding.llPlayControl.realplayPlayBtn.setBackgroundResource(R.drawable.play_stop_selector);
+                    monitorDeviceDetailBinding.llPlayControl.realplayBackBtn.setVisibility(View.VISIBLE);
+
                     mStatus = RealPlayStatus.STATUS_START;
                     mHandler = new Handler(this);
                     monitorDeviceDetailBinding.realplaySv.setVisibility(View.VISIBLE);
@@ -302,7 +326,7 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
                     monitorDeviceDetailBinding.llInclued.realplayLoading.setVisibility(View.VISIBLE);
                     boolean isSuccess = ezPlayer.startPlayback(mPlayTime, DateKit.get(DateUtil.parseTimeToday("23:59")).getCalendar());
                     Log.e("GG", "playback" + isSuccess);
-                    isPlayBack = false;
+                    //isPlayBack = false;
                 } else {
                     startRealPlay();
                 }

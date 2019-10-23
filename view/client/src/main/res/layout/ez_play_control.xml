@@ -23,6 +23,18 @@
             android:layout_weight="1"
             android:background="@drawable/play_play_selector" />
 
+        <Button
+            android:id="@+id/realplay_back_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#222222"
+            android:text="回直播"
+            android:textColor="@color/white"
+            android:visibility="gone">
+
+        </Button>
+
         <View
             android:id="@+id/sound_line"
             android:layout_width="1dp"
