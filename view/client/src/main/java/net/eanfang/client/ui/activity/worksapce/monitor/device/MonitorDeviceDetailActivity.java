@@ -996,7 +996,7 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
 
         if (ezPlayer != null) {
             startUpdateTimer();
-            final String strRecordFile = Config.Cache.VIDEO_STORAGE_DIR + "/" + System.currentTimeMillis() + ".mp4";
+            final String strRecordFile = Config.Cache.VIDEO_STORAGE_DIR + System.currentTimeMillis() + ".mp4";
             Log.e("GG", "recorded video file path is " + strRecordFile);
             ezPlayer.setStreamDownloadCallback(new EZOpenSDKListener.EZStreamDownloadCallback() {
                 @Override
