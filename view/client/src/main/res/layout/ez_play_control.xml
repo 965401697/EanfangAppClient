@@ -30,6 +30,7 @@
             android:layout_weight="1"
             android:background="#222222"
             android:text="回直播"
+            android:textSize="@dimen/textSize_12"
             android:textColor="@color/white"
             android:visibility="gone">
 
