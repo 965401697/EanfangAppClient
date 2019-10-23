@@ -125,9 +125,13 @@ public class MonitorSearchViewModle extends BaseViewModel implements SwipeRefres
                     }
                 }
             } else {
-
-                monitorSearchBinding.tvNoData.setVisibility(View.VISIBLE);
                 monitorSearchBinding.swipreFresh.setRefreshing(false);
+                monitorSearchAdapter.loadMoreEnd();//没有数据了
+                if (monitorSearchAdapter.getData().size() == 0) {
+                    monitorSearchBinding.tvNoData.setVisibility(View.VISIBLE);
+                } else {
+                    monitorSearchBinding.tvNoData.setVisibility(View.GONE);
+                }
             }
         });
     }

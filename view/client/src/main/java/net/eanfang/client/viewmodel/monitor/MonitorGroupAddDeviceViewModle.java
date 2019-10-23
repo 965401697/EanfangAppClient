@@ -114,9 +114,13 @@ public class MonitorGroupAddDeviceViewModle extends BaseViewModel implements Swi
                     }
                 }
             } else {
-                mDeviceQueryEntry = null;
-                monitorGroupAddDeviceBinding.tvNoData.setVisibility(View.VISIBLE);
                 monitorGroupAddDeviceBinding.swipreFresh.setRefreshing(false);
+                monitorAddDevicetAdapter.loadMoreEnd();//没有数据了
+                if (monitorAddDevicetAdapter.getData().size() == 0) {
+                    monitorGroupAddDeviceBinding.tvNoData.setVisibility(View.VISIBLE);
+                } else {
+                    monitorGroupAddDeviceBinding.tvNoData.setVisibility(View.GONE);
+                }
             }
         });
 

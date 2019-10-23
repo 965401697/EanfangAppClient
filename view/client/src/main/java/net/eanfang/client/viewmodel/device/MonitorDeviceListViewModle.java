@@ -116,9 +116,13 @@ public class MonitorDeviceListViewModle extends BaseViewModel implements SwipeRe
                     }
                 }
             } else {
-                mSearchDeviceQueryEntry = null;
-                monitorDeviceListBinding.tvNoData.setVisibility(View.VISIBLE);
                 monitorDeviceListBinding.swipreFresh.setRefreshing(false);
+                monitorSearchAdapter.loadMoreEnd();//没有数据了
+                if (monitorSearchAdapter.getData().size() == 0) {
+                    monitorDeviceListBinding.tvNoData.setVisibility(View.VISIBLE);
+                } else {
+                    monitorDeviceListBinding.tvNoData.setVisibility(View.GONE);
+                }
             }
         });
     }

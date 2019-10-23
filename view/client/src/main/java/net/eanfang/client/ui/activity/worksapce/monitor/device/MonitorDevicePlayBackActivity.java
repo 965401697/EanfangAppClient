@@ -267,7 +267,7 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
             onScreenHot();
         });
         // 录像
-        monitorDevicePlayBackBinding.ivVideoTapeStart.setOnClickListener((v) -> {
+        monitorDevicePlayBackBinding.llVideoTape.setOnClickListener((v) -> {
             onVideoTape();
         });
         // 选择时间

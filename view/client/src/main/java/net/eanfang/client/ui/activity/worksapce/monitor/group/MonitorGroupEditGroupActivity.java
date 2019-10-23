@@ -30,6 +30,7 @@ public class MonitorGroupEditGroupActivity extends BaseActivity {
     private MonitorGroupEditViewModle monitorGroupEditViewModle;
 
     private static final int REQUEST_UPDATENAME = 1001;
+    private static final int REQUEST_UPDATECOUNT = 1003;
     private static final int REQUEST_SELECT_TOP = 1002;
 
     /**
@@ -84,7 +85,7 @@ public class MonitorGroupEditGroupActivity extends BaseActivity {
             bundle.putString("mCompanyId", String.valueOf(getIntent().getStringExtra("mCompanyId")));
             bundle.putBoolean("mEdit", true);
             bundle.putLong("groupId", getIntent().getLongExtra("groupId", 0));
-            bundle.putString("mChangeCompanyName",getIntent().getStringExtra("mChangeCompanyName"));
+            bundle.putString("mChangeCompanyName", getIntent().getStringExtra("mChangeCompanyName"));
             JumpItent.jump(this, MonitorGroupSelectTopActivity.class, bundle, REQUEST_SELECT_TOP);
         });
         /**
@@ -95,7 +96,7 @@ public class MonitorGroupEditGroupActivity extends BaseActivity {
             bundle.putString("groupId", String.valueOf(getIntent().getLongExtra("groupId", 0)));
             bundle.putString("configId", String.valueOf(getIntent().getLongExtra("configId", 0)));
             bundle.putString("mCompanyId", getIntent().getStringExtra("mCompanyId"));
-            JumpItent.jump(this, MonitorGroupEditDeviceActivity.class, bundle);
+            JumpItent.jump(this, MonitorGroupEditDeviceActivity.class, bundle, REQUEST_UPDATECOUNT);
         });
 
         /**
@@ -146,6 +147,9 @@ public class MonitorGroupEditGroupActivity extends BaseActivity {
                 break;
             case REQUEST_SELECT_TOP:
                 monitorGroupEditGroupBinding.tvTopGroupName.setText(data.getStringExtra("groupName"));
+                break;
+            case REQUEST_UPDATECOUNT:
+                monitorGroupEditGroupBinding.tvDeviceCount.setText(data.getIntExtra("deviceCount", 0) + "个设备");
                 break;
             default:
                 break;

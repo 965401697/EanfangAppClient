@@ -162,6 +162,7 @@ public class MonitorHomeViewModle extends BaseViewModel implements SwipeRefreshL
         public void onItemClick(int position, String mDeviceName) {
             if (!monitorListLeftAdapter.getData().get(position).isHaveSubGroup() || monitorListLeftAdapter.getData().get(position).isFirstHaveDevice()) {
                 mLeftGroupId = monitorListLeftAdapter.getData().get(position).getGroupId();
+                mDevicePage = 1;
                 doGetRightDeviceList(mDevicePage, mLeftGroupId);
             }
         }
@@ -203,9 +204,13 @@ public class MonitorHomeViewModle extends BaseViewModel implements SwipeRefreshL
                     }
                 }
             } else {
-                mDeviceQueryEntry = null;
-                monitorListBinding.tvNoData.setVisibility(View.VISIBLE);
                 monitorListBinding.swipreFresh.setRefreshing(false);
+                monitorListRightAdapter.loadMoreEnd();//没有数据了
+                if (monitorListRightAdapter.getData().size() == 0) {
+                    monitorListBinding.tvNoData.setVisibility(View.VISIBLE);
+                } else {
+                    monitorListBinding.tvNoData.setVisibility(View.GONE);
+                }
             }
         });
     }
