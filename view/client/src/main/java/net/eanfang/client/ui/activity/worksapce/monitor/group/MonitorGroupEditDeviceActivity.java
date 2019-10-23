@@ -1,11 +1,14 @@
 package net.eanfang.client.ui.activity.worksapce.monitor.group;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
 
 import com.eanfang.base.BaseActivity;
+import com.eanfang.biz.model.PageBean;
+import com.eanfang.biz.model.entity.Ys7DevicesEntity;
 import com.eanfang.biz.model.vo.MonitorDeleteVo;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 import com.eanfang.util.JumpItent;
@@ -24,6 +27,7 @@ public class MonitorGroupEditDeviceActivity extends BaseActivity {
 
     private ActivityMonitorGroupEditDeviceBinding monitorGroupEditDeviceBinding;
     private MonitorGroupEditDeviceViewModle monitorGroupEditDeviceViewModle;
+    private Intent intent = new Intent();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +39,10 @@ public class MonitorGroupEditDeviceActivity extends BaseActivity {
     protected void initView() {
         super.initView();
         setTitle("编辑分组设备");
-        setLeftBack(true);
+        setLeftBack((v) -> {
+            setResult(RESULT_OK, intent);
+            finish();
+        });
         setRightClick("保存", (v) -> {
             monitorGroupEditDeviceViewModle.doSaveDelete();
         });
@@ -66,11 +73,24 @@ public class MonitorGroupEditDeviceActivity extends BaseActivity {
         monitorGroupEditDeviceViewModle = LViewModelProviders.of(this, MonitorGroupEditDeviceViewModle.class);
         monitorGroupEditDeviceViewModle.setMonitorGroupEditDeviceBinding(monitorGroupEditDeviceBinding);
         monitorGroupEditDeviceViewModle.getMonitorDeleteVoMutableLiveData().observe(this, this::deleteSuccess);
+        monitorGroupEditDeviceViewModle.getMonitorDeviceMutableLiveData().observe(this, this::refreshDeviceCount);
         return monitorGroupEditDeviceViewModle;
+    }
+
+    private void refreshDeviceCount(PageBean<Ys7DevicesEntity> ys7DevicesEntityPageBean) {
+        intent.putExtra("deviceCount", ys7DevicesEntityPageBean.getList().size());
     }
 
     private void deleteSuccess(MonitorDeleteVo monitorDeleteVo) {
         showToast("删除成功");
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        setResult(RESULT_OK, intent);
         finish();
     }
 }

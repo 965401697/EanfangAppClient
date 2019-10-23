@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.biz.model.PageBean;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.entity.Ys7DevicesEntity;
 import com.eanfang.biz.model.vo.MonitorDeleteVo;
@@ -52,10 +53,13 @@ public class MonitorGroupEditDeviceViewModle extends BaseViewModel implements Sw
     private List<Ys7DevicesEntity> deviceList = new ArrayList<>();
     @Getter
     private MutableLiveData<MonitorDeleteVo> monitorDeleteVoMutableLiveData;
+    @Getter
+    private MutableLiveData<PageBean<Ys7DevicesEntity>> monitorDeviceMutableLiveData;
 
     public MonitorGroupEditDeviceViewModle() {
         monitorDeleteVo = new MonitorDeleteVo();
         monitorDeleteVoMutableLiveData = new MutableLiveData<>();
+        monitorDeviceMutableLiveData = new MutableLiveData<>();
         monitorRepo = new MonitorRepo(new MonitorDs(this));
 
     }
@@ -114,9 +118,15 @@ public class MonitorGroupEditDeviceViewModle extends BaseViewModel implements Sw
                     }
                 }
             } else {
-                monitorGroupEditDeviceBinding.tvNoData.setVisibility(View.VISIBLE);
                 monitorGroupEditDeviceBinding.swipreFresh.setRefreshing(false);
+                monitorDeleteDevicetAdapter.loadMoreEnd();//没有数据了
+                if (monitorDeleteDevicetAdapter.getData().size() == 0) {
+                    monitorGroupEditDeviceBinding.tvNoData.setVisibility(View.VISIBLE);
+                } else {
+                    monitorGroupEditDeviceBinding.tvNoData.setVisibility(View.GONE);
+                }
             }
+            monitorDeviceMutableLiveData.setValue(monitorDeviceBean);
         });
     }
 
