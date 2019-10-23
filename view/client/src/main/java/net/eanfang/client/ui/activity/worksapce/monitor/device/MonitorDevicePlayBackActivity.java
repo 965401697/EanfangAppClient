@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.config.Config;
 import com.eanfang.sdk.selecttime.SelectCalendarDialogFragment;
+import com.eanfang.util.DateKit;
 import com.eanfang.util.JumpItent;
 import com.videogo.constant.Constant;
 import com.videogo.errorlayer.ErrorInfo;
@@ -132,7 +133,7 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
     @Override
     protected void initView() {
         super.initView();
-        setTitle("视频回访");
+        setTitle("视频回放");
         setLeftBack(true);
 
         mAudioPlayUtil = AudioPlayUtil.getInstance(ClientApplication.get());
@@ -199,15 +200,15 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
             } else {
                 if (!StrUtil.isEmpty(mHour)) {
                     if (StrUtil.isEmpty(minute)) {
-                        mPlayTime = DateUtil.calendar(DateUtil.parse(mYearMonthDay + " " + mHour + ":00:00", DatePattern.NORM_DATETIME_MINUTE_PATTERN).getTime());
-                        mPlayEndTime = DateUtil.calendar(DateUtil.parse(mYearMonthDay + " " + mHour + ":10:00", DatePattern.NORM_DATETIME_MINUTE_PATTERN).getTime());
+                        mPlayTime = DateKit.get(DateUtil.parse(mYearMonthDay + " " + mHour + ":00:00", DatePattern.NORM_DATETIME_MINUTE_PATTERN)).getCalendar();
+                        mPlayEndTime = DateKit.get(DateUtil.parse(mYearMonthDay + " " + mHour + ":10:00", DatePattern.NORM_DATETIME_MINUTE_PATTERN)).getCalendar();
                     } else {
-                        mPlayTime = DateUtil.calendar(DateUtil.parse(mYearMonthDay + " " + mHour + ":" + minute + ":00", DatePattern.NORM_DATETIME_MINUTE_PATTERN).getTime());
-                        mPlayEndTime = DateUtil.calendar(DateUtil.parse(mYearMonthDay + " " + mHour + ":" + (Double.parseDouble(minute) + 10) + ":00", DatePattern.NORM_DATETIME_MINUTE_PATTERN).getTime());
+                        mPlayTime = DateKit.get(DateUtil.parse(mYearMonthDay + " " + mHour + ":" + minute + ":00", DatePattern.NORM_DATETIME_MINUTE_PATTERN)).getCalendar();
+                        mPlayEndTime = DateKit.get(DateUtil.parse(mYearMonthDay + " " + mHour + ":" + (Double.parseDouble(minute) + 10) + ":00", DatePattern.NORM_DATETIME_MINUTE_PATTERN)).getCalendar();
                     }
                 } else {
-                    mPlayTime = DateUtil.calendar(DateUtil.parse(mYearMonthDay + " 00:00:00", DatePattern.NORM_DATETIME_MINUTE_PATTERN).getTime());
-                    mPlayEndTime = DateUtil.calendar(DateUtil.parse(mYearMonthDay + " " + mHour + ":10:00", DatePattern.NORM_DATETIME_MINUTE_PATTERN).getTime());
+                    mPlayTime = DateKit.get(DateUtil.parse(mYearMonthDay + " 00:00:00", DatePattern.NORM_DATETIME_MINUTE_PATTERN)).getCalendar();
+                    mPlayEndTime = DateKit.get(DateUtil.parse(mYearMonthDay + " 00:10:00", DatePattern.NORM_DATETIME_MINUTE_PATTERN)).getCalendar();
                 }
             }
             try {
@@ -244,9 +245,7 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
                 ezPlayer.setSurfaceHold(mRealPlaySh);
                 setOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
                 monitorDevicePlayBackBinding.llInclued.realplayLoading.setVisibility(View.VISIBLE);
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(DateUtil.parseTimeToday("23:59"));
-                boolean isSuccess = ezPlayer.startPlayback(mPlayTime, calendar);
+                boolean isSuccess = ezPlayer.startPlayback(mPlayTime, DateKit.get(DateUtil.parseTimeToday("23:59")).getCalendar());
                 isPlayBack = false;
             } else {
                 stopRealPlay();
@@ -282,7 +281,7 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
         monitorDevicePlayBackBinding.ivReturn.setOnClickListener((v) -> {
             if (ezPlayer.getOSDTime() != null) {
                 ezPlayer.stopPlayback();
-                ezPlayer.seekPlayback(DateUtil.date(ezPlayer.getOSDTime().getTime().getTime() - 10000).toCalendar());
+                ezPlayer.seekPlayback(DateKit.get(DateUtil.date(ezPlayer.getOSDTime().getTime().getTime() - 10000)).getCalendar());
             }
         });
     }
@@ -823,12 +822,12 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
             case EZConstants.EZPlaybackConstants.MSG_REMOTEPLAYBACK_PLAY_SUCCUSS:
                 startRealPlay();
                 monitorDevicePlayBackBinding.llInclued.realplayLoadingRl.setVisibility(View.GONE);
-                showToast("回访成功");
+                showToast("回放成功");
                 break;
             // 回访失败
             case EZConstants.EZPlaybackConstants.MSG_REMOTEPLAYBACK_PLAY_FAIL:
-                showToast("回访失败");
-                Log.e("GG", "回访失败 " + msg.arg1);
+                showToast("回放失败");
+                Log.e("GG", "回放失败 " + msg.arg1);
                 break;
             default:
                 // do nothing

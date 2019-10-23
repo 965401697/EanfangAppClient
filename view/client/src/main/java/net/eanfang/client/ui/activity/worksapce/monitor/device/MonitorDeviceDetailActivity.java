@@ -39,6 +39,7 @@ import com.eanfang.biz.model.entity.Ys7DevicesEntity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 import com.eanfang.config.Config;
 import com.eanfang.util.CallUtils;
+import com.eanfang.util.DateKit;
 import com.eanfang.util.JumpItent;
 import com.videogo.constant.Constant;
 import com.videogo.errorlayer.ErrorInfo;
@@ -141,9 +142,8 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
     private String isScrollMinute = "17.0";
     private int mHour = 1000;
     public String minute;
-    public Calendar mPlayTime = Calendar.getInstance();
-    public Calendar mPlayEndTime = Calendar.getInstance();
-    ;
+    public Calendar mPlayTime;
+    public Calendar mPlayEndTime;
 
     public MonitorDeviceDetailTimeAdapter monitorDeviceDetailTimeAdapter;
     private List<String> mTimeList = new ArrayList<>();
@@ -262,12 +262,11 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
                         return;
                     }
                     if (StrUtil.isEmpty(minute)) {
-                        mPlayTime.setTime(DateUtil.parseTimeToday(mHour + ":00"));
-                        mPlayEndTime.setTime(DateUtil.parse(DateUtil.today() + " " + mHour + ":10:00", DatePattern.NORM_DATETIME_MINUTE_PATTERN));
+                        mPlayTime = DateKit.get(DateUtil.parseTimeToday(mHour + ":00")).getCalendar();
+                        mPlayEndTime = DateKit.get(DateUtil.parse(DateUtil.today() + " " + mHour + ":10:00", DatePattern.NORM_DATETIME_MINUTE_PATTERN)).getCalendar();
                     } else {
-
-                        mPlayTime.setTime(DateUtil.parseTimeToday(mHour + ":" + minute));
-                        mPlayEndTime.setTime(DateUtil.parse(DateUtil.today() + " " + mHour + ":" + (Double.parseDouble(minute) + 10), DatePattern.NORM_DATETIME_MINUTE_PATTERN));
+                        mPlayTime = DateKit.get(DateUtil.parseTimeToday(mHour + ":" + minute)).getCalendar();
+                        mPlayEndTime = DateKit.get(DateUtil.parse(DateUtil.today() + " " + mHour + ":" + (Double.parseDouble(minute) + 10), DatePattern.NORM_DATETIME_MINUTE_PATTERN)).getCalendar();
                     }
                     try {
                         if (EZOpenSDK.getInstance().searchRecordFileFromDevice(mDeviceSerial, 1, mPlayTime, mPlayEndTime).size() <= 0) {
@@ -301,9 +300,7 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
                     ezPlayer.setSurfaceHold(mRealPlaySh);
                     setOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
                     monitorDeviceDetailBinding.llInclued.realplayLoading.setVisibility(View.VISIBLE);
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(DateUtil.parseTimeToday("23:59"));
-                    boolean isSuccess = ezPlayer.startPlayback(mPlayTime, calendar);
+                    boolean isSuccess = ezPlayer.startPlayback(mPlayTime, DateKit.get(DateUtil.parseTimeToday("23:59")).getCalendar());
                     Log.e("GG", "playback" + isSuccess);
                     isPlayBack = false;
                 } else {
@@ -358,6 +355,11 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
             bundle.putString("deviceSerial", mDeviceSerial);
             JumpItent.jump(MonitorDeviceDetailActivity.this, MonitorDevicePlayBackActivity.class, bundle);
         });
+        //控制
+        monitorDeviceDetailBinding.tvControl.setOnClickListener((v) -> showToast("当前设备暂不支持控制"));
+        //对讲
+        monitorDeviceDetailBinding.tvTalk.setOnClickListener((v) -> showToast("当前设备暂不支持对讲"));
+
         // 编辑
         monitorDeviceDetailBinding.tvEdit.setOnClickListener((v) -> {
             isEdit = true;
@@ -618,12 +620,12 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
             case EZConstants.EZPlaybackConstants.MSG_REMOTEPLAYBACK_PLAY_SUCCUSS:
                 startRealPlay();
                 monitorDeviceDetailBinding.llInclued.realplayLoadingRl.setVisibility(View.GONE);
-                showToast("回访成功");
+                showToast("回放成功");
                 break;
             // 回访失败
             case EZConstants.EZPlaybackConstants.MSG_REMOTEPLAYBACK_PLAY_FAIL:
-                showToast("回访失败");
-                Log.e("GG", "回访失败 " + msg.arg1);
+                showToast("回放失败");
+                Log.e("GG", "回放失败 " + msg.arg1);
                 break;
             default:
                 // do nothing
