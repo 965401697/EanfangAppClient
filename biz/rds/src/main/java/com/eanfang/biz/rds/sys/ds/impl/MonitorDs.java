@@ -153,6 +153,17 @@ public class MonitorDs extends BaseRemoteDataSource implements IMonitorDs {
     }
 
     /**
+     * 获取设备分组信息
+     *
+     * @param mGroupId
+     * @param callback
+     */
+    @Override
+    public void doGetDeviceInfo(String mGroupId, RequestCallback<RealTimeGroupEntity> callback) {
+        execute(getService(MonitorApi.class).doGetDeviceInfo(mGroupId), callback);
+    }
+
+    /**
      * 生成汇报
      */
     @Override

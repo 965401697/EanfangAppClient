@@ -113,6 +113,7 @@ public interface IMonitorDs {
 
     /**
      * 修改设备名称
+     *
      * @param monitorUpdataVo
      * @param callback
      */
@@ -120,15 +121,25 @@ public interface IMonitorDs {
 
     /**
      * 修改设备分组
+     *
      * @param monitorUpdataVo
      * @param callback
      */
     void doUpdateDeviceGroup(MonitorUpdataVo monitorUpdataVo, RequestCallback<MonitorUpdataVo> callback);
 
     /**
+     * 获取设备分组信息
+     *
+     * @param mGroupId
+     * @param callback
+     */
+    void doGetDeviceInfo(String mGroupId, RequestCallback<RealTimeGroupEntity> callback);
+
+    /**
      * 生成汇报
+     *
      * @param monitorReportVo
      * @param callback
      */
-    void doCreateReport(MonitorReportVo monitorReportVo,RequestCallback<MonitorReportVo> callback);
+    void doCreateReport(MonitorReportVo monitorReportVo, RequestCallback<MonitorReportVo> callback);
 }

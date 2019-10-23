@@ -152,6 +152,12 @@ public interface MonitorApi {
     Observable<BaseResponseBody<Ys7DevicesEntity>> doUpdateDeviceGroup(@Body MonitorUpdataVo monitorDeleteVo);
 
     /**
+     * 获取设备分组信息
+     */
+    @POST("/yaf_real_time/realtimegroup/info")
+    Observable<BaseResponseBody<RealTimeGroupEntity>> doGetDeviceInfo(@Query("groupId") String mGroupId);
+
+    /**
      * 生成汇报
      *
      * @param monitorReportVo

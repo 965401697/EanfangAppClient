@@ -39,12 +39,19 @@ public class MonitorGroupEditViewModle extends BaseViewModel {
         monitorRepo = new MonitorRepo(new MonitorDs(this));
     }
 
+    public void doGetGroupList() {
+        monitorRepo.doGetDeviceInfo(mGroupId).observe(lifecycleOwner, groupMangerBean -> {
+            if (groupMangerBean != null) {
+                monitorGroupEditGroupBinding.tvDeviceCount.setText(groupMangerBean.getDeviceCount() + "个设备");
+            }
+        });
+    }
 
     /**
      * 删除分组
      */
     public void doDeleteGroup() {
-        new RxDialog((Activity)monitorGroupEditGroupBinding.getRoot().getContext())
+        new RxDialog((Activity) monitorGroupEditGroupBinding.getRoot().getContext())
                 .setTitle("提示")
                 .setMessage("退出后将无法查看数据，您确定退出吗？")
                 .setPositiveText("确定")

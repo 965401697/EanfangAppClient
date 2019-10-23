@@ -213,6 +213,17 @@ public class MonitorRepo extends BaseRepo<MonitorDs> {
     }
 
     /**
+     * 查看分组信息
+     */
+    public MutableLiveData<RealTimeGroupEntity> doGetDeviceInfo(String mGroupId) {
+        MutableLiveData<RealTimeGroupEntity> monitorGetDeviceInfoMutableLiveData = new MutableLiveData<>();
+        remoteDataSource.doGetDeviceInfo(mGroupId, (val) -> {
+            monitorGetDeviceInfoMutableLiveData.setValue(val);
+        });
+        return monitorGetDeviceInfoMutableLiveData;
+    }
+
+    /**
      * 修改 名字 分组 设备
      */
     public MutableLiveData<MonitorUpdataVo> doUpdataGroupInfo(MonitorUpdataVo monitorUpdataVo) {
