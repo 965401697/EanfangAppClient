@@ -158,7 +158,7 @@ public class GroupDetailActivity extends BaseClienActivity {
 
                     mList = (ArrayList<SysGroupUserEntity>) bean.getList();
 
-                    if (String.valueOf(ClientApplication.get().getAccId()).equals(bean.getGroup().getCreateUser())) {
+                    if (String.valueOf(ClientApplication.get().getAccId()).equals(String.valueOf(bean.getGroup().getCreateUser()))) {
                         isOwner = true;
                         groupQuit.setText("解散并退出");
                         group_transfer.setVisibility(View.VISIBLE);
