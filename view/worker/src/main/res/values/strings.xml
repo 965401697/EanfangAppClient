@@ -85,4 +85,5 @@
     <string name="text_user_home_intro_default">这家伙很懒，没有留下任何内容</string>
     <string name="text_tender_count_down">距截止还剩：%1$d天 %2$d时%3$d分</string>
     <string name="text_new_order_screen_choose_area">已选%1$d个地区</string>
+    <string name="text_put_up_order"><u>转单</u></string>
 </resources>

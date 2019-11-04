@@ -29,12 +29,26 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent_gray">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dimen_30"
+                        android:drawableLeft="@mipmap/ic_worker_new_order_notice"
+                        android:drawablePadding="@dimen/dimen_19"
+                        android:text="据统计，提交完整检修报告的技师工资都1万+" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_100"
                     android:background="@color/color_white"
-                    android:paddingBottom="@dimen/dimen_20"
                     android:paddingLeft="@dimen/dimen_30"
+                    android:paddingTop="@dimen/dimen_20"
                     android:paddingRight="@dimen/dimen_26"
-                    android:paddingTop="@dimen/dimen_20">
+                    android:paddingBottom="@dimen/dimen_20">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -44,28 +58,40 @@
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_15" />
 
-                    <TextView
-                        android:id="@+id/tv_add_fault"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentTop="true"
-                        android:background="@drawable/bg_btn_trouble_detail_add_trouble"
-                        android:gravity="center"
-                        android:padding="@dimen/dimen_10"
-                        android:text="+  添加故障"
-                        android:textColor="@color/color_white"
-                        android:textSize="@dimen/textSize_12" />
                 </RelativeLayout>
 
                 <View style="@style/style_common_line_gray" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_trouble"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:paddingTop="@dimen/dimen_20" />
+                    android:layout_height="wrap_content">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_trouble"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dimen_50"
+                        android:background="@color/white"
+                        android:paddingTop="@dimen/dimen_20" />
+
+                    <TextView
+                        android:id="@+id/tv_add_fault"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/bg_new_order_add_trouble"
+                        android:drawableLeft="@mipmap/add"
+                        android:drawablePadding="@dimen/dimen_6"
+                        android:paddingLeft="@dimen/dimen_38"
+                        android:paddingTop="@dimen/dimen_26"
+                        android:paddingRight="@dimen/dimen_38"
+                        android:paddingBottom="@dimen/dimen_26"
+                        android:text="添加现场额外故障"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/textSize_14" />
+                </RelativeLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -74,7 +100,7 @@
                 android:layout_marginTop="@dimen/dimen_16"
                 android:background="@color/color_white"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -86,9 +112,9 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="15dp"
                         android:paddingLeft="@dimen/dimen_38"
                         android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
                         android:text="技师例行检查"
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_15" />
@@ -98,9 +124,9 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="10dp"
                         android:paddingLeft="@dimen/dimen_38"
                         android:paddingTop="@dimen/dimen_40"
+                        android:paddingBottom="10dp"
                         android:text="电视监控系统"
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
@@ -155,8 +181,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dimen_20"
                         android:layout_marginTop="@dimen/dimen_30"
+                        android:layout_marginBottom="@dimen/dimen_20"
                         android:orientation="horizontal"
                         android:paddingLeft="@dimen/dimen_30">
 
@@ -204,9 +230,9 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="15dp"
                         android:paddingLeft="@dimen/dimen_38"
                         android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
                         android:text="遗留问题"
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_15" />
@@ -221,8 +247,6 @@
                 </RelativeLayout>
 
 
-                <View style="@style/style_common_line_gray" />
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -232,11 +256,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_150"
                         android:layout_marginLeft="@dimen/dimen_38"
-                        android:layout_marginRight="@dimen/dimen_38"
                         android:layout_marginTop="@dimen/dimen_30"
+                        android:layout_marginRight="@dimen/dimen_38"
                         android:background="@drawable/select_camera_back"
                         android:gravity="start"
-                        android:hint="请输入遗留问题,200字以内"
+                        android:hint="请输入遗留问题,50字以内"
                         android:padding="@dimen/dimen_10"
                         android:textColor="@color/color_client_neworder"
                         android:textColorHint="@color/color_bottom"
@@ -246,10 +270,10 @@
                         android:id="@+id/tv_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@id/et_remain_question"
                         android:layout_alignRight="@id/et_remain_question"
+                        android:layout_alignBottom="@id/et_remain_question"
                         android:padding="10dp"
-                        android:text="0/200"
+                        android:text="0/50"
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_12" />
                 </RelativeLayout>
@@ -267,10 +291,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="15dp"
                     android:paddingLeft="@dimen/dimen_38"
                     android:paddingTop="15dp"
-                    android:text="监控室全貌"
+                    android:paddingBottom="15dp"
+                    android:text="现场照片"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_15" />
 
@@ -306,7 +330,8 @@
                             android:padding="@dimen/dimen_10"
                             android:text="添加视频"
                             android:textColor="@color/color_white"
-                            android:textSize="@dimen/textSize_12" />
+                            android:textSize="@dimen/textSize_12"
+                            android:visibility="gone" />
                     </RelativeLayout>
 
                     <LinearLayout
@@ -369,7 +394,8 @@
                     android:background="@color/white"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/dimen_38"
-                    android:paddingTop="15dp">
+                    android:paddingTop="15dp"
+                    android:visibility="gone">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -457,7 +483,8 @@
                     android:background="@color/white"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/dimen_38"
-                    android:paddingTop="15dp">
+                    android:paddingTop="15dp"
+                    android:visibility="gone">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -547,7 +574,8 @@
                     android:background="@color/white"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/dimen_38"
-                    android:paddingTop="15dp">
+                    android:paddingTop="15dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -583,7 +611,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_16"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -623,35 +652,37 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_90"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_60"
                 android:layout_marginTop="@dimen/dimen_16"
-                android:background="@color/white"
+                android:layout_marginRight="@dimen/dimen_60"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:padding="@dimen/dimen_10">
 
                 <TextView
-                    android:id="@+id/tv_up"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/color_white"
-                    android:gravity="center"
-                    android:text="转单"
-                    android:textColor="@color/color_worker_data_item_title"
-                    android:textSize="@dimen/textSize_15" />
-
-                <TextView
                     android:id="@+id/tv_commit"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/bg_btn_trouble_detail_add_trouble"
                     android:gravity="center"
-                    android:text="确认提交"
+                    android:paddingTop="@dimen/dimen_26"
+                    android:paddingBottom="@dimen/dimen_26"
+                    android:text="提交"
                     android:textColor="@color/white" />
 
-
+                <TextView
+                    android:id="@+id/tv_up"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:autoLink="all"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/dimen_26"
+                    android:paddingBottom="@dimen/dimen_26"
+                    android:text="@string/text_put_up_order"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_15" />
             </LinearLayout>
 
         </LinearLayout>

@@ -76,7 +76,7 @@
         android:supportsRtl="true"
         android:theme="@style/NewBaseTheme"
         tools:replace="android:name,android:theme">
-
+        <activity android:name=".ui.activity.order.HomeOrderHistoryActivity"></activity>
         <activity
             android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait"
@@ -90,9 +90,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- 支付宝支付 -->
-
-
-        <activity android:name=".ui.activity.worksapce.tender.TenderBidDetailActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.tender.TenderBidDetailActivity" />
         <activity android:name=".ui.activity.worksapce.tender.TenderOfferDetailActivity" />
         <activity android:name=".ui.activity.worksapce.tender.TenderPersonControlActivity" />
         <activity
@@ -107,8 +105,7 @@
         <activity android:name=".ui.activity.techniciancertification.JsCapabilityTagActivity" />
         <activity android:name=".ui.activity.techniciancertification.JsQualificationsAndAbilitiesActivity" />
         <activity android:name=".ui.activity.techniciancertification.SubmitSuccessfullyJsActivity" />
-        <activity android:name=".ui.activity.techniciancertification.RealNameAuthenticationActivity" />
-        <!--<activity android:name=".ui.activity.techniciancertification.PerfectingPersonalDataActivity" />-->
+        <activity android:name=".ui.activity.techniciancertification.RealNameAuthenticationActivity" /> <!-- <activity android:name=".ui.activity.techniciancertification.PerfectingPersonalDataActivity" /> -->
         <activity android:name=".ui.activity.techniciancertification.TechnicianCertificationActivity" />
         <activity android:name=".ui.activity.authentication.MechanicalOrganizationActivity" />
         <activity android:name=".ui.activity.authentication.MoreCapabilityActivity" />
@@ -146,7 +143,7 @@
             tools:replace="android:value" />
 
         <receiver
-            android:name="net.eanfang.worker.ui.receiver.MessageReceiver"
+            android:name=".ui.receiver.MessageReceiver"
             android:exported="true"
             tools:ignore="ExportedReceiver">
             <intent-filter>
@@ -157,7 +154,6 @@
                 <action android:name="com.tencent.android.tpush.action.FEEDBACK" />
             </intent-filter>
         </receiver>
-
 
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
@@ -1140,25 +1136,22 @@
                 android:name="hwc-theme"
                 android:value="androidhwext:style/Theme.Emui.Translucent" />
         </activity> <!-- 解决华为移动服务升级问题的透明界面（必须声明） -->
-        <!--<activity-->
-        <!--android:name="com.huawei.android.hms.agent.common.HMSAgentActivity"-->
-        <!--android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"-->
-        <!--android:excludeFromRecents="true"-->
-        <!--android:exported="false"-->
-        <!--android:hardwareAccelerated="true"-->
-        <!--android:theme="@android:style/Theme.Translucent">-->
-        <!--<meta-data-->
-        <!--android:name="hwc-theme"-->
-        <!--android:value="androidhwext:style/Theme.Emui.Translucent" />-->
-        <!--</activity>-->
-
+        <!-- <activity -->
+        <!-- android:name="com.huawei.android.hms.agent.common.HMSAgentActivity" -->
+        <!-- android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale" -->
+        <!-- android:excludeFromRecents="true" -->
+        <!-- android:exported="false" -->
+        <!-- android:hardwareAccelerated="true" -->
+        <!-- android:theme="@android:style/Theme.Translucent"> -->
+        <!-- <meta-data -->
+        <!-- android:name="hwc-theme" -->
+        <!-- android:value="androidhwext:style/Theme.Emui.Translucent" /> -->
+        <!-- </activity> -->
         <provider
             android:name="com.huawei.hms.update.provider.UpdateProvider"
             android:authorities="net.eanfang.worker.hms.update.provider"
             android:exported="false"
-            android:grantUriPermissions="true" />
-
-        <!-- 第三方相关 :接收Push消息（注册、Push消息、Push连接状态）广播 -->
+            android:grantUriPermissions="true" /> <!-- 第三方相关 :接收Push消息（注册、Push消息、Push连接状态）广播 -->
         <receiver android:name="io.rong.push.platform.hms.HMSReceiver">
             <intent-filter>
 
@@ -1172,7 +1165,6 @@
                 <action android:name="com.huawei.intent.action.PUSH_STATE" />
             </intent-filter>
         </receiver>
-
         <receiver android:name="com.huawei.hms.support.api.push.PushEventReceiver">
             <intent-filter>
 
@@ -1180,14 +1172,12 @@
                 <action android:name="com.huawei.intent.action.PUSH" />
             </intent-filter>
         </receiver> <!-- 华为 配置结束 < -->
-
         <activity
             android:name=".ui.activity.worksapce.security.SecurityCommentDetailActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".ui.activity.NewOrderActivity" />
         <activity android:name=".ui.activity.NewOrderScreenActivity" />
         <activity android:name=".ui.activity.ChooseAreaActivity" />
-
     </application>
 
 </manifest>

@@ -25,7 +25,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.rx.RxPerm;
+import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.biz.model.bean.TemplateBean;
+import com.eanfang.biz.model.entity.BughandleConfirmEntity;
 import com.eanfang.biz.model.entity.BughandleDetailEntity;
 import com.eanfang.biz.model.entity.RepairFailureEntity;
 import com.eanfang.config.Config;
@@ -42,8 +44,6 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.biz.model.QueryEntry;
-import com.eanfang.biz.model.entity.BughandleConfirmEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.PutUpOrderActivity;
@@ -52,6 +52,7 @@ import net.eanfang.worker.ui.activity.worksapce.repair.finishwork.faultdetail.Ad
 import net.eanfang.worker.ui.adapter.FillTroubleDetailAdapter;
 import net.eanfang.worker.ui.adapter.RepairTeamWorkerAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
+import net.eanfang.worker.ui.widget.NewOrderAddTroubleDevicesDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -223,9 +224,15 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
     List<TemplateBean.Preson> mPresonList = new ArrayList<>();
     private RepairTeamWorkerAdapter repairTeamWorkerAdapter;
 
-    private int maxWordsNum = 200; //输入限制的最大字数
+    private int maxWordsNum = 50; //输入限制的最大字数
 
     private Long clientCompanyUid;
+
+
+    /**
+     * 选择故障设备
+     */
+    private NewOrderAddTroubleDevicesDialog newOrderAddTroubleDevicesDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -287,10 +294,27 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
     public void setListener() {
         //添加故障
         tvAddFault.setOnClickListener(v -> {
-            Intent intent = new Intent(FillRepairInfoActivity.this, AddTroubleActivity.class);
-            intent.putExtra("repaid", orderId);
-            intent.putExtra("clientCompanyUid", clientCompanyUid);
-            startActivityForResult(intent, 10003);
+            newOrderAddTroubleDevicesDialog = new NewOrderAddTroubleDevicesDialog(FillRepairInfoActivity.this, new NewOrderAddTroubleDevicesDialog.OnSelectListener() {
+                @Override
+                public void onDeviceScan() {
+                    Intent intent = new Intent(FillRepairInfoActivity.this, AddTroubleActivity.class);
+                    intent.putExtra("repaid", orderId);
+                    intent.putExtra("clientCompanyUid", clientCompanyUid);
+                    startActivityForResult(intent, 10003);
+                }
+
+                @Override
+                public void onDeviceHouse() {
+                showToast("设备库");
+                }
+
+                @Override
+                public void onDeviceInput() {
+                    showToast("手动输入");
+                }
+            });
+
+            newOrderAddTroubleDevicesDialog.show();
         });
         //提交完工
         tvCommit.setOnClickListener(new MultiClickListener(this, this::checkInfo, () -> {
@@ -758,6 +782,14 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
                 ivThumbnailToolsPackage.setImageBitmap(PhotoUtils.getVideoBitmap(image));
             }
 
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (newOrderAddTroubleDevicesDialog != null) {
+            newOrderAddTroubleDevicesDialog.dismiss();
         }
     }
 }

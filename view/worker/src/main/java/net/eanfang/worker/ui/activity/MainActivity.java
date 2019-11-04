@@ -68,7 +68,7 @@ import net.eanfang.worker.ui.fragment.ContactListFragment;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
 import net.eanfang.worker.ui.fragment.HomeFragment;
 import net.eanfang.worker.ui.fragment.MyFragment;
-import net.eanfang.worker.ui.fragment.WorkspaceFragment;
+import net.eanfang.worker.ui.fragment.OrderFragment;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -261,7 +261,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         mTabHost.addTab(mTabHost.newTabSpec("contactList").setIndicator(indicator), ContactListFragment.class, null);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_work, null);
-        mTabHost.addTab(mTabHost.newTabSpec("work").setIndicator(indicator), WorkspaceFragment.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("work").setIndicator(indicator), OrderFragment.class, null);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_org_work, null);
         mTabHost.addTab(mTabHost.newTabSpec("contact").setIndicator(indicator), ContactsFragment.class, null);

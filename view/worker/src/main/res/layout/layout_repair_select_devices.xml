@@ -6,7 +6,7 @@
     android:layout_gravity="center"
     android:background="@drawable/bg_client_contact_create"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/dimen_40" >
+    android:paddingBottom="@dimen/dimen_40">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,39 +19,86 @@
             android:layout_alignParentRight="true"
             android:padding="@dimen/dimen_25"
             android:src="@mipmap/ic_contact_create_close" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_close"
+            android:layout_centerInParent="true"
+            android:text="故障添加方式"
+            android:textColor="#333333"
+            android:textSize="@dimen/textSize_15" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_30"
         android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginTop="@dimen/dimen_30"
         android:layout_marginEnd="@dimen/dimen_40"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_device_type"
-            android:layout_width="0dp"
+        <RelativeLayout
+            android:id="@+id/rl_device_sacn"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawablePadding="@dimen/dimen_34"
-            android:gravity="center"
-            android:text="按设备类别粗选"
-            android:textColor="@color/color_client_neworder"
-            android:textSize="@dimen/textSize_14" />
-        <!--android:drawableTop="@mipmap/ic_repair_device_type"-->
+            android:background="@drawable/bg_new_order_add_device_first">
 
-        <TextView
-            android:id="@+id/tv_device_warehouse"
-            android:layout_width="0dp"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawableLeft="@mipmap/ic_worker_new_order_scan"
+                android:drawablePadding="@dimen/dimen_7"
+                android:paddingTop="@dimen/dimen_24"
+                android:paddingBottom="@dimen/dimen_24"
+                android:text="扫一扫添加"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/textSize_14" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_device_house"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawablePadding="@dimen/dimen_34"
-            android:gravity="center"
-            android:text="设备库精选"
-            android:textColor="@color/color_client_neworder"
-            android:textSize="@dimen/textSize_14" />
-        <!--android:drawableTop="@mipmap/ic_repair_device_warehouse"-->
+            android:layout_marginTop="@dimen/dimen_50"
+            android:background="@drawable/bg_new_order_confim_second">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawableLeft="@mipmap/ic_worker_new_order_house"
+                android:drawablePadding="@dimen/dimen_7"
+                android:paddingTop="@dimen/dimen_24"
+                android:paddingBottom="@dimen/dimen_24"
+                android:text="设备库添加"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/textSize_14" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_device_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_50"
+            android:background="@drawable/bg_new_order_add_device_three">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawableLeft="@mipmap/ic_worker_new_order_input"
+                android:drawablePadding="@dimen/dimen_7"
+                android:paddingTop="@dimen/dimen_24"
+                android:paddingBottom="@dimen/dimen_24"
+                android:text="手动录入"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/textSize_14" />
+        </RelativeLayout>
+
 
     </LinearLayout>
 </LinearLayout>
