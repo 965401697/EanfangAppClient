@@ -14,7 +14,7 @@ import net.eanfang.worker.viewmodle.neworder.HistoryOrderViewModle;
  * @description 历史订单 报修
  */
 
-public class HistoryRepairFragment extends TemplateItemListFragment {
+public class HistoryDesignFragment extends TemplateItemListFragment {
 
     public String mType;
 
@@ -22,11 +22,11 @@ public class HistoryRepairFragment extends TemplateItemListFragment {
 
     private HistoryOrderViewModle historyOrderViewModle;
 
-    public static HistoryRepairFragment getInstance(String type, HistoryOrderViewModle mHistoryOrderViewModle) {
-        HistoryRepairFragment homePendingFragment = new HistoryRepairFragment();
-        homePendingFragment.mType = type;
-        homePendingFragment.historyOrderViewModle = mHistoryOrderViewModle;
-        return homePendingFragment;
+    public static HistoryDesignFragment getInstance(String type, HistoryOrderViewModle mHistoryOrderViewModle) {
+        HistoryDesignFragment homeDesignFragment = new HistoryDesignFragment();
+        homeDesignFragment.mType = type;
+        homeDesignFragment.historyOrderViewModle = mHistoryOrderViewModle;
+        return homeDesignFragment;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class HistoryRepairFragment extends TemplateItemListFragment {
     @Override
     protected ViewModel initViewModel() {
 //        historyOrderViewModle = LViewModelProviders.of(getActivity(), HistoryOrderViewModle.class);
-        historyOrderViewModle.getHistoryRepairMutableLiveData().observe(this, this::getCommenData);
+        historyOrderViewModle.getHistoryDesignMutableLiveData().observe(this, this::getCommenData);
         return historyOrderViewModle;
     }
 

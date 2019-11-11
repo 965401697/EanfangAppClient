@@ -299,11 +299,15 @@ public interface Constant {
     /**
      * 46.发布用工预算单位
      */
-    String TENDERAPPLYBUDGETUNIT = "applyBudgetUnit"; 
+    String TENDERAPPLYBUDGETUNIT = "applyBudgetUnit";
     /**
      * 47.获取阀值时间
      */
     String DETECT_TIME = "detectTime";
+    /**
+     * 订单类型
+     */
+    String ORDER_TYPE = "OrderType";
 
     /**
      * 国家区域集合

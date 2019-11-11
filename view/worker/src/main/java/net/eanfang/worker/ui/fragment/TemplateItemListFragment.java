@@ -91,7 +91,7 @@ public abstract class TemplateItemListFragment extends BaseFragment implements S
 
     protected void getCommenData(PageBean pageBean) {
         if (mPage == 1) {
-            if(pageBean==null){
+            if (pageBean == null) {
                 return;
             }
             baseQuickAdapter.getData().clear();
@@ -117,21 +117,6 @@ public abstract class TemplateItemListFragment extends BaseFragment implements S
                 baseQuickAdapter.loadMoreEnd();
             }
         }
-//                    @Override
-//                    public void onNoData(String message) {
-//                        mSwipeRefreshLayout.setRefreshing(false);
-//                        workTenderAdapter.loadMoreEnd();//没有数据了
-//                        if (workTenderAdapter.getData().size() == 0) {
-//                            mTvNoData.setVisibility(View.VISIBLE);
-//                        } else {
-//                            mTvNoData.setVisibility(View.GONE);
-//                        }
-//
-//                    }
-//
-//                    @Override
-//                    public void onCommitAgain() {
-//                        mSwipeRefreshLayout.setRefreshing(false);
-//                    }
     }
+
 }

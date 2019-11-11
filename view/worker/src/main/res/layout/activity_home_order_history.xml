@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -14,68 +15,31 @@
 
         <include layout="@layout/header_eanfang" />
 
-        <LinearLayout
-            android:id="@+id/ll_status"
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/tl_perosonal_list"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_80"
+            android:layout_height="@dimen/dimen_90"
             android:background="@color/color_new_order_back"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/titles_bar">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_pending"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="报修"
-                    android:textColor="@color/color_white"
-                    android:textSize="@dimen/textSize_15" />
-
-                <View
-                    android:id="@+id/view_pending"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_4"
-                    android:background="@color/color_new_order_under_line" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_haveIn"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="报装"
-                    android:textColor="@color/color_new_order_unselect"
-                    android:textSize="@dimen/textSize_15" />
-
-                <View
-                    android:id="@+id/view_haveIn"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_4"
-                    android:background="@color/color_new_order_under_line"
-                    android:visibility="gone" />
-            </LinearLayout>
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@id/titles_bar"
+            tl:tl_divider_color="#1A000000"
+            tl:tl_divider_padding="10dp"
+            tl:tl_divider_width="0dp"
+            tl:tl_indicator_color="@color/color_new_order_under_line"
+            tl:tl_indicator_height="1.5dp"
+            tl:tl_indicator_width_equal_title="true"
+            tl:tl_tab_padding="20dp"
+            tl:tl_tab_space_equal="false"
+            tl:tl_textSelectColor="@color/color_white"
+            tl:tl_textUnselectColor="@color/color_new_order_unselect"
+            tl:tl_textsize="@dimen/textSize_15"
+            tl:tl_underline_color="@color/colorPrimary"
+            tl:tl_underline_height="1dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/ll_status">
+            app:layout_constraintTop_toBottomOf="@id/tl_perosonal_list">
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/vp_order_list"

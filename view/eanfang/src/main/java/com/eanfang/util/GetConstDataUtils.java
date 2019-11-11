@@ -183,6 +183,10 @@ public class GetConstDataUtils {
      */
     private static List<String> flaseCauseList;
     /**
+     * 新订单类型
+     */
+    private static List<String> newOrderList;
+    /**
      * 旁路的报警原因
      */
     private static List<String> bypassCauseList;
@@ -969,6 +973,24 @@ public class GetConstDataUtils {
             }
         }
         return flaseCauseList;
+    }
+
+
+    /**
+     * 新订单 订单类型
+     * getConst
+     *
+     * @return
+     */
+    public static List<String> getNewOrderType() {
+        if (newOrderList == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (newOrderList == null) {
+                    newOrderList = Config.get().getConstBean().getData().getConst().get(Constant.ORDER_TYPE);
+                }
+            }
+        }
+        return newOrderList;
     }
 
 }

@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.fragment;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,22 +10,29 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModel;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.eanfang.base.BaseFragment;
+import com.eanfang.biz.model.entity.OrderBean;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.databinding.FragmentOrderBinding;
 import net.eanfang.worker.ui.activity.order.HomeOrderHistoryActivity;
+import net.eanfang.worker.ui.adapter.neworder.HomeOrderApdapter;
 import net.eanfang.worker.ui.fragment.neworder.HomePendingFragment;
 import net.eanfang.worker.ui.fragment.neworder.HomeProgressFragment;
 import net.eanfang.worker.viewmodle.neworder.HomeOrderViewModle;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import lombok.Getter;
+import q.rorbin.badgeview.QBadgeView;
 
 /**
  * @author guanluocang
@@ -32,28 +40,72 @@ import lombok.Getter;
  * @description 订单页面
  */
 
-public class OrderFragment extends BaseFragment {
+public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     private FragmentOrderBinding orderBinding;
 
     private String[] mTitles = {"待处理", "进行中"};
     private MyPagerAdapter mAdapter;
     private HomeOrderViewModle homeOrderViewModle;
 
-    @Override
 
+    private HomeOrderApdapter homeOrderApdapter;
+
+    private QBadgeView qBadgeViewReport = new QBadgeView(WorkerApplication.get().getApplicationContext());
+
+
+    @Override
     protected ViewModel initViewModel() {
+        orderBinding = FragmentOrderBinding.inflate(getLayoutInflater());
         homeOrderViewModle = LViewModelProviders.of(getActivity(), HomeOrderViewModle.class);
+        homeOrderViewModle.setFragmentOrderBinding(orderBinding);
         return homeOrderViewModle;
     }
 
+    private void getProgressData(List<OrderBean> orderList) {
+        if (orderList != null && orderList.size() > 0) {
+            qBadgeViewReport.bindTarget(orderBinding.tvOrder)
+                    .setBadgeBackgroundColor(0xFFFF0000)
+                    .setBadgePadding(5, true)
+                    .setBadgeGravity(Gravity.END | Gravity.TOP)
+                    .setGravityOffset(0, 1, true)
+                    .setBadgeTextSize(10, true)
+                    .setBadgeNumber(orderList.size());
+            orderBinding.swipreFresh.setRefreshing(false);
+            homeOrderApdapter.setNewData(orderList);
+        } else {
+            orderBinding.swipreFresh.setRefreshing(false);
+            orderBinding.rvList.setVisibility(View.GONE);
+            orderBinding.tvNoDatas.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
-        orderBinding = FragmentOrderBinding.inflate(getLayoutInflater());
-        mAdapter = new MyPagerAdapter(getChildFragmentManager(), mTitles);
-        mAdapter.getFragments().add(HomePendingFragment.getInstance(homeOrderViewModle));
-        mAdapter.getFragments().add(HomeProgressFragment.getInstance(homeOrderViewModle));
-        orderBinding.vpOrderList.setAdapter(mAdapter);
-        orderBinding.vpOrderList.setCurrentItem(0);
+        if (WorkerApplication.get().getUserId().equals(WorkerApplication.get().getCompanyEntity().getOrgUnitEntity().getAdminUserId())) {
+            // 管理员
+            orderBinding.llAdmin.setVisibility(View.VISIBLE);
+            orderBinding.swipreFresh.setVisibility(View.GONE);
+
+            mAdapter = new MyPagerAdapter(getChildFragmentManager(), mTitles);
+            mAdapter.getFragments().add(HomePendingFragment.getInstance(homeOrderViewModle));
+            mAdapter.getFragments().add(HomeProgressFragment.getInstance(homeOrderViewModle));
+            orderBinding.vpOrderList.setAdapter(mAdapter);
+            orderBinding.vpOrderList.setCurrentItem(0);
+        } else {
+            // 技师
+            orderBinding.llAdmin.setVisibility(View.GONE);
+            orderBinding.swipreFresh.setVisibility(View.VISIBLE);
+
+            homeOrderApdapter = new HomeOrderApdapter();
+            orderBinding.rvList.setLayoutManager(new LinearLayoutManager(getActivity()));
+            orderBinding.swipreFresh.setOnRefreshListener(this);
+            homeOrderApdapter.bindToRecyclerView(orderBinding.rvList);
+            homeOrderViewModle.doGetProgressData(1);
+            homeOrderViewModle.getProgressMutableLiveData().observe(this, this::getProgressData);
+        }
+
         initListener();
         return orderBinding.getRoot();
     }
@@ -109,6 +161,12 @@ public class OrderFragment extends BaseFragment {
 
             }
         });
+    }
+
+
+    @Override
+    public void onRefresh() {
+        homeOrderViewModle.doGetProgressData(1);
     }
 
     /**

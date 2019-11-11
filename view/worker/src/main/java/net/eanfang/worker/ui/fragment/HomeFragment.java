@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,6 +31,7 @@ import com.eanfang.bean.security.SecurityListBean;
 import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.biz.model.bean.AllMessageBean;
 import com.eanfang.biz.model.entity.NoticeEntity;
+import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -63,6 +67,7 @@ import net.eanfang.worker.ui.activity.worksapce.security.SecurityPersonalActivit
 import net.eanfang.worker.ui.activity.worksapce.tender.WorkerTenderControlActivity;
 import net.eanfang.worker.ui.adapter.HomeWaitAdapter;
 import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
+import net.eanfang.worker.ui.widget.CompanyListView;
 import net.eanfang.worker.ui.widget.CustomHomeViewPager;
 import net.eanfang.worker.ui.widget.HomeWaitIndicator;
 import net.eanfang.worker.ui.widget.SignCtrlView;
@@ -144,6 +149,12 @@ public class HomeFragment extends BaseFragment implements SecurityListAdapter.On
     private int mSecurityNum;
     private ArrayList<String> picList = new ArrayList<>();
     private String[] pics = null;
+    /**
+     * 切换公司 pop
+     */
+    private CompanyListView selectCompanyPop;
+    List<OrgEntity> mList = new ArrayList<>();
+    private RotateAnimation rotate;
 
     @Override
     protected void initData(Bundle arguments) {
@@ -193,6 +204,44 @@ public class HomeFragment extends BaseFragment implements SecurityListAdapter.On
         initNum();
         initWait();
         initSecurity();
+    }
+
+    /**
+     * 切换公司
+     */
+    private void doChangeCompany() {
+
+        EanfangHttp.post(NewApiService.GET_COMPANY_ALL_LIST)
+                .params("accId", WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getAccId() + "")
+                // 公司类型（单位类型0平台总公司1城市平台公司2企事业单位3安防公司）
+                .params("orgType", "3")
+                .execute(new EanfangCallback<OrgEntity>(getActivity(), false, OrgEntity.class, true, bean -> {
+                    mList = bean;
+                    if (mList == null || mList.size() <= 0) {
+                        showToast("暂无安防公司");
+                        return;
+                    }
+                    rotate = new RotateAnimation(0f, 180f, Animation.RELATIVE_TO_SELF,
+                            0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                    rotate.setDuration(300);
+                    rotate.setFillAfter(true);
+                    selectCompanyPop = new CompanyListView(getActivity(), mList, ((name, url) -> {
+                        if ("个人".equals(name)) {
+                            tvHomeTitle.setText(name);
+                        } else {
+                            tvHomeTitle.setText(name);
+                        }
+                        selectCompanyPop.dismiss();
+                        doHttpOrderNums();
+                    }));
+                    selectCompanyPop.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            selectCompanyPop.backgroundAlpha(1.0f);
+                        }
+                    });
+                    selectCompanyPop.showAsDropDown(findViewById(R.id.tv_homeTitle));
+                }));
     }
 
     private void initNum() {
@@ -312,6 +361,10 @@ public class HomeFragment extends BaseFragment implements SecurityListAdapter.On
      * 工作按钮
      */
     private void initIconClick() {
+        //切换公司
+        tvHomeTitle.setOnClickListener((v) -> {
+            doChangeCompany();
+        });
         //报修订单
         findViewById(R.id.tv_reparir_order).setOnClickListener((v) -> {
 //            if (!PermKit.get().getRepairListPerm()) return;
