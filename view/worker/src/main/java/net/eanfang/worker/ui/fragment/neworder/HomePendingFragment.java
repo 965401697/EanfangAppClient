@@ -15,7 +15,6 @@ import net.eanfang.worker.databinding.FragmentPendingBinding;
 import net.eanfang.worker.ui.adapter.neworder.HomeOrderAdapter;
 import net.eanfang.worker.viewmodle.neworder.HomeOrderViewModle;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Setter;
@@ -34,7 +33,6 @@ public class HomePendingFragment extends BaseFragment implements SwipeRefreshLay
     private HomeOrderViewModle mHomeOrderViewModle;
 
     private HomeOrderAdapter homeOrderAdapter;
-    private List<String> mProgressList = new ArrayList<>();
 
     public static HomePendingFragment getInstance(HomeOrderViewModle homeOrderViewModle) {
         return new HomePendingFragment().setMHomeOrderViewModle(homeOrderViewModle);
@@ -43,8 +41,6 @@ public class HomePendingFragment extends BaseFragment implements SwipeRefreshLay
 
     @Override
     protected ViewModel initViewModel() {
-        mHomeOrderViewModle.doGetProgressData(0);
-        mHomeOrderViewModle.getPendingMutableLiveData().observe(this, this::getProgressData);
         return mHomeOrderViewModle;
     }
 
@@ -64,6 +60,8 @@ public class HomePendingFragment extends BaseFragment implements SwipeRefreshLay
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
         fragmentPendingBinding = FragmentPendingBinding.inflate(getLayoutInflater());
+        mHomeOrderViewModle.doGetProgressData(0);
+        mHomeOrderViewModle.getPendingMutableLiveData().observe(this, this::getProgressData);
         homeOrderAdapter = new HomeOrderAdapter();
         fragmentPendingBinding.rvList.setLayoutManager(new LinearLayoutManager(getActivity()));
         fragmentPendingBinding.swipreFresh.setOnRefreshListener(this);

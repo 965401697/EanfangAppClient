@@ -52,6 +52,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
 
     private QBadgeView qBadgeViewReport = new QBadgeView(WorkerApplication.get().getApplicationContext());
 
+    private View root;
 
     @Override
     protected ViewModel initViewModel() {
@@ -83,11 +84,16 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
+        if (orderBinding.getRoot() != null) {
+            ViewGroup p = (ViewGroup) orderBinding.getRoot().getParent();
+            if (p != null) {
+                p.removeAllViewsInLayout();
+            }
+        }
         if (WorkerApplication.get().getUserId().equals(WorkerApplication.get().getCompanyEntity().getOrgUnitEntity().getAdminUserId())) {
             // 管理员
             orderBinding.llAdmin.setVisibility(View.VISIBLE);
             orderBinding.swipreFresh.setVisibility(View.GONE);
-
             mAdapter = new MyPagerAdapter(getChildFragmentManager(), mTitles);
             mAdapter.getFragments().add(HomePendingFragment.getInstance(homeOrderViewModle));
             mAdapter.getFragments().add(HomeProgressFragment.getInstance(homeOrderViewModle));
@@ -117,6 +123,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             orderBinding.tvHaveIn.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_new_order_unselect));
             orderBinding.viewPending.setVisibility(View.VISIBLE);
             orderBinding.viewHaveIn.setVisibility(View.GONE);
+            orderBinding.vpOrderList.setCurrentItem(0);
         });
         // 进行中
         orderBinding.tvHaveIn.setOnClickListener((v) -> {
@@ -124,6 +131,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             orderBinding.tvHaveIn.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_white));
             orderBinding.viewPending.setVisibility(View.GONE);
             orderBinding.viewHaveIn.setVisibility(View.VISIBLE);
+            orderBinding.vpOrderList.setCurrentItem(1);
 
         });
         orderBinding.ivOrderHestory.setOnClickListener((v) -> {

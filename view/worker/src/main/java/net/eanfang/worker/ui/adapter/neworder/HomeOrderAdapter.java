@@ -1,5 +1,7 @@
 package net.eanfang.worker.ui.adapter.neworder;
 
+import android.view.ViewGroup;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.biz.model.entity.OrderBean;
@@ -20,6 +22,11 @@ import cn.hutool.core.date.DateUtil;
 public class HomeOrderAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder> {
     public HomeOrderAdapter() {
         super(R.layout.layout_home_new_order_item);
+    }
+
+    @Override
+    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return super.onCreateViewHolder(parent, viewType);
     }
 
     @Override

@@ -40,8 +40,6 @@ public class HomeProgressFragment extends BaseFragment implements SwipeRefreshLa
 
     @Override
     protected ViewModel initViewModel() {
-        mHomeOrderViewModle.doGetProgressData(1);
-        mHomeOrderViewModle.getProgressMutableLiveData().observe(this, this::getProgressData);
         return mHomeOrderViewModle;
     }
 
@@ -61,6 +59,8 @@ public class HomeProgressFragment extends BaseFragment implements SwipeRefreshLa
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
         fragmentProgressBinding = FragmentProgressBinding.inflate(getLayoutInflater());
+        mHomeOrderViewModle.doGetProgressData(1);
+        mHomeOrderViewModle.getProgressMutableLiveData().observe(this, this::getProgressData);
         homeOrderAdapter = new HomeOrderAdapter();
         fragmentProgressBinding.rvList.setLayoutManager(new LinearLayoutManager(getActivity()));
         fragmentProgressBinding.swipreFresh.setOnRefreshListener(this);
