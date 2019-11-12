@@ -15,12 +15,12 @@
 
         <include layout="@layout/header_eanfang" />
 
-
+<!--        android:background="@color/color_new_order_back"-->
         <com.flyco.tablayout.SlidingTabLayout
             android:id="@+id/tl_perosonal_list"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_90"
-            android:background="@color/color_new_order_back"
+            android:background="@color/colorPrimaryW"
             app:layout_constraintTop_toBottomOf="@id/titles_bar"
             tl:tl_divider_color="#1A000000"
             tl:tl_divider_padding="10dp"

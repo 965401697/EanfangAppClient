@@ -18,7 +18,7 @@
             android:id="@+id/rl_top"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/color_new_order_back"
+            android:background="@color/colorPrimaryW"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -57,7 +57,7 @@
                 android:id="@+id/ll_status"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_80"
-                android:background="@color/color_new_order_back"
+                android:background="@color/colorPrimaryW"
                 android:orientation="horizontal">
 
                 <LinearLayout
