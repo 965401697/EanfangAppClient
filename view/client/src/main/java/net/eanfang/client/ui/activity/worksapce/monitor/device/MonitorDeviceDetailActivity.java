@@ -153,7 +153,7 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
     public Calendar mPlayEndTime;
 
     public MonitorDeviceDetailTimeAdapter monitorDeviceDetailTimeAdapter;
-    private List<String> mTimeList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,6 +187,7 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         monitorDeviceDetailBinding.rvTime.setLayoutManager(manager);
         monitorDeviceDetailTimeAdapter.bindToRecyclerView(monitorDeviceDetailBinding.rvTime);
+        List<String> mTimeList = new ArrayList<>();
         for (int i = 0; i < 24; i++) {
             if (i < 10) {
                 mTimeList.add("0" + i + "时");

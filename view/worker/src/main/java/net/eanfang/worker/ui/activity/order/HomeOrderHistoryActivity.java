@@ -58,6 +58,7 @@ public class HomeOrderHistoryActivity extends BaseActivity {
             JumpItent.jump(HomeOrderHistoryActivity.this, FilterTenderActivity.class, bundle, FILTRATE_TYPE_CODE);
         });
         mAdapter = new MyPagerAdapter(getSupportFragmentManager(), mTitles);
+
         mAdapter.getFragments().add(HistoryRepairFragment.getInstance("repair", historyOrderViewModle));
         mAdapter.getFragments().add(HistoryInstallFragment.getInstance("install", historyOrderViewModle));
         mAdapter.getFragments().add(HistoryDesignFragment.getInstance("design", historyOrderViewModle));
@@ -66,12 +67,6 @@ public class HomeOrderHistoryActivity extends BaseActivity {
         homeOrderHistoryBinding.tlPerosonalList.setViewPager(homeOrderHistoryBinding.vpOrderList, mTitles, this, mAdapter.getFragments());
         homeOrderHistoryBinding.vpOrderList.setAdapter(mAdapter);
         homeOrderHistoryBinding.vpOrderList.setCurrentItem(0);
-
-        initListener();
-
-    }
-
-    private void initListener() {
     }
 
     @Override

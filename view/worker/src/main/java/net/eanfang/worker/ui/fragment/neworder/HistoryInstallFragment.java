@@ -3,8 +3,9 @@ package net.eanfang.worker.ui.fragment.neworder;
 import androidx.lifecycle.ViewModel;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.biz.rds.base.LViewModelProviders;
 
-import net.eanfang.worker.ui.adapter.neworder.HomeOrderApdapter;
+import net.eanfang.worker.ui.adapter.neworder.HomeOrderAdapter;
 import net.eanfang.worker.ui.fragment.TemplateItemListFragment;
 import net.eanfang.worker.viewmodle.neworder.HistoryOrderViewModle;
 
@@ -17,7 +18,7 @@ import net.eanfang.worker.viewmodle.neworder.HistoryOrderViewModle;
 public class HistoryInstallFragment extends TemplateItemListFragment {
 
     public String mType;
-    private HomeOrderApdapter homeOrderApdapter;
+    private HomeOrderAdapter homeOrderAdapter;
 
     private HistoryOrderViewModle historyOrderViewModle;
 
@@ -30,8 +31,8 @@ public class HistoryInstallFragment extends TemplateItemListFragment {
 
     @Override
     protected void initAdapter(BaseQuickAdapter baseQuickAdapter) {
-        homeOrderApdapter = new HomeOrderApdapter();
-        super.initAdapter(homeOrderApdapter);
+        homeOrderAdapter = new HomeOrderAdapter();
+        super.initAdapter(homeOrderAdapter);
     }
 
     @Override

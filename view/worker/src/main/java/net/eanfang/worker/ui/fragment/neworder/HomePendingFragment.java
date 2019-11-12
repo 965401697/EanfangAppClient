@@ -12,7 +12,7 @@ import com.eanfang.base.BaseFragment;
 import com.eanfang.biz.model.entity.OrderBean;
 
 import net.eanfang.worker.databinding.FragmentPendingBinding;
-import net.eanfang.worker.ui.adapter.neworder.HomeOrderApdapter;
+import net.eanfang.worker.ui.adapter.neworder.HomeOrderAdapter;
 import net.eanfang.worker.viewmodle.neworder.HomeOrderViewModle;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class HomePendingFragment extends BaseFragment implements SwipeRefreshLay
     @Accessors(chain = true)
     private HomeOrderViewModle mHomeOrderViewModle;
 
-    private HomeOrderApdapter homeOrderApdapter;
+    private HomeOrderAdapter homeOrderAdapter;
     private List<String> mProgressList = new ArrayList<>();
 
     public static HomePendingFragment getInstance(HomeOrderViewModle homeOrderViewModle) {
@@ -53,7 +53,7 @@ public class HomePendingFragment extends BaseFragment implements SwipeRefreshLay
             fragmentPendingBinding.rvList.setVisibility(View.VISIBLE);
             fragmentPendingBinding.tvNoDatas.setVisibility(View.GONE);
             fragmentPendingBinding.swipreFresh.setRefreshing(false);
-            homeOrderApdapter.setNewData(orderList);
+            homeOrderAdapter.setNewData(orderList);
         } else {
             fragmentPendingBinding.swipreFresh.setRefreshing(false);
             fragmentPendingBinding.rvList.setVisibility(View.GONE);
@@ -64,10 +64,10 @@ public class HomePendingFragment extends BaseFragment implements SwipeRefreshLay
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
         fragmentPendingBinding = FragmentPendingBinding.inflate(getLayoutInflater());
-        homeOrderApdapter = new HomeOrderApdapter();
+        homeOrderAdapter = new HomeOrderAdapter();
         fragmentPendingBinding.rvList.setLayoutManager(new LinearLayoutManager(getActivity()));
         fragmentPendingBinding.swipreFresh.setOnRefreshListener(this);
-        homeOrderApdapter.bindToRecyclerView(fragmentPendingBinding.rvList);
+        homeOrderAdapter.bindToRecyclerView(fragmentPendingBinding.rvList);
         return fragmentPendingBinding.getRoot();
     }
 

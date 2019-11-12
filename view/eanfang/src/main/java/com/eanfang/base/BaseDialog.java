@@ -340,7 +340,9 @@ public abstract class BaseDialog extends RxDialogFragment {
             loadingDialog.setCancelable(false);
             loadingDialog.setCanceledOnTouchOutside(false);
         }
-        loadingDialog.show();
+        if (!loadingDialog.isShowing()) {
+            loadingDialog.show();
+        }
     }
 
     protected void dismissLoading() {

@@ -35,15 +35,7 @@ public class OrderBean {
      * 系统类别编码 默认取第一个
      */
     private String sysCode;
-    /**
-     * 客户（订单拥有者）公司id
-     */
-    private Long ownerCompanyId;
 
-    /**
-     * 技师（订单处理者）公司id
-     */
-    private Long assigneeCompanyId;
     /**
      * 订单状态
      */
@@ -78,8 +70,25 @@ public class OrderBean {
      */
     private Long ownerUserId;
     /**
+     * 客户（订单拥有者）公司id
+     */
+    private Long ownerCompanyId;
+
+    /**
      * 技师（订单处理者）id
      */
     private Long assigneeUserId;
+    /**
+     * 技师（订单处理者）姓名
+     */
+    private String assigneeUserName;
+    /**
+     * 技师（订单处理者）电话
+     */
+    private String assigneeUserPhone;
+    /**
+     * 技师（订单处理者）公司id
+     */
+    private Long assigneeCompanyId;
 
 }

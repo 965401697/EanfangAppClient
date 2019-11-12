@@ -12,7 +12,7 @@ import com.eanfang.base.BaseFragment;
 import com.eanfang.biz.model.entity.OrderBean;
 
 import net.eanfang.worker.databinding.FragmentProgressBinding;
-import net.eanfang.worker.ui.adapter.neworder.HomeOrderApdapter;
+import net.eanfang.worker.ui.adapter.neworder.HomeOrderAdapter;
 import net.eanfang.worker.viewmodle.neworder.HomeOrderViewModle;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class HomeProgressFragment extends BaseFragment implements SwipeRefreshLa
     @Setter
     @Accessors(chain = true)
     private HomeOrderViewModle mHomeOrderViewModle;
-    private HomeOrderApdapter homeOrderApdapter;
+    private HomeOrderAdapter homeOrderAdapter;
 
 
     private FragmentProgressBinding fragmentProgressBinding;
@@ -50,7 +50,7 @@ public class HomeProgressFragment extends BaseFragment implements SwipeRefreshLa
             fragmentProgressBinding.rvList.setVisibility(View.VISIBLE);
             fragmentProgressBinding.tvNoDatas.setVisibility(View.GONE);
             fragmentProgressBinding.swipreFresh.setRefreshing(false);
-            homeOrderApdapter.setNewData(orderList);
+            homeOrderAdapter.setNewData(orderList);
         } else {
             fragmentProgressBinding.swipreFresh.setRefreshing(false);
             fragmentProgressBinding.rvList.setVisibility(View.GONE);
@@ -61,10 +61,10 @@ public class HomeProgressFragment extends BaseFragment implements SwipeRefreshLa
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
         fragmentProgressBinding = FragmentProgressBinding.inflate(getLayoutInflater());
-        homeOrderApdapter = new HomeOrderApdapter();
+        homeOrderAdapter = new HomeOrderAdapter();
         fragmentProgressBinding.rvList.setLayoutManager(new LinearLayoutManager(getActivity()));
         fragmentProgressBinding.swipreFresh.setOnRefreshListener(this);
-        homeOrderApdapter.bindToRecyclerView(fragmentProgressBinding.rvList);
+        homeOrderAdapter.bindToRecyclerView(fragmentProgressBinding.rvList);
         return fragmentProgressBinding.getRoot();
     }
 

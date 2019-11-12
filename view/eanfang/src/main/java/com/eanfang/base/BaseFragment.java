@@ -234,10 +234,12 @@ public abstract class BaseFragment extends RxFragment {
             loadingDialog.setCancelable(false);
             loadingDialog.setCanceledOnTouchOutside(false);
         }
-        loadingDialog.show();
+        if (!loadingDialog.isShowing()) {
+            loadingDialog.show();
+        }
     }
 
-    private void dismissLoading() {
+    protected void dismissLoading() {
         if (loadingDialog != null && loadingDialog.isShowing()) {
             LoadKit.closeDialog(loadingDialog);
         }

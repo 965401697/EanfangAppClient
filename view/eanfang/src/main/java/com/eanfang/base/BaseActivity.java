@@ -337,10 +337,12 @@ public abstract class BaseActivity extends RxAppCompatActivity {
                         switch (baseActionEvent.getAction()) {
                             case BaseActionEvent.SHOW_LOADING_DIALOG: {
                                 startLoading(baseActionEvent.getMessage());
+                                viewModelAction.getActionLiveData().setValue(new BaseActionEvent(BaseActionEvent.DEFAULT));
                                 break;
                             }
                             case BaseActionEvent.DISMISS_LOADING_DIALOG: {
                                 dismissLoading();
+                                viewModelAction.getActionLiveData().setValue(new BaseActionEvent(BaseActionEvent.DEFAULT));
                                 break;
                             }
                             case BaseActionEvent.SHOW_TOAST: {
@@ -415,7 +417,9 @@ public abstract class BaseActivity extends RxAppCompatActivity {
             loadingDialog.setCancelable(false);
             loadingDialog.setCanceledOnTouchOutside(false);
         }
-        loadingDialog.show();
+        if (!loadingDialog.isShowing()) {
+            loadingDialog.show();
+        }
     }
 
     protected void dismissLoading() {

@@ -23,7 +23,7 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.databinding.FragmentOrderBinding;
 import net.eanfang.worker.ui.activity.order.HomeOrderHistoryActivity;
-import net.eanfang.worker.ui.adapter.neworder.HomeOrderApdapter;
+import net.eanfang.worker.ui.adapter.neworder.HomeOrderAdapter;
 import net.eanfang.worker.ui.fragment.neworder.HomePendingFragment;
 import net.eanfang.worker.ui.fragment.neworder.HomeProgressFragment;
 import net.eanfang.worker.viewmodle.neworder.HomeOrderViewModle;
@@ -48,7 +48,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
     private HomeOrderViewModle homeOrderViewModle;
 
 
-    private HomeOrderApdapter homeOrderApdapter;
+    private HomeOrderAdapter homeOrderAdapter;
 
     private QBadgeView qBadgeViewReport = new QBadgeView(WorkerApplication.get().getApplicationContext());
 
@@ -71,7 +71,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                     .setBadgeTextSize(10, true)
                     .setBadgeNumber(orderList.size());
             orderBinding.swipreFresh.setRefreshing(false);
-            homeOrderApdapter.setNewData(orderList);
+            homeOrderAdapter.setNewData(orderList);
         } else {
             orderBinding.swipreFresh.setRefreshing(false);
             orderBinding.rvList.setVisibility(View.GONE);
@@ -98,10 +98,10 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             orderBinding.llAdmin.setVisibility(View.GONE);
             orderBinding.swipreFresh.setVisibility(View.VISIBLE);
 
-            homeOrderApdapter = new HomeOrderApdapter();
+            homeOrderAdapter = new HomeOrderAdapter();
             orderBinding.rvList.setLayoutManager(new LinearLayoutManager(getActivity()));
             orderBinding.swipreFresh.setOnRefreshListener(this);
-            homeOrderApdapter.bindToRecyclerView(orderBinding.rvList);
+            homeOrderAdapter.bindToRecyclerView(orderBinding.rvList);
             homeOrderViewModle.doGetProgressData(1);
             homeOrderViewModle.getProgressMutableLiveData().observe(this, this::getProgressData);
         }

@@ -71,6 +71,7 @@ class DialogLoading {
     static void closeDialog(Dialog mDialogUtils) {
         if (mDialogUtils != null && mDialogUtils.isShowing()) {
             mDialogUtils.dismiss();
+            mDialogUtils.cancel();
         }
     }
 

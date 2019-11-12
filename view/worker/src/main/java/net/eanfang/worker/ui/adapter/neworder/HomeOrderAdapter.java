@@ -17,8 +17,8 @@ import cn.hutool.core.date.DateUtil;
  * @data 2019/10/28
  * @description 首页订单Adapter
  */
-public class HomeOrderApdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder> {
-    public HomeOrderApdapter() {
+public class HomeOrderAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder> {
+    public HomeOrderAdapter() {
         super(R.layout.layout_home_new_order_item);
     }
 
@@ -33,7 +33,7 @@ public class HomeOrderApdapter extends BaseQuickAdapter<OrderBean, BaseViewHolde
         // 维修 维保
         helper.setText(R.id.tv_order_type_second, Config.get().getBaseNameByCode(1, item.getSysCode(), 1));
         // 电视监控
-        helper.setText(R.id.tv_order_type_first, GetConstDataUtils.getNewOrderType().get(item.getStatus()));
+        helper.setText(R.id.tv_order_type_first, GetConstDataUtils.getNewOrderType().get(item.getType()));
         // 待预约
         if (item.getStatus() == 6) {
             helper.setText(R.id.tv_order_type, "订单取消");
@@ -45,13 +45,16 @@ public class HomeOrderApdapter extends BaseQuickAdapter<OrderBean, BaseViewHolde
         // 单位
         helper.setText(R.id.tv_company, item.getContactCompany());
         // 技师 是否是自己的单子
-        if (item.getAssigneeUserId().equals(WorkerApplication.get().getUserId())) {
-            helper.setText(R.id.tv_contactName, "现场联系人：");
-            helper.setText(R.id.tv_worder, item.getContactName());
-        } else {
-            helper.setText(R.id.tv_contactName, "负责技师：" );
-            helper.setText(R.id.tv_worder, item.getContactName());
+        if (item.getAssigneeUserId() != null) {
+            if (item.getAssigneeUserId().equals(WorkerApplication.get().getUserId())) {
+                helper.setText(R.id.tv_contactName, "现场联系人：");
+                helper.setText(R.id.tv_worder, item.getContactName());
+            } else {
+                helper.setText(R.id.tv_contactName, "负责技师：");
+                helper.setText(R.id.tv_worder, item.getAssigneeUserName());
+            }
         }
+
         // 时间
         helper.setText(R.id.tv_time, DateUtil.date(item.getCreateTime()).toString());
 

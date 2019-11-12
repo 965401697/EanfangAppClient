@@ -13,7 +13,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.eanfang.R;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.BaseApplication;
-import com.eanfang.base.kit.aop.annotation.BugLog;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.base.network.config.HttpConfig;

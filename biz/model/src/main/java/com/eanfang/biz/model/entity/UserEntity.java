@@ -1,11 +1,11 @@
 package com.eanfang.biz.model.entity;
 
+import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import java.io.Serializable;
-import java.util.Date;
 
 
 @Getter
@@ -85,5 +85,6 @@ public class UserEntity implements Serializable {
      * 归属部门
      */
     private OrgEntity departmentEntity;
+    
 
 }

@@ -119,7 +119,7 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
     public Calendar mPlayTime;
     public Calendar mPlayEndTime;
     public MonitorDeviceDetailTimeAdapter monitorDeviceDetailTimeAdapter;
-    private List<String> mTimeList = new ArrayList<>();
+
 
     private String mShopName;
     private String mYearMonthDay;
@@ -155,6 +155,7 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         monitorDevicePlayBackBinding.rvTime.setLayoutManager(manager);
         monitorDeviceDetailTimeAdapter.bindToRecyclerView(monitorDevicePlayBackBinding.rvTime);
+        List<String> mTimeList = new ArrayList<>();
         for (int i = 0; i < 24; i++) {
             if (i < 10) {
                 mTimeList.add("0" + i + "时");
