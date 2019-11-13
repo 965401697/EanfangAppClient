@@ -366,6 +366,10 @@ public interface Constant {
          * 报价单 订单编号的前缀
          */
         QUOTE("报价单", "PO"),
+        /**
+         * 开店日志 订单编号的前缀
+         */
+        OSLOG("开店日志", "OS"),
         /***
          * 设备编号的前缀
          */
@@ -373,8 +377,55 @@ public interface Constant {
         /***
          * 发包
          */
-        PUBLISH("发包", "fb");
-
+        PUBLISH("发包", "fb"),
+        /**
+         * 免费设计的前缀
+         */
+        DESIGN("免费设计", "DS"),
+        /**
+         * 维修保养的前缀
+         */
+        MAINTAIN("维修保养", "BO"),
+        /**
+         * 布防日志
+         */
+        PROTECTIONLOG("布防日志", "PL"),
+        /**
+         * 故障编号前缀
+         */
+        FAILURE("故障编号", "FL"),
+        /**
+         * 工作汇报
+         */
+        REPORT("工作汇报", "RP"),
+        /**
+         * 布置任务
+         */
+        TASK("布置任务", "TK"),
+        /**
+         * 设备点检
+         */
+        INSPECT("设备点检", "PI"),
+        /**
+         * 交接班
+         */
+        EXCHANGE("交接班", "EL"),
+        /**
+         * 面谈员工
+         */
+        FACE("面谈员工", "FW"),
+        /**
+         * 专家付费咨询
+         */
+        EXPERT("专家付费咨询", "EXP"),
+        /**
+         * 接包
+         */
+        APPLY("接包", "AB"),
+        /**
+         * 招投标
+         */
+        BID("招投标", "IFB");
 
         public String v;
         private String title;

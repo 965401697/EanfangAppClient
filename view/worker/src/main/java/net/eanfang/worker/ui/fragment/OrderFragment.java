@@ -1,5 +1,7 @@
 package net.eanfang.worker.ui.fragment;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,17 +17,28 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.eanfang.base.BaseFragment;
+import com.eanfang.base.kit.V;
 import com.eanfang.biz.model.entity.OrderBean;
 import com.eanfang.biz.rds.base.LViewModelProviders;
+import com.eanfang.util.CallUtils;
 import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.databinding.FragmentOrderBinding;
 import net.eanfang.worker.ui.activity.order.HomeOrderHistoryActivity;
+import net.eanfang.worker.ui.activity.worksapce.EvaluateClientActivity;
+import net.eanfang.worker.ui.activity.worksapce.SignInActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.SolveModeActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.finishwork.FillRepairInfoActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.finishwork.PhoneSolveRepairInfoActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.PsTroubleDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.TroubleDetailActivity;
 import net.eanfang.worker.ui.adapter.neworder.HomeOrderAdapter;
 import net.eanfang.worker.ui.fragment.neworder.HomePendingFragment;
 import net.eanfang.worker.ui.fragment.neworder.HomeProgressFragment;
+import net.eanfang.worker.ui.widget.FillAppointmentInfoRebookView;
 import net.eanfang.worker.viewmodle.neworder.HomeOrderViewModle;
 
 import java.util.ArrayList;
@@ -169,8 +182,161 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
 
             }
         });
+        homeOrderAdapter.setOnItemClickListener(((adapter, view, position) -> {
+            OrderBean item = homeOrderAdapter.getData().get(position);
+            switchCase(item, view);
+        }));
+
+
     }
 
+    private void switchCase(OrderBean item, View view) {
+        Intent intent;
+        //获取：订单状态( 0:待支付，1:待回电，2:待上门，3:待完工，4:待确认，5:订单完成)
+        switch (item.getStatus()) {
+            case 0:
+                switch (view.getId()) {
+                    case R.id.tv_do_second:
+                        //只有当前登陆人为订单负责人才可以操作
+                        //联系客户
+                        CallUtils.call(getActivity(), item.getContactPhone());
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case 1:
+                switch (view.getId()) {
+                    case R.id.tv_do_second:
+                        // 解决方式
+                        //马上回电
+                        Bundle bundle = new Bundle();
+                        bundle.putLong("orderId", item.getId());
+                        JumpItent.jump(getActivity(), SolveModeActivity.class, bundle, RepairCtrlActivity.REFREST_ITEM);
+                        //给客户联系人打电话
+                        CallUtils.call(getActivity(), V.v(() -> item.getContactPhone()));
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case 2:
+                // 待上门 签到
+                switch (view.getId()) {
+
+                    case R.id.tv_do_first:
+                        //只有当前登陆人为订单负责人才可以操作
+                        Bundle bundle = new Bundle();
+                        bundle.putLong("itemId", item.getId());
+                        bundle.putBoolean("isReAppoint", true);
+                        JumpItent.jump(getActivity(), FillAppointmentInfoRebookView.class, bundle);
+                        break;
+                    case R.id.tv_do_second:
+                        //只有当前登陆人为订单负责人才可以操作
+                        intent = new Intent(getActivity(), SignInActivity.class);
+                        intent.putExtra("orderId", item.getId());
+                        intent.putExtra("latitude", item.getLatitude());
+                        intent.putExtra("longitude", item.getLongitude());
+                        getActivity().startActivityForResult(intent, RepairCtrlActivity.REFREST_ITEM);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+
+
+            case 3:
+                switch (view.getId()) {
+                    case R.id.tv_do_first:
+                        //给客户联系人打电话
+                        //联系客户
+                        CallUtils.call(getActivity(), V.v(() -> item.getContactPhone()));
+                        break;
+                    case R.id.tv_do_second:
+                        //只有当前登陆人为订单负责人才可以操作
+                        // 是否 电话解决 0：未解决，1：已解决
+                        //完工
+                        if (item.getIsPhoneSolve() == 0) {
+                            intent = new Intent(getActivity(), FillRepairInfoActivity.class);
+                        } else {
+                            intent = new Intent(getActivity(), PhoneSolveRepairInfoActivity.class);
+                        }
+                        intent.putExtra("orderId", item.getId());
+                        intent.putExtra("workerUserId", item.getAssigneeUserId());
+//                        if (item.getOwnerOrg() != null) {
+//                            intent.putExtra("companyName", item.getOwnerOrg().getBelongCompany().getOrgName());
+//                        } else {
+//                            intent.putExtra("companyName", "个人");
+//                        }
+
+                        intent.putExtra("phoneSolve", item.getIsPhoneSolve());
+                        intent.putExtra("companyUid", item.getAssigneeCompanyId());
+                        intent.putExtra("clientCompanyUid", item.getOwnerCompanyId());
+                        getActivity().startActivityForResult(intent, RepairCtrlActivity.REFREST_ITEM);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            //待确认
+            case 4:
+                switch (view.getId()) {
+                    case R.id.tv_do_first:
+                        CallUtils.call(getActivity(), V.v(() -> item.getAssigneeUser().getAccountEntity().getMobile()));
+                        break;
+                    case R.id.tv_do_second:
+                        doJumpTroubleDetail(item.getId(), item.getIsPhoneSolve());
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            //待评价
+            case 5:
+                switch (view.getId()) {
+
+                    case R.id.tv_do_first:
+                        //查看故障处理
+                        doJumpTroubleDetail(item.getId(), item.getIsPhoneSolve());
+                        break;
+                    case R.id.tv_do_second:
+//                        if (!item.getAssigneeUserId().equals(WorkerApplication.get().getUserId())) {
+//                            showToast("当前订单负责人可以操作");
+//                            return;
+//                        }
+                        //评价客户
+                        startActivity(new Intent(getActivity(), EvaluateClientActivity.class).putExtra("flag", 0)
+                                .putExtra("ordernum", item.getOrderNum())
+                                .putExtra("ownerId", item.getOwnerUserId())
+                                .putExtra("orderId", item.getId())
+                                .putExtra("avatar", item.getAssigneeUser().getAccountEntity().getAvatar()));
+                        break;
+                    default:
+                        break;
+                }
+                break;
+
+            case 6:
+                CallUtils.call(getActivity(), item.getOwnerUser().getAccountEntity().getMobile());
+                break;
+            default:
+                break;
+
+        }
+    }
+
+    private void doJumpTroubleDetail(Long busRepairOrderId, Integer isPhoneSolve) {
+        Bundle bundle = new Bundle();
+        bundle.putLong("busRepairOrderId", busRepairOrderId);
+        bundle.putBoolean("isVisible", false);
+        if (isPhoneSolve == 0) {
+            // 电话未解决
+            JumpItent.jump(getActivity(), TroubleDetailActivity.class, bundle);
+        } else {
+            // 电话解决
+            JumpItent.jump(getActivity(), PsTroubleDetailActivity.class, bundle);
+        }
+    }
 
     @Override
     public void onRefresh() {
