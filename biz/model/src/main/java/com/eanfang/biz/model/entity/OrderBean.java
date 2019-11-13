@@ -44,6 +44,22 @@ public class OrderBean {
      * 地区code
      */
     private String placeCode;
+
+
+    /**
+     * 经度
+     */
+    private String longitude;
+    /**
+     * 维度
+     */
+    private String latitude;
+    /**
+     * 是否电话解决
+     */
+    private String isPhoneSolve;
+
+
     /**
      * 详细地址
      */
