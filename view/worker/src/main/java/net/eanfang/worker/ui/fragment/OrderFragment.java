@@ -21,7 +21,6 @@ import com.eanfang.base.kit.V;
 import com.eanfang.biz.model.bean.DesignOrderListBean;
 import com.eanfang.biz.model.bean.WorkspaceInstallBean;
 import com.eanfang.biz.model.entity.OrderBean;
-import com.eanfang.biz.model.entity.RepairOrderEntity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 import com.eanfang.config.Constant;
 import com.eanfang.util.CallUtils;
@@ -142,12 +141,12 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                         return;
                     }
                     Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
-                    intent.putExtra("id", ((RepairOrderEntity) adapter.getData().get(position)).getId());
+                    intent.putExtra("id", ((OrderBean) adapter.getData().get(position)).getId());
                     intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     //刷新已读未读
-                    ((RepairOrderEntity) adapter.getData().get(position)).setNewOrder(0);
-                    adapter.notifyItemChanged(position);
-                    intent.putExtra("orderTime", DateUtil.date(((RepairOrderEntity) adapter.getData().get(position)).getCreateTime()).toString());
+//                    ((OrderBean) adapter.getData().get(position)).setNewOrder(0);
+//                    adapter.notifyItemChanged(position);
+                    intent.putExtra("orderTime", DateUtil.date(((OrderBean) adapter.getData().get(position)).getCreateTime()).toString());
                     startActivity(intent);
                 } else if (homeOrderAdapter.getData().get(position).getType() == Constant.OrderType.INSTALL.ordinal()) {
                     if (!PermKit.get().getInstallDetailPrem()) {
