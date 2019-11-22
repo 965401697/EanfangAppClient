@@ -49,6 +49,9 @@ public class HomeOrderViewModle extends BaseViewModel {
      */
     public void doGetProgressData(int type) {
         newOrderRepo.doGetHomeOrder(type).observe(lifecycleOwner, newOrderList -> {
+            if (newOrderList == null) {
+                return;
+            }
             //  0 待处理  1  进行中
             if (type == 0) {
                 pendingMutableLiveData.setValue(newOrderList);

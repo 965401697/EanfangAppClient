@@ -20,8 +20,12 @@ import cn.hutool.core.date.DateUtil;
  * @description 首页订单Adapter
  */
 public class HomeOrderAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder> {
-    public HomeOrderAdapter() {
+
+    private boolean mIsHistory;
+
+    public HomeOrderAdapter(boolean isHistory) {
         super(R.layout.layout_home_new_order_item);
+        this.mIsHistory = isHistory;
     }
 
     @Override
@@ -32,6 +36,11 @@ public class HomeOrderAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder
     @Override
     protected void convert(BaseViewHolder helper, OrderBean item) {
 
+        if (mIsHistory) {
+            helper.setGone(R.id.rl_operate, false);
+        } else {
+            helper.setGone(R.id.rl_operate, true);
+        }
         //创建订单操作类( 0:待支付，1:待回电，2:待上门，3:待完工，4:待确认，5:订单完成)
         int status = item.getStatus();
         boolean custom = item.getAssigneeUserId() != null && item.getAssigneeUserId().equals(WorkerApplication.get().getUserId());

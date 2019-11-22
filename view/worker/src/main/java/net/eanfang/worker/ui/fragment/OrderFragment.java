@@ -18,32 +18,43 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.eanfang.base.BaseFragment;
 import com.eanfang.base.kit.V;
+import com.eanfang.biz.model.bean.DesignOrderListBean;
+import com.eanfang.biz.model.bean.WorkspaceInstallBean;
 import com.eanfang.biz.model.entity.OrderBean;
+import com.eanfang.biz.model.entity.RepairOrderEntity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
+import com.eanfang.config.Constant;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermKit;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.databinding.FragmentOrderBinding;
 import net.eanfang.worker.ui.activity.order.HomeOrderHistoryActivity;
 import net.eanfang.worker.ui.activity.worksapce.EvaluateClientActivity;
+import net.eanfang.worker.ui.activity.worksapce.OrderDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.SignInActivity;
+import net.eanfang.worker.ui.activity.worksapce.design.DesignOrderDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.SolveModeActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.finishwork.FillRepairInfoActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.finishwork.PhoneSolveRepairInfoActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.PsTroubleDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.TroubleDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.tender.TenderFindDetailActivity;
 import net.eanfang.worker.ui.adapter.neworder.HomeOrderAdapter;
 import net.eanfang.worker.ui.fragment.neworder.HomePendingFragment;
 import net.eanfang.worker.ui.fragment.neworder.HomeProgressFragment;
 import net.eanfang.worker.ui.widget.FillAppointmentInfoRebookView;
+import net.eanfang.worker.ui.widget.InstallCtrlItemView;
 import net.eanfang.worker.viewmodle.neworder.HomeOrderViewModle;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.hutool.core.date.DateUtil;
 import lombok.Getter;
 import q.rorbin.badgeview.QBadgeView;
 
@@ -117,12 +128,56 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             orderBinding.llAdmin.setVisibility(View.GONE);
             orderBinding.swipreFresh.setVisibility(View.VISIBLE);
 
-            homeOrderAdapter = new HomeOrderAdapter();
+            homeOrderAdapter = new HomeOrderAdapter(false);
             orderBinding.rvList.setLayoutManager(new LinearLayoutManager(getActivity()));
             orderBinding.swipreFresh.setOnRefreshListener(this);
             homeOrderAdapter.bindToRecyclerView(orderBinding.rvList);
             homeOrderViewModle.doGetProgressData(1);
             homeOrderViewModle.getProgressMutableLiveData().observe(this, this::getProgressData);
+
+
+            homeOrderAdapter.setOnItemClickListener(((adapter, view, position) -> {
+                if (homeOrderAdapter.getData().get(position).getType() == Constant.OrderType.REPAIR.ordinal()) {
+                    if (!PermKit.get().getRepairDetailPerm()) {
+                        return;
+                    }
+                    Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
+                    intent.putExtra("id", ((RepairOrderEntity) adapter.getData().get(position)).getId());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    //刷新已读未读
+                    ((RepairOrderEntity) adapter.getData().get(position)).setNewOrder(0);
+                    adapter.notifyItemChanged(position);
+                    intent.putExtra("orderTime", DateUtil.date(((RepairOrderEntity) adapter.getData().get(position)).getCreateTime()).toString());
+                    startActivity(intent);
+                } else if (homeOrderAdapter.getData().get(position).getType() == Constant.OrderType.INSTALL.ordinal()) {
+                    if (!PermKit.get().getInstallDetailPrem()) {
+                        return;
+                    }
+                    new InstallCtrlItemView(getActivity(), true, ((WorkspaceInstallBean.ListBean) adapter.getData().get(position)).getId()).show();
+                } else if (homeOrderAdapter.getData().get(position).getType() == Constant.OrderType.DESIGN.ordinal()) {
+                    if (!PermKit.get().getDesignDetailPrem()) {
+                        return;
+                    }
+                    startActivity(new Intent(getActivity(), DesignOrderDetailActivity.class).putExtra("id", String.valueOf(((DesignOrderListBean.ListBean) adapter.getData().get(position)).getId())));
+
+                } else if (homeOrderAdapter.getData().get(position).getType() == Constant.OrderType.MAINTAIN.ordinal()) {
+                    if (!PermKit.get().getMaintenanceDetailPrem()) {
+                        return;
+                    }
+                    Intent intent = new Intent(getActivity(), MaintenanceDetailActivity.class);
+                    intent.putExtra("id", homeOrderAdapter.getData().get(position).getId());
+                    startActivity(intent);
+                } else if (homeOrderAdapter.getData().get(position).getType() == Constant.OrderType.PUBLISH.ordinal()) {
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("tendFindId", homeOrderAdapter.getData().get(position).getId());
+                    JumpItent.jump(getActivity(), TenderFindDetailActivity.class, bundle);
+                }
+
+            }));
+            homeOrderAdapter.setOnItemChildClickListener(((adapter, view, position) -> {
+                OrderBean item = homeOrderAdapter.getData().get(position);
+                switchCase(item, view);
+            }));
         }
 
         initListener();
@@ -182,12 +237,6 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
 
             }
         });
-        homeOrderAdapter.setOnItemClickListener(((adapter, view, position) -> {
-            OrderBean item = homeOrderAdapter.getData().get(position);
-            switchCase(item, view);
-        }));
-
-
     }
 
     private void switchCase(OrderBean item, View view) {
@@ -282,7 +331,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             case 4:
                 switch (view.getId()) {
                     case R.id.tv_do_first:
-                        CallUtils.call(getActivity(), V.v(() -> item.getAssigneeUser().getAccountEntity().getMobile()));
+                        CallUtils.call(getActivity(), V.v(() -> item.getAssigneeUserPhone()));
                         break;
                     case R.id.tv_do_second:
                         doJumpTroubleDetail(item.getId(), item.getIsPhoneSolve());
@@ -306,10 +355,10 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
 //                        }
                         //评价客户
                         startActivity(new Intent(getActivity(), EvaluateClientActivity.class).putExtra("flag", 0)
-                                .putExtra("ordernum", item.getOrderNum())
+                                .putExtra("ordernum", item.getNum())
                                 .putExtra("ownerId", item.getOwnerUserId())
-                                .putExtra("orderId", item.getId())
-                                .putExtra("avatar", item.getAssigneeUser().getAccountEntity().getAvatar()));
+                                .putExtra("orderId", item.getId()));
+//                                .putExtra("avatar", item.getAssigneeUser().getAccountEntity().getAvatar()));
                         break;
                     default:
                         break;
@@ -317,7 +366,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                 break;
 
             case 6:
-                CallUtils.call(getActivity(), item.getOwnerUser().getAccountEntity().getMobile());
+                CallUtils.call(getActivity(), item.getContactPhone());
                 break;
             default:
                 break;

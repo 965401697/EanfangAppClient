@@ -57,7 +57,7 @@ public class OrderBean {
     /**
      * 是否电话解决
      */
-    private String isPhoneSolve;
+    private Integer isPhoneSolve;
 
 
     /**

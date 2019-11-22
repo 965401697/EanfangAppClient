@@ -70,6 +70,7 @@
                         android:id="@+id/rv_trouble"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/dimen_50"
                         android:layout_marginBottom="@dimen/dimen_50"
                         android:background="@color/white"
                         android:paddingTop="@dimen/dimen_20" />

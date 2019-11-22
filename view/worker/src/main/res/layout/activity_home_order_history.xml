@@ -8,9 +8,10 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".ui.activity.order.HomeOrderHistoryActivity">
 
         <include layout="@layout/header_eanfang" />
@@ -38,13 +39,13 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:layout_constraintTop_toBottomOf="@id/tl_perosonal_list">
 
-            <androidx.viewpager.widget.ViewPager
+            <net.eanfang.worker.ui.widget.CustomHomeViewPager
                 android:id="@+id/vp_order_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </RelativeLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>

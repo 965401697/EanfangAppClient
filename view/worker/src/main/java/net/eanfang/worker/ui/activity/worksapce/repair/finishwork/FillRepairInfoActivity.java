@@ -224,7 +224,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
     List<TemplateBean.Preson> mPresonList = new ArrayList<>();
     private RepairTeamWorkerAdapter repairTeamWorkerAdapter;
 
-    private int maxWordsNum = 50; //输入限制的最大字数
+    private int maxWordsNum = 50; //输入限制的最大字数e
 
     private Long clientCompanyUid;
 

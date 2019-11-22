@@ -32,7 +32,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="暂时没有数据"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
             </FrameLayout>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

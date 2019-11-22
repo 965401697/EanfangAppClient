@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.PopupWindow;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -40,7 +39,9 @@ import cn.sharesdk.wechat.friends.Wechat;
  */
 
 /**
- * 工作台-已报修-订单详情
+ * 工作台-已报修-订单详情··
+ * +4
+ * /.g*
  * Created by Administrator on 2017/3/15.
  */
 
@@ -73,7 +74,7 @@ public class OrderDetailActivity extends BaseWorkerActivity implements OnTabSele
         isVisible = getIntent().getBooleanExtra("isVisible", false);
         sharePopWindow = new SharePopWindow(this, pictureSelectItemsOnClick);
         sharePopWindow.setOnDismissListener(() -> sharePopWindow.backgroundAlpha(1.0f));
-        mFragments.add(OrderDetailFragment.getInstance(id));
+        mFragments.add(OrderDetailFragment.getInstance(id, getIntent().getIntExtra("status", 0)));
         mFragments.add(OrderProgressFragment.getInstance(id, mOrderTime));
         View decorView = getWindow().getDecorView();
         ViewPager vp = ViewFindUtils.find(decorView, R.id.vp);

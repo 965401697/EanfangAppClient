@@ -86,15 +86,22 @@ public class OrderDetailFragment extends BaseFragment {
     // 订单状态
     private int mOrderStatus;
     private Long id;
+    private int mStatus;
 
     //分享用的必要参数
     private HashMap hashMap = new HashMap();
 
+    private LinearLayout llPending;
+    private LinearLayout llDoor;
+    private LinearLayout llWaitFinish;
+
+
     private OrderConfirmAdapter orderConfirmAdapter;
 
-    public static OrderDetailFragment getInstance(Long id) {
+    public static OrderDetailFragment getInstance(Long id, int status) {
         OrderDetailFragment sf = new OrderDetailFragment();
         sf.id = id;
+        sf.mStatus = status;
         return sf;
     }
 
@@ -137,11 +144,34 @@ public class OrderDetailFragment extends BaseFragment {
         mTvPayTime = findViewById(R.id.tv_payTime);
         mTvDoorFee = findViewById(R.id.tv_doorFee);
         mTvOrderAllPrice = findViewById(R.id.tv_orderAllPrice);
+        llPending = findViewById(R.id.ll_pending);
+        llDoor = findViewById(R.id.ll_door);
+        llWaitFinish = findViewById(R.id.ll_waitFinish);
 
         orderConfirmAdapter = new OrderConfirmAdapter(R.layout.item_order_confirm, mDataList, "");
         orderConfirmAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
 
         mRecyclerView.setAdapter(orderConfirmAdapter);
+        // 待上门
+        if (mStatus == 2) {
+            llDoor.setVisibility(View.VISIBLE);
+            llPending.setVisibility(View.GONE);
+            llWaitFinish.setVisibility(View.GONE);
+            //待完工
+        } else if (mStatus == 3) {
+            llDoor.setVisibility(View.GONE);
+            llPending.setVisibility(View.VISIBLE);
+            llWaitFinish.setVisibility(View.GONE);
+            //待确认
+        } else if (mStatus == 4) {
+            llDoor.setVisibility(View.GONE);
+            llPending.setVisibility(View.GONE);
+            llWaitFinish.setVisibility(View.VISIBLE);
+        } else {
+            llDoor.setVisibility(View.GONE);
+            llPending.setVisibility(View.GONE);
+            llWaitFinish.setVisibility(View.GONE);
+        }
     }
 
 

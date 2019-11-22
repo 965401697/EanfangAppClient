@@ -3,10 +3,12 @@ package net.eanfang.worker.ui.fragment.neworder;
 import androidx.lifecycle.ViewModel;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.eanfang.biz.rds.base.LViewModelProviders;
+import com.eanfang.biz.model.bean.WorkspaceInstallBean;
+import com.eanfang.util.PermKit;
 
 import net.eanfang.worker.ui.adapter.neworder.HomeOrderAdapter;
 import net.eanfang.worker.ui.fragment.TemplateItemListFragment;
+import net.eanfang.worker.ui.widget.InstallCtrlItemView;
 import net.eanfang.worker.viewmodle.neworder.HistoryOrderViewModle;
 
 /**
@@ -31,8 +33,16 @@ public class HistoryInstallFragment extends TemplateItemListFragment {
 
     @Override
     protected void initAdapter(BaseQuickAdapter baseQuickAdapter) {
-        homeOrderAdapter = new HomeOrderAdapter();
+        homeOrderAdapter = new HomeOrderAdapter(true);
         super.initAdapter(homeOrderAdapter);
+        homeOrderAdapter.setOnItemClickListener(((adapter, view, position) -> {
+            if (!PermKit.get().getInstallDetailPrem()) {
+                return;
+            }
+            new InstallCtrlItemView(getActivity(), true, ((WorkspaceInstallBean.ListBean) adapter.getData().get(position)).getId()).show();
+
+        }));
+
     }
 
     @Override
