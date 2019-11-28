@@ -1,0 +1,489 @@
+package net.eanfang.worker.ui.activity;
+
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
+
+import androidx.lifecycle.ViewModel;
+
+import com.eanfang.BuildConfig;
+import com.eanfang.apiservice.NewApiService;
+import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
+import com.eanfang.base.widget.customview.CircleImageView;
+import com.eanfang.biz.model.bean.AllMessageBean;
+import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.biz.model.entity.OrgEntity;
+import com.eanfang.biz.rds.base.BaseViewModel;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.ui.activity.kpbs.KPBSActivity;
+import com.eanfang.util.GlideUtil;
+import com.eanfang.util.LocationUtil;
+import com.eanfang.util.PermKit;
+
+import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.ui.activity.worksapce.CustomerServiceActivity;
+import net.eanfang.worker.ui.activity.worksapce.FaultRecordListActivity;
+import net.eanfang.worker.ui.activity.worksapce.WebActivity;
+import net.eanfang.worker.ui.activity.worksapce.equipment.EquipmentListActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.check.CheckListActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.task.TaskAssignmentListActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.workreport.WorkReportListActivity;
+import net.eanfang.worker.ui.activity.worksapce.worktalk.WorkTalkControlActivity;
+import net.eanfang.worker.ui.activity.worksapce.worktransfer.WorkTransferControlActivity;
+import net.eanfang.worker.ui.widget.CompanyListView;
+import net.eanfang.worker.ui.widget.SignCtrlView;
+import net.eanfang.worker.ui.widget.WorkSpaceSelectMapPopWindow;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import cn.hutool.core.util.StrUtil;
+import q.rorbin.badgeview.QBadgeView;
+
+
+/**
+ * Created by MrHou
+ *
+ * @on 2017/11/10  15:07
+ * @email houzhongzhou@yeah.net
+ * @desc 工作台
+ */
+public class WorkspaceActivity extends BaseActivity {
+
+    @BindView(R.id.iv_user_header)
+    CircleImageView ivUserHeader;
+    List<OrgEntity> mList = new ArrayList<>();
+    /**
+     * 箭头
+     */
+    private ImageView mIvDownIcon;
+    private TextView tvCompanyName;
+    /**
+     * /选择地图Pop
+     */
+    private WorkSpaceSelectMapPopWindow selectMapPopWindow;
+    /**
+     * 经度
+     */
+    private Double longitude;
+    /**
+     * 纬度
+     */
+    private Double latitude;
+    //所在城市
+    private String companyName = "";
+    private String mSeachRequest = "五金店";
+    View.OnClickListener selectMapListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.btn_gaodeMap:// 高德地图
+                    doOpenMap("Gaode");
+                    selectMapPopWindow.dismiss();
+                    break;
+                case R.id.btn_baiduMap: // 百度地图
+                    doOpenMap("Baidu");
+                    selectMapPopWindow.dismiss();
+                    break;
+                case R.id.btn_cancel:
+                    selectMapPopWindow.dismiss();
+                    break;
+
+            }
+        }
+    };
+    /**
+     * 消息气泡
+     */
+    private QBadgeView qBadgeViewReport = new QBadgeView(WorkerApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewTask = new QBadgeView(WorkerApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewInspect = new QBadgeView(WorkerApplication.get().getApplicationContext());
+    private int mReport = 0;
+    private int mTask = 0;
+    private int mInspect = 0;
+    /**
+     * 切换公司 pop
+     */
+    private CompanyListView selectCompanyPop;
+    private RotateAnimation rotate;
+
+    private BaseViewModel viewModel;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.fragment_workspace);
+        super.onCreate(savedInstanceState);
+
+        initView();
+        setListener();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        doHttpOrderNums();
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return viewModel = new BaseViewModel();
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        setTitle("全部应用");
+//        headViewSize(ivUserHeader, (int) getResources().getDimension(R.dimen.dimen_52));
+        tvCompanyName = findViewById(R.id.tv_company_name);
+        mIvDownIcon = findViewById(R.id.iv_down_icon);
+//        setLogpic();
+        // 选择地图pop
+        selectMapPopWindow = new WorkSpaceSelectMapPopWindow(this, selectMapListener);
+        selectMapPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                selectMapPopWindow.backgroundAlpha(1.0f);
+            }
+        });
+        // 获取定位
+        getLocation();
+        // 汇报
+        qBadgeViewReport.bindTarget(findViewById(R.id.tv_work_report))
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(10, true);
+        // 任务
+        qBadgeViewTask.bindTarget(findViewById(R.id.tv_work_task))
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(10, true);
+        //检查
+        qBadgeViewInspect.bindTarget(findViewById(R.id.tv_work_inspect))
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(10, true);
+    }
+
+    // 获取当前定位
+    private void getLocation() {
+        LocationUtil.location(this, (location) -> {
+            LoginBean user = WorkerApplication.get().getLoginBean();
+            if (user == null || StrUtil.isEmpty(user.getToken())) {
+                return;
+            }
+            longitude = location.getLongitude();// 116
+            latitude = location.getLatitude();// 39
+            companyName = location.getCity();
+
+
+        });
+    }
+
+//    private void setLogpic() {
+//        List<OrgEntity> orgUnitEntityList = new ArrayList<>(WorkerApplication.get().getLoginBean().getAccount().getBelongCompanys());
+//        Long defaultOrgid = WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
+//        List<String> defaultPic = Stream.of(orgUnitEntityList).filter(bean -> bean.getOrgUnitEntity() != null
+//                && bean.getOrgUnitEntity().getLogoPic() != null
+//                && bean.getOrgUnitEntity().getOrgId().equals(defaultOrgid)).map(be -> v(() -> be.getOrgUnitEntity().getLogoPic())).toList();
+//        String imgUrl = v(() -> defaultPic.get(0));
+//        if (!StrUtil.isEmpty(imgUrl)) {
+//            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + imgUrl), ivUserHeader);
+//        }
+//    }
+
+    protected void setListener() {
+
+        progressCtrl();
+        helpTools();
+        teamWork();
+
+//        //遗留故障
+//        findViewById(R.id.ll_leave_bug).setOnClickListener((v) -> {
+//            new LeaveBugView(this, true).show();
+//        });
+// 客服
+        findViewById(R.id.iv_service).setOnClickListener((v) -> {
+            startActivity(new Intent(this, CustomerServiceActivity.class));
+        });
+        //切换公司
+        findViewById(R.id.ll_switch_company).setOnClickListener(v -> {
+            doChangeCompany();
+        });
+    }
+
+    /**
+     * 切换公司
+     */
+    private void doChangeCompany() {
+
+        EanfangHttp.post(NewApiService.GET_COMPANY_ALL_LIST)
+                .params("accId", WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getAccId() + "")
+                // 公司类型（单位类型0平台总公司1城市平台公司2企事业单位3安防公司）
+                .params("orgType", "3")
+                .execute(new EanfangCallback<OrgEntity>(this, false, OrgEntity.class, true, bean -> {
+                    mList = bean;
+                    if (mList == null || mList.size() <= 0) {
+                        showToast("暂无安防公司");
+                        return;
+                    }
+                    rotate = new RotateAnimation(0f, 180f, Animation.RELATIVE_TO_SELF,
+                            0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                    rotate.setDuration(300);
+                    rotate.setFillAfter(true);
+                    mIvDownIcon.startAnimation(rotate);
+                    selectCompanyPop = new CompanyListView(this, mList, ((name, url) -> {
+                        if ("个人".equals(name)) {
+                            tvCompanyName.setText(name);
+                        } else {
+                            tvCompanyName.setText(name);
+                        }
+                        if (url != null) {
+                            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + url), ivUserHeader);
+                        } else {
+                            GlideUtil.intoImageView(this, "", ivUserHeader);
+                        }
+                        selectCompanyPop.dismiss();
+                        doHttpOrderNums();
+                    }));
+                    selectCompanyPop.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            selectCompanyPop.backgroundAlpha(1.0f);
+                            mIvDownIcon.clearAnimation();
+                        }
+                    });
+                    selectCompanyPop.showAsDropDown(findViewById(R.id.ll_company_top));
+                }));
+    }
+
+    /**
+     * 过程管控
+     */
+
+    private void progressCtrl() {
+        findViewById(R.id.tv_work_service).setOnClickListener((v) -> {
+            startActivity(new Intent(this, CustomerServiceActivity.class));
+        });
+
+    }
+
+    private void helpTools() {
+        //相机
+        findViewById(R.id.tv_work_camera).setOnClickListener((v) -> {
+            startActivity(new Intent(this, CameraActivity.class));
+        });
+        //码率
+        findViewById(R.id.tv_work_calculate).setOnClickListener((v) -> {
+            startActivity(new Intent(this, KPBSActivity.class));
+        });
+        //天猫安防
+        findViewById(R.id.tv_work_tm).setOnClickListener((v) -> {
+            startActivity(new Intent(this, WebActivity.class)
+                    .putExtra("url", "https://list.tmall.com/search_product.htm?q=%B0%B2%B7%C0&type=p&vmarket=&spm=875.7931836%2FB.a2227oh.d100&from=mallfp..pc_1_searchbutton")
+                    .putExtra("title", "天猫安防"));
+        });
+        //京东安防
+        findViewById(R.id.tv_work_jd).setOnClickListener((v) -> {
+            startActivity(new Intent(this, WebActivity.class)
+                    .putExtra("url", "https://list.jd.com/list.html?cat=670,716,7374")
+                    .putExtra("title", "京东安防"));
+        });
+        // 五金店
+        findViewById(R.id.tv_work_hardwareStore).setOnClickListener((v) -> {
+            selectMapPopWindow.showAtLocation(findViewById(R.id.ll_workspace), Gravity.BOTTOM, 0, 0);
+            selectMapPopWindow.backgroundAlpha(0.5f);
+        });
+        //行业知识
+        findViewById(R.id.tv_work_knowledge).setOnClickListener(v ->
+                startActivity(new Intent(this, WebActivity.class)
+                        .putExtra("url", "http://www.1anfang.com/news")
+                        .putExtra("title", "行业知识")));
+    }
+
+    /**
+     * 协同办公
+     */
+    private void teamWork() {
+        //签到
+        findViewById(R.id.tv_sign).setOnClickListener((v) -> {
+            // 检查有无权限
+            List<String> ss = new ArrayList<>();
+            new SignCtrlView(this).show();
+        });
+        //工作汇报
+        findViewById(R.id.tv_work_report).setOnClickListener((v) -> {
+//            new ReportCtrlView(this, true).show();
+//            Intent intent = new Intent(this, ReportParentActivity.class);
+//            startActivity(intent);
+
+            if (!PermKit.get().getWorkReportListPrem()) {
+                return;
+            }
+            Intent intent = new Intent(this, WorkReportListActivity.class);
+//            intent.putExtra("title", title);
+//            intent.putExtra("type", type);
+            startActivity(intent);
+        });
+        //布置任务
+        findViewById(R.id.tv_work_task).setOnClickListener((v) -> {
+//            new TaskCtrlView(this, true).show();
+//            Intent intent = new Intent(this, TaskParentActivity.class);
+            if (!PermKit.get().getWorkTaskListPrem()) {
+                return;
+            }
+            Intent intent = new Intent(this, TaskAssignmentListActivity.class);
+            startActivity(intent);
+        });
+
+        //设备点检
+        findViewById(R.id.tv_work_inspect).setOnClickListener((v) -> {
+//            new WorkCheckCtrlView(this, true).show();
+//            Intent intent = new Intent(this, CheckParentActivity.class);
+            if (!PermKit.get().getWorkInspectListPrem()) {
+                return;
+            }
+            Intent intent = new Intent(this, CheckListActivity.class);
+            startActivity(intent);
+        });
+
+
+        //故障记录
+        findViewById(R.id.tv_work_fault).setOnClickListener((v) -> {
+            if (PermKit.get().getFailureListPerm()) {
+                Intent intent = new Intent(this, FaultRecordListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //设备库
+        findViewById(R.id.tv_work_library).setOnClickListener((v) -> {
+            if (!PermKit.get().getDeviceArchiveListPerm()) {
+                return;
+            }
+            Intent intent = new Intent(this, EquipmentListActivity.class);
+            startActivity(intent);
+        });
+        //面谈员工
+        findViewById(R.id.tv_work_talk).setOnClickListener((v) -> {
+            if (!PermKit.get().getFaceToWorkerListPrem()) {
+                return;
+            }
+            Intent intent = new Intent(this, WorkTalkControlActivity.class);
+            startActivity(intent);
+        });
+
+        //交接班
+        findViewById(R.id.tv_work_transfer).setOnClickListener((v) -> {
+            if (!PermKit.get().getExchangeListPrem()) {
+                return;
+            }
+            Intent intent = new Intent(this, WorkTransferControlActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    /**
+     * 判断是否安装目标应用
+     *
+     * @param packageName 目标应用安装后的包名
+     * @return 是否已安装目标应用
+     */
+    private boolean isInstallByread(String packageName) {
+        return new File("/data/data/" + packageName).exists();
+    }
+
+    // 打开 第三方 地图
+    public void doOpenMap(String name) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        Uri uri = null;
+        // 判断是否安装高德地图
+        if ("Gaode".equals(name)) {
+            if (isInstallByread("com.autonavi.minimap")) {
+                intent.setPackage("com.autonavi.minimap");
+                uri = Uri.parse("androidamap://poi?sourceApplication=softname&keywords=" + mSeachRequest + "&dev=0");
+            } else {
+                this.startActivity(new Intent(this, WebActivity.class)
+                        .putExtra("url", "http://uri.amap.com/search?keyword=" + mSeachRequest + "&center=" + longitude + "," + latitude + "&src=mypage")
+                        .putExtra("title", "高德地图"));
+            }
+        } else if ("Baidu".equals(name)) {
+            if (isInstallByread("com.baidu.BaiduMap")) {
+                uri = Uri.parse("baidumap://map/place/search?query=" + mSeachRequest + "&location=" + latitude + "，" + longitude);
+            } else {
+                this.startActivity(new Intent(this, WebActivity.class)
+                        .putExtra("url", "http://api.map.baidu.com/place/search?query=" + mSeachRequest + "&location=" + latitude + "," + longitude + "&output=html&src=" + companyName + "|易安防")
+                        .putExtra("title", "百度地图"));
+            }
+        }
+
+        intent.setData(uri);
+        startActivity(intent); //启动调用
+
+
+    }
+
+    /**
+     * 获取订单数量
+     */
+    private void doHttpOrderNums() {
+        EanfangHttp.get(UserApi.ALL_MESSAGE).execute(new EanfangCallback<AllMessageBean>(this, false, AllMessageBean.class, (bean -> {
+            doSetOrderNums(bean);
+        })));
+    }
+
+    public void doSetOrderNums(AllMessageBean bean) {
+        // 汇报
+        if (bean.getReport() > 0) {
+            mReport = bean.getReport();
+        } else {
+            mReport = 0;
+        }
+        qBadgeViewReport.setBadgeNumber(mReport);
+        // 任务
+        if (bean.getTask() > 0) {
+            mTask = bean.getTask();
+        } else {
+            mTask = 0;
+        }
+        qBadgeViewTask.setBadgeNumber(mTask);
+        //检查
+        if (bean.getInspect() > 0) {
+            mInspect = bean.getInspect();
+        } else {
+            mInspect = 0;
+        }
+        qBadgeViewInspect.setBadgeNumber(mInspect);
+        /**
+         * 底部红点更新
+         * */
+        EventBus.getDefault().post(bean);
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+}
