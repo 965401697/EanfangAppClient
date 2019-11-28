@@ -8,79 +8,53 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.PagerSnapHelper;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.alibaba.fastjson.JSONObject;
-import com.annimon.stream.Stream;
-import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.V;
-import com.eanfang.bean.security.SecurityLikeBean;
-import com.eanfang.bean.security.SecurityLikeStatusBean;
-import com.eanfang.bean.security.SecurityListBean;
-import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.biz.model.bean.AllMessageBean;
-import com.eanfang.biz.model.entity.NoticeEntity;
+import com.eanfang.biz.model.entity.HomeNewsBean;
+import com.eanfang.biz.model.entity.HomeToDoOrderBean;
 import com.eanfang.biz.model.entity.OrgEntity;
+import com.eanfang.config.Config;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
-import com.eanfang.util.BGASpaceItemDecoration;
-import com.eanfang.util.JsonUtils;
+import com.eanfang.util.CallUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.HomeScanPopWindow;
 import com.eanfang.witget.RollTextView;
-import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.CameraActivity;
 import net.eanfang.worker.ui.activity.NewOrderActivity;
-import net.eanfang.worker.ui.activity.worksapce.InstallOrderParentActivity;
-import net.eanfang.worker.ui.activity.worksapce.MineTaskPublishListSendParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.OfferAndPayOrderParentActivity;
-import net.eanfang.worker.ui.activity.worksapce.TakeTaskListActivity;
-import net.eanfang.worker.ui.activity.worksapce.WebActivity;
-import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
-import net.eanfang.worker.ui.activity.worksapce.design.DesignActivity;
-import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.workreport.WorkReportListActivity;
 import net.eanfang.worker.ui.activity.worksapce.online.ExpertOnlineActivity;
-import net.eanfang.worker.ui.activity.worksapce.online.FaultExplainActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.SolveModeActivity;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
-import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;
-import net.eanfang.worker.ui.activity.worksapce.security.SecurityListActivity;
-import net.eanfang.worker.ui.activity.worksapce.security.SecurityPersonalActivity;
-import net.eanfang.worker.ui.activity.worksapce.tender.WorkerTenderControlActivity;
-import net.eanfang.worker.ui.adapter.HomeWaitAdapter;
-import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
 import net.eanfang.worker.ui.widget.CompanyListView;
 import net.eanfang.worker.ui.widget.CustomHomeViewPager;
-import net.eanfang.worker.ui.widget.HomeWaitIndicator;
 import net.eanfang.worker.ui.widget.SignCtrlView;
-import net.eanfang.worker.util.ImagePerviewUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import butterknife.BindView;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.StrUtil;
 import q.rorbin.badgeview.QBadgeView;
 
 import static com.eanfang.base.kit.V.v;
@@ -94,61 +68,41 @@ import static com.eanfang.base.kit.V.v;
  * @desc 首页
  */
 
-public class HomeNewFragment extends BaseFragment implements SecurityListAdapter.OnPhotoClickListener {
+public class HomeNewFragment extends BaseFragment {
 
+    @BindView(R.id.tv_homeTitle)
+    TextView tvHomeTitle;
+    @BindView(R.id.tv_to_do_order_title)
+    TextView tvToDoOrderTitle;
+    @BindView(R.id.tv_order_address)
+    TextView tvOrderAddress;
+    @BindView(R.id.tv_order_company)
+    TextView tvOrderCompany;
+    @BindView(R.id.ll_to_do_order)
+    LinearLayout llToDoOrder;
+    @BindView(R.id.tv_order_time)
+    TextView tvOrderTime;
+    @BindView(R.id.tv_inside_price)
+    TextView tvInsidePrice;
+    @BindView(R.id.tv_work_report)
+    TextView tvWorkReport;
+    @BindView(R.id.tv_do_phone)
+    TextView tvDoPhone;
     private BannerView bannerView;
     //头部标题
-    private TextView tvHomeTitle;
     private RollTextView rollTextView;
-
-    private RelativeLayout rlAllData;
-
 
     // 扫码Popwindow
     private HomeScanPopWindow homeScanPopWindow;
 
+    private Long mOrderId;
+    private String mOrderPhone;
     /**
      * 图标数量
      */
-    private QBadgeView qBadgeViewRepair = new QBadgeView(WorkerApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewDesign = new QBadgeView(WorkerApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewMaintain = new QBadgeView(WorkerApplication.get().getApplicationContext());
     private QBadgeView qBadgeViewQuota = new QBadgeView(WorkerApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewInstall = new QBadgeView(WorkerApplication.get().getApplicationContext());
-    private int mRepair = 0;
-    private int mDesign = 0;
-    private int mInstall = 0;
-    private int mMaintain = 0;
     private int mQuota = 0;
 
-    /**
-     * 统计
-     */
-    private SlidingTabLayout tlDataStatisticsList;
-    private CustomHomeViewPager customHomeViewPager;
-    private ArrayList<Fragment> mFragments = new ArrayList<>();
-    private String[] mTitles = {"当日维修", "当日安装", "当日设计"};
-    private MyPagerAdapter mAdapter;
-
-    /**
-     * 今日待办
-     */
-    private RecyclerView rvWait;
-    private HomeWaitAdapter waitAdapter;
-    private List mWaitList = new ArrayList();
-    private HomeWaitIndicator homeWaitIndicator;
-    private LinearLayoutManager layoutManager;
-    /**
-     * 安防圈
-     */
-    private RecyclerView rvSecurity;
-    private SecurityListAdapter securityListAdapter;
-    private TextView tvNoSecurity;
-    private TextView mTvSecurityNewMessage;
-    private RelativeLayout rlSecurityNewMessage;
-    private int mSecurityNum;
-    private ArrayList<String> picList = new ArrayList<>();
-    private String[] pics = null;
     /**
      * 切换公司 pop
      */
@@ -156,54 +110,26 @@ public class HomeNewFragment extends BaseFragment implements SecurityListAdapter
     List<OrgEntity> mList = new ArrayList<>();
     private RotateAnimation rotate;
 
+
+    private MyPagerAdapter mAdapter;
+
     @Override
     protected void initData(Bundle arguments) {
     }
 
     @Override
     protected int setLayoutResouceId() {
-        return R.layout.fragment_home;
+        return R.layout.fragment_home_new;
     }
 
     @Override
     protected void initView() {
-        rvWait = findViewById(R.id.rv_wait);
-        rvSecurity = findViewById(R.id.rv_security);
-        homeWaitIndicator = findViewById(R.id.indicator);
-        tlDataStatisticsList = findViewById(R.id.tl_datastatistics);
-        rlAllData = findViewById(R.id.rl_allData);
-        customHomeViewPager = findViewById(R.id.vp_datastatistics);
-        tvHomeTitle = findViewById(R.id.tv_homeTitle);
-        tvNoSecurity = findViewById(R.id.tv_noSecurity);
-        mTvSecurityNewMessage = findViewById(R.id.tv_security_count);
-        rlSecurityNewMessage = findViewById(R.id.rl_security_message);
         homeScanPopWindow = new HomeScanPopWindow(getActivity(), true, scanSelectItemsOnClick);
         homeScanPopWindow.setOnDismissListener(() -> homeScanPopWindow.backgroundAlpha(1.0f));
-
         initIconClick();
         initLoopView();
-
-        /**
-         * 统计
-         * */
-        mFragments.clear();
-        mFragments.add(HomeDataStatisticsFragment.getInstance(mTitles[0], 1));
-        mFragments.add(HomeDataStatisticsFragment.getInstance(mTitles[1], 2));
-        mFragments.add(HomeDataStatisticsFragment.getInstance(mTitles[2], 0));
-
-        mAdapter = new MyPagerAdapter(this.getChildFragmentManager());
-        customHomeViewPager.setAdapter(mAdapter);
-        // 设置不可滑动
-        customHomeViewPager.setScanScroll(false);
-        tlDataStatisticsList.setViewPager(customHomeViewPager, mTitles, getActivity(), mFragments);
-        customHomeViewPager.setCurrentItem(0);
-        tlDataStatisticsList.setCurrentTab(0);
-
-        initCount();
         doHttpNews();
         initNum();
-        initWait();
-        initSecurity();
     }
 
     /**
@@ -245,35 +171,6 @@ public class HomeNewFragment extends BaseFragment implements SecurityListAdapter
     }
 
     private void initNum() {
-        // 报修
-        qBadgeViewRepair.bindTarget(findViewById(R.id.tv_reparir_order))
-                .setBadgeNumber(mRepair)
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(10, true);
-        // 报装
-        qBadgeViewInstall.bindTarget(findViewById(R.id.tv_install_order))
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(10, true);
-        //设计
-        qBadgeViewDesign.bindTarget(findViewById(R.id.tv_design_order))
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(10, true);
-        //维保
-        qBadgeViewMaintain.bindTarget(findViewById(R.id.tv_maintain_order))
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(10, true);
         /**
          * 报价
          * */
@@ -285,64 +182,6 @@ public class HomeNewFragment extends BaseFragment implements SecurityListAdapter
                 .setBadgeTextSize(10, true);
     }
 
-    private void initWait() {
-
-        /**
-         * 今日待办
-         * */
-        mWaitList.add("报修订单MO111111111111111");
-        mWaitList.add("报修订单MO222222222222222");
-        mWaitList.add("报修订单MO333333333333333");
-        mWaitList.add("报修订单MO444444444444444");
-        mWaitList.add("报修订单MO555555555555555");
-        mWaitList.add("报修订单MO666666666666666");
-        waitAdapter = new HomeWaitAdapter();
-        layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        rvWait.setLayoutManager(layoutManager);
-        waitAdapter.bindToRecyclerView(rvWait);
-        waitAdapter.setNewData(mWaitList);
-        rvWait.setHasFixedSize(true);
-        rvWait.scrollToPosition(mWaitList.size() * 10);
-        PagerSnapHelper snapHelper = new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(rvWait);
-        homeWaitIndicator.setNumber(mWaitList.size());
-    }
-
-
-    /**
-     * 安防圈
-     */
-    private void initSecurity() {
-        securityListAdapter = new SecurityListAdapter(false, this);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-        rvSecurity.setLayoutManager(layoutManager);
-        rvSecurity.setNestedScrollingEnabled(false);
-        rvSecurity.addItemDecoration(new BGASpaceItemDecoration(20));
-        securityListAdapter.bindToRecyclerView(rvSecurity);
-        doGetSecurityData();
-    }
-
-    private void doGetSecurityData() {
-        QueryEntry mQueryEntry = new QueryEntry();
-        mQueryEntry.setPage(1);
-        mQueryEntry.setSize(3);
-        EanfangHttp.post(NewApiService.SECURITY_RECOMMEND)
-                .upJson(JsonUtils.obj2String(mQueryEntry))
-                .execute(new EanfangCallback<SecurityListBean>(getActivity(), false, SecurityListBean.class) {
-
-                    @Override
-                    public void onSuccess(SecurityListBean bean) {
-                        securityListAdapter.getData().clear();
-                        securityListAdapter.setNewData(bean.getList());
-                        if (bean.getList().size() > 0) {
-                            tvNoSecurity.setVisibility(View.GONE);
-                        } else {
-                            tvNoSecurity.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -352,8 +191,45 @@ public class HomeNewFragment extends BaseFragment implements SecurityListAdapter
         } else {
             tvHomeTitle.setText(orgName);
         }
+        doGetToDoOrder();
         doHttpOrderNums();
-        doGetSecurityData();
+    }
+
+    /**
+     * 新订单
+     */
+    private void doGetToDoOrder() {
+        EanfangHttp.get(NewApiService.GET_HOME_TO_DO_ORDER).execute(new EanfangCallback<HomeToDoOrderBean>(getActivity(), false, HomeToDoOrderBean.class, (bean -> {
+            if (bean != null) {
+                tvToDoOrderTitle.setText(bean.getMsg());
+                tvOrderAddress.setText(Config.get().getAddressByCode(bean.getOrder().getPlaceCode()) + bean.getOrder().getAddress());
+                tvOrderCompany.setText(bean.getOrder().getContactCompany());
+                tvOrderTime.setText(DateUtil.date(bean.getOrder().getCreateTime()).toString());
+                mOrderId = bean.getOrder().getId();
+                mOrderPhone = bean.getOrder().getContactPhone();
+                llToDoOrder.setVisibility(View.VISIBLE);
+            } else {
+                llToDoOrder.setVisibility(View.GONE);
+            }
+        })));
+
+    }
+
+    private void initViewPager1() {
+        String[] titles = {"当日维修", "当日安装", "当日设计"};
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        CustomHomeViewPager vpDataStatis = findViewById(R.id.vp_datastatistics);
+
+        fragments.clear();
+        fragments.add(HomeDataStatisticsFragment.getInstance(titles[0], 1));
+        fragments.add(HomeDataStatisticsFragment.getInstance(titles[1], 2));
+        fragments.add(HomeDataStatisticsFragment.getInstance(titles[2], 3));
+
+        mAdapter = new MyPagerAdapter(titles, fragments);
+        vpDataStatis.setAdapter(mAdapter);
+        // 设置不可滑动
+        vpDataStatis.setScanScroll(false);
+        vpDataStatis.setCurrentItem(0);
     }
 
 
@@ -361,67 +237,35 @@ public class HomeNewFragment extends BaseFragment implements SecurityListAdapter
      * 工作按钮
      */
     private void initIconClick() {
+
+        // 电话解决
+        tvDoPhone.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putLong("orderId", mOrderId);
+            JumpItent.jump(getActivity(), SolveModeActivity.class, bundle, RepairCtrlActivity.REFREST_ITEM);
+            //给客户联系人打电话
+            CallUtils.call(getActivity(), V.v(() -> mOrderPhone));
+        });
+        //报价
+        tvInsidePrice.setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), OfferAndPayOrderParentActivity.class));
+        });
+        //工作日报
+        tvWorkReport.setOnClickListener((v) -> {
+            if (!PermKit.get().getWorkReportListPrem()) {
+                return;
+            }
+            Intent intent = new Intent(getActivity(), WorkReportListActivity.class);
+            startActivity(intent);
+        });
         //切换公司
         tvHomeTitle.setOnClickListener((v) -> {
             doChangeCompany();
         });
-        //报修订单
-        findViewById(R.id.tv_reparir_order).setOnClickListener((v) -> {
-//            if (!PermKit.get().getRepairListPerm()) return;
-            if (workerApprove()) {
-                startActivity(new Intent(getActivity(), RepairCtrlActivity.class));
-            }
-        });
         //专家问答
         findViewById(R.id.tv_onLine).setOnClickListener((v) -> {//wq==
-//            if (!PermKit.get().getRepairListPerm()) return;
             if (workerApprove()) {
                 startActivity(new Intent(getActivity(), ExpertOnlineActivity.class));
-            }
-        });
-        //报装订单
-        findViewById(R.id.tv_install_order).setOnClickListener((v) -> {
-            if (workerApprove()) {
-//                new InstallCtrlView(getActivity(), true).show();
-                startActivity(new Intent(getActivity(), InstallOrderParentActivity.class));
-            }
-        });
-        //设计订单
-        findViewById(R.id.tv_design_order).setOnClickListener((v) -> {
-            if (workerApprove()) {
-                JumpItent.jump(getActivity(), DesignActivity.class);
-            }
-        });
-        //维保订单
-        findViewById(R.id.tv_maintain_order).setOnClickListener((v) -> {
-            if (workerApprove()) {
-//                new MaintainCtrlView(getActivity(), true).show();
-                startActivity(new Intent(getActivity(), MaintenanceActivity.class));
-            }
-        });
-        //找工人
-        findViewById(R.id.tv_project_send).setOnClickListener((v) -> {
-            if (workerApprove()) {
-//                new TaskPubCtrlView(getActivity(), true).show();
-                startActivity(new Intent(getActivity(), MineTaskPublishListSendParentActivity.class));
-            }
-        });
-        //找活
-        findViewById(R.id.tv_project_receive).setOnClickListener((v) -> {
-            if (workerApprove()) {
-//                new TakePubCtrlView(getActivity(), true).show();
-                if (!PermKit.get().getBidListPrem()) {
-                    return;
-                }
-                startActivity(new Intent(getActivity(), TakeTaskListActivity.class));
-
-            }
-        });
-        //内部报价
-        findViewById(R.id.tv_inside_price).setOnClickListener((v) -> {
-            if (workerApprove()) {
-//                new PayOrderListCtrlView(getActivity(), true).show();
-                startActivity(new Intent(getActivity(), OfferAndPayOrderParentActivity.class));
             }
         });
         //签到
@@ -432,29 +276,11 @@ public class HomeNewFragment extends BaseFragment implements SecurityListAdapter
                 new SignCtrlView(getActivity()).show();
             }
         });
-        //招标信息
-        findViewById(R.id.tv_tender).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), WorkerTenderControlActivity.class));
-        });
         //扫描二维码
         findViewById(R.id.iv_scan).setOnClickListener((v) -> {
             homeScanPopWindow.showAsDropDown(findViewById(R.id.iv_scan));
             homeScanPopWindow.backgroundAlpha(0.5f);
         });
-        // 安防圈
-        findViewById(R.id.rl_security).setOnClickListener((v) -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt("mSecurityNum", mSecurityNum);
-            JumpItent.jump(getActivity(), SecurityListActivity.class, bundle);
-        });
-        findViewById(R.id.iv_security_cancle).setOnClickListener((v) -> {
-            rlSecurityNewMessage.setVisibility(View.GONE);
-        });
-        findViewById(R.id.ll_security_new).setOnClickListener((v) -> {
-            JumpItent.jump(getActivity(), SecurityPersonalActivity.class);
-        });
-
-
     }
 
     View.OnClickListener scanSelectItemsOnClick = new View.OnClickListener() {
@@ -493,108 +319,8 @@ public class HomeNewFragment extends BaseFragment implements SecurityListAdapter
     @Override
     protected void setListener() {
         findViewById(R.id.iv_camera).setOnClickListener(v -> startActivity(new Intent(getActivity(), CameraActivity.class)));
-        rvWait.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    int i = layoutManager.findFirstVisibleItemPosition() % mWaitList.size();
-                    homeWaitIndicator.setPosition(i);
-                }
-            }
-        });
-        securityListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            doJump(position, false);
-        });
-        securityListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            switch (view.getId()) {
-                case R.id.ll_comments:
-                    doJump(position, true);
-                    break;
-                case R.id.ll_like:
-                    doLike(position, securityListAdapter.getData().get(position));
-                    break;
-                case R.id.tv_isFocus:
-                case R.id.iv_share:
-                case R.id.ll_question:
-                case R.id.rl_video:
-                case R.id.rl_content:
-                    doJump(position, false);
-                    break;
-                default:
-                    break;
-            }
-        });
     }
 
-    /**
-     * 进行点赞
-     */
-    private void doLike(int position, SecurityListBean.ListBean listBean) {
-        SecurityLikeBean securityLikeBean = new SecurityLikeBean();
-        securityLikeBean.setAsId(listBean.getSpcId());
-        securityLikeBean.setType("0");
-        /**
-         *状态：0 点赞 1 未点赞
-         * */
-        if (listBean.getLikeStatus() == 0) {
-            listBean.setLikeStatus(1);
-            listBean.setLikesCount(listBean.getLikesCount());
-            securityLikeBean.setLikeStatus("1");
-        } else {
-            listBean.setLikeStatus(0);
-            listBean.setLikesCount(listBean.getLikesCount());
-            securityLikeBean.setLikeStatus("0");
-        }
-        securityLikeBean.setLikeUserId(WorkerApplication.get().getUserId());
-        securityLikeBean.setLikeCompanyId(WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId());
-        securityLikeBean.setLikeTopCompanyId(WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getTopCompanyId());
-        EanfangHttp.post(NewApiService.SERCURITY_LIKE)
-                .upJson(JSONObject.toJSONString(securityLikeBean))
-                .execute(new EanfangCallback<SecurityLikeStatusBean>(getActivity(), true, SecurityLikeStatusBean.class, bean -> {
-                    getActivity().runOnUiThread(() -> {
-                        securityListAdapter.getData().get(position).setLikeStatus(bean.getLikeStatus());
-                        securityListAdapter.getData().get(position).setLikesCount(bean.getLikesCount());
-                        securityListAdapter.notifyItemChanged(position);
-                    });
-                }));
-    }
-
-    public void doJump(int position, boolean isCommon) {
-        //专家问答
-        if (securityListAdapter.getData().get(position).getType() == 1) {
-            Bundle bundle_question = new Bundle();
-            bundle_question.putInt("QuestionIdZ", Integer.parseInt(securityListAdapter.getData().get(position).getQuestionId()));
-            JumpItent.jump(getActivity(), FaultExplainActivity.class, bundle_question);
-        } else {
-            Bundle bundle = new Bundle();
-            bundle.putLong("spcId", securityListAdapter.getData().get(position).getSpcId());
-            bundle.putBoolean("isCommon", isCommon);
-            JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
-        }
-    }
-
-
-    /**
-     * 统计
-     */
-
-    private void initCount() {
-        rlAllData.setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), DataStaticsticsListActivity.class));
-        });
-    }
-
-    private void jumpWebview() {
-        boolean isHave = WorkerApplication.get().getLoginBean().getPerms().contains("top:statistics:count");
-        if (isHave == true) {
-            String token = WorkerApplication.get().getLoginBean().getToken();
-            startActivity(new Intent(getActivity(), WebActivity.class)
-                    .putExtra("url", "http:/worker.eanfang.net:8099/#/totalPhone?token=" + token)
-                    .putExtra("title", "数据统计"));
-        } else {
-            showToast("您没有权限");
-        }
-    }
 
     /**
      * 初始化轮播控件
@@ -618,64 +344,16 @@ public class HomeNewFragment extends BaseFragment implements SecurityListAdapter
     /**
      * 初始化rolltext显示的文本
      */
-    private void initRollTextView(List<NoticeEntity> list) {
+    private void initRollTextView(List<String> list) {
         rollTextView = findViewById(R.id.home_recommand_ad_text);
         List<View> views = new ArrayList<>();
-        List<String> data = new ArrayList<>();
-        List<String> titleList = new ArrayList<>();
-
-        String repairStr = "通过易安防接到了一个报修订单。";
-        String installStr = "通过易安防接到了一个报装订单。";
-        String quoteStr = "通过易安防发送了一次报价。";
-        String designStr = "通过易安防接到了一个设计订单。";
-        String maintainStr = "通过易安防进行了一次日常维保。";
-
-        if (list != null && !list.isEmpty()) {
-            for (int i = 0; i < list.size(); i++) {
-                NoticeEntity noticeEntity = list.get(i);
-
-                String realName = V.v(() -> noticeEntity.getReciveAccEntity().getRealName());
-                if (StrUtil.isEmpty(realName)) {
-                    continue;
-                }
-
-                if (noticeEntity.getNoticeType() == 22) {
-                    data.add(repairStr + "\r\n" + DateUtil.date(noticeEntity.getCreateTime()).toString());
-                } else if (noticeEntity.getNoticeType() == 40) {
-                    data.add(installStr + "\r\n" + DateUtil.date(noticeEntity.getCreateTime()).toString());
-                } else if (noticeEntity.getNoticeType() == 42) {
-                    data.add(quoteStr + "\r\n" + DateUtil.date(noticeEntity.getCreateTime()).toString());
-                } else if (noticeEntity.getNoticeType() == 51) {
-                    data.add(designStr + "\r\n" + DateUtil.date(noticeEntity.getCreateTime()).toString());
-                } else if (noticeEntity.getNoticeType() == 62) {
-                    data.add(maintainStr + "\r\n" + DateUtil.date(noticeEntity.getCreateTime()).toString());
-                } else {
-                    continue;
-                }
-
-
-                StringBuilder showName = new StringBuilder();
-                if (realName.length() >= 1) {
-                    showName.append(realName.charAt(0));
-                }
-                if (realName.length() >= 2) {
-                    showName.append("*");
-                }
-                if (realName.length() >= 3) {
-                    showName.append(realName.charAt(2));
-                }
-                titleList.add(showName + "先生");
-            }
-
-        }
-
         try {
-            for (int i = 0; i < data.size(); i++) {
+            for (int i = 0; i < list.size(); i++) {
                 View view = View.inflate(getContext(), R.layout.rolltext_item, null);
                 TextView content = view.findViewById(R.id.tv_roll_item_text);
                 TextView title = view.findViewById(R.id.tv_roll_item_title);
-                title.setText(titleList.get(i));
-                content.setText(data.get(i));
+//                title.setText(titleList.get(i));
+                content.setText(list.get(i).toString());
                 views.add(view);
             }
         } catch (NullPointerException e) {
@@ -690,8 +368,8 @@ public class HomeNewFragment extends BaseFragment implements SecurityListAdapter
 
     public void doHttpNews() {
 
-        EanfangHttp.get(NewApiService.GET_PUSH_NEWS_WORKER).execute(new EanfangCallback<NoticeEntity>(getActivity(), false, NoticeEntity.class, true, (list -> {
-            initRollTextView(list);
+        EanfangHttp.get(NewApiService.GET_HOME_ORDER).execute(new EanfangCallback<HomeNewsBean>(getActivity(), false, HomeNewsBean.class, (list -> {
+            initRollTextView(list.getList());
         })));
 
 
@@ -711,34 +389,6 @@ public class HomeNewFragment extends BaseFragment implements SecurityListAdapter
     }
 
     public void doSetOrderNums(AllMessageBean bean) {
-        // 报修
-        if (bean.getRepair() > 0) {
-            mRepair = bean.getRepair();
-        } else {
-            mRepair = 0;
-        }
-        qBadgeViewRepair.setBadgeNumber(mRepair);
-        // 报装
-        if (bean.getInstall() > 0) {
-            mInstall = bean.getInstall();
-        } else {
-            mInstall = 0;
-        }
-        qBadgeViewInstall.setBadgeNumber(mInstall);
-        //设计
-        if (bean.getDesign() > 0) {
-            mDesign = bean.getDesign();
-        } else {
-            mDesign = 0;
-        }
-        qBadgeViewDesign.setBadgeNumber(mDesign);
-        //维保
-        if (bean.getMaintain() > 0) {
-            mMaintain = bean.getMaintain();
-        } else {
-            mMaintain = 0;
-        }
-        qBadgeViewMaintain.setBadgeNumber(mMaintain);
         //报价
         if (bean.getQuote() > 0) {
             mQuota = bean.getQuote();
@@ -746,51 +396,37 @@ public class HomeNewFragment extends BaseFragment implements SecurityListAdapter
             mQuota = 0;
         }
         qBadgeViewQuota.setBadgeNumber(mQuota);
-        // @我的和评论未读
-        if (bean.getCommentNoRead() + bean.getNoReadCount() > 0) {
-            mSecurityNum = bean.getCommentNoRead() + bean.getNoReadCount();
-            mTvSecurityNewMessage.setText(mSecurityNum + "");
-            rlSecurityNewMessage.setVisibility(View.VISIBLE);
-        } else {
-            mSecurityNum = 0;
-            rlSecurityNewMessage.setVisibility(View.GONE);
-        }
         /**
          * 底部红点更新
          * */
         EventBus.getDefault().post(bean);
     }
 
+
     private class MyPagerAdapter extends FragmentPagerAdapter {
-        public MyPagerAdapter(FragmentManager fm) {
-            super(fm);
+        private final String[] titles;
+        private final ArrayList<Fragment> fragments;
+
+        private MyPagerAdapter(String[] titles, ArrayList<Fragment> fragments) {
+            super(getChildFragmentManager());
+            this.titles = titles;
+            this.fragments = fragments;
         }
 
         @Override
         public int getCount() {
-            return mFragments.size();
+            return fragments.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return mTitles[position];
+            return titles[position];
         }
 
         @Override
         public Fragment getItem(int position) {
-            return mFragments.get(position);
+            return fragments.get(position);
         }
-    }
-
-    /**
-     * 照片点击事件
-     */
-    @Override
-    public void onPhotoClick(int position, int mWhich) {
-        picList.clear();
-        pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
-        picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
-        ImagePerviewUtil.perviewImage(getActivity(), picList, mWhich);
     }
 }
 

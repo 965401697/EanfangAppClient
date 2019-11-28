@@ -33,7 +33,7 @@
     <string name="text_worker_install_order">报装订单</string>
     <string name="text_worker_design_order">设计订单</string>
     <string name="text_worker_maintain_order">维保订单</string>
-    <string name="text_worker_inside_price">内部报价</string>
+    <string name="text_worker_inside_price">报价</string>
     <string name="text_worker_project_send">找工人</string>
     <string name="text_worker_project_receive">找活</string>
     <string name="text_worker_sign">签到</string>

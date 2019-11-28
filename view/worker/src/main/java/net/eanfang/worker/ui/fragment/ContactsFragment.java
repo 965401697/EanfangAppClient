@@ -223,7 +223,7 @@ public class ContactsFragment extends BaseFragment {
 
         parentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             if (!String.valueOf(((OrgEntity) adapter.getData().get(position)).getCompanyId()).equals(String.valueOf(WorkerApplication.get().getCompanyId()))) {
-                ToastUtil.get().showToast(getActivity(), "请到工作台切换当前被点击的公司");
+                ToastUtil.get().showToast(getActivity(), "请到首页切换当前被点击的公司");
                 return;
             }
             switch (view.getId()) {

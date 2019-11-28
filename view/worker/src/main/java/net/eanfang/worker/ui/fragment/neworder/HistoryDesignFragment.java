@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.biz.model.bean.DesignOrderListBean;
+import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.entity.OrderBean;
 import com.eanfang.util.PermKit;
 
@@ -41,6 +42,8 @@ public class HistoryDesignFragment extends TemplateItemListFragment {
     public void onRefresh() {
         historyOrderViewModle.mQueryEntry = null;
         super.onRefresh();
+    }
+    public void getTenderData(QueryEntry queryEntry) {
     }
 
     @Override

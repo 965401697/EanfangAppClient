@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.base.kit.V;
+import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.entity.OrderBean;
 import com.eanfang.config.Constant;
 import com.eanfang.util.CallUtils;
@@ -67,6 +68,9 @@ public class HistoryRepairFragment extends TemplateItemListFragment {
         historyOrderViewModle.doGetHistroryOrder(mType, mPage);
     }
 
+    public void getTenderData(QueryEntry queryEntry) {
+    }
+
     @Override
     protected void initAdapter(BaseQuickAdapter baseQuickAdapter) {
         homeOrderAdapter = new HomeOrderAdapter(true);
@@ -107,10 +111,10 @@ public class HistoryRepairFragment extends TemplateItemListFragment {
             }
 
         }));
-        homeOrderAdapter.setOnItemChildClickListener(((adapter, view, position) ->{
+        homeOrderAdapter.setOnItemChildClickListener(((adapter, view, position) -> {
             OrderBean item = homeOrderAdapter.getData().get(position);
             switchCase(item, view);
-        } ));
+        }));
     }
 
 

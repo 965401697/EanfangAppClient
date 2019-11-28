@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.lifecycle.ViewModel;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.ui.activity.worksapce.tender.TenderFindDetailActivity;
@@ -55,6 +56,8 @@ public class HistoryTaskApplyFragment extends TemplateItemListFragment {
         });
     }
 
+    public void getTenderData(QueryEntry queryEntry) {
+    }
 
     @Override
     protected ViewModel initViewModel() {

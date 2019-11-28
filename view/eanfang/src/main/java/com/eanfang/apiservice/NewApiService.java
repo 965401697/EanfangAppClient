@@ -174,6 +174,8 @@ public interface NewApiService {
     String GET_PUSH_NEWS_CLIENT = BuildConfig.API_HOST + "/yaf_sys/notice/newsClient";
 
     String GET_PUSH_NEWS_WORKER = BuildConfig.API_HOST + "/yaf_sys/notice/newsWorker";
+    String GET_HOME_ORDER = BuildConfig.API_HOST + "/yaf_order/order/newOrder";
+    String GET_HOME_TO_DO_ORDER = BuildConfig.API_HOST + "/yaf_order/order/toDoOrder";
     /**
      * 最新订单
      */

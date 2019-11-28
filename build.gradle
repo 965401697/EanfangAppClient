@@ -56,7 +56,7 @@ ext {
             ossEndpoint      : "\"https://oss-cn-beijing.aliyuncs.com\"",
             javaVersion      : JavaVersion.VERSION_1_8,
             debugMod         : "true",
-            localApiHost     : "\"http://192.168.0.222:8080\"",
+            localApiHost     : "\"http://yz.ngrok.eanfang.net:89\"",
             betaApiHost      : "\"http://api.beta.eanfang.net\"",
             proApiHost       : "\"https://api.eanfang.net\"",
             clientId         : "net.eanfang.client",

@@ -3,6 +3,7 @@ package net.eanfang.worker.ui.fragment.neworder;
 import androidx.lifecycle.ViewModel;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.bean.WorkspaceInstallBean;
 import com.eanfang.util.PermKit;
 
@@ -30,7 +31,8 @@ public class HistoryInstallFragment extends TemplateItemListFragment {
         homeInstallFragment.historyOrderViewModle = mHistoryOrderViewModle;
         return homeInstallFragment;
     }
-
+    public void getTenderData(QueryEntry queryEntry) {
+    }
     @Override
     protected void initAdapter(BaseQuickAdapter baseQuickAdapter) {
         homeOrderAdapter = new HomeOrderAdapter(true);

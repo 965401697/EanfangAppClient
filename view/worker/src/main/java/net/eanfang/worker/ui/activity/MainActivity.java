@@ -66,7 +66,7 @@ import net.eanfang.worker.ui.activity.worksapce.notice.OfficialListActivity;
 import net.eanfang.worker.ui.activity.worksapce.notice.SystemNoticeActivity;
 import net.eanfang.worker.ui.fragment.ContactListFragment;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
-import net.eanfang.worker.ui.fragment.HomeFragment;
+import net.eanfang.worker.ui.fragment.HomeNewFragment;
 import net.eanfang.worker.ui.fragment.MyFragment;
 import net.eanfang.worker.ui.fragment.OrderFragment;
 
@@ -255,7 +255,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
         mTabHost.getTabWidget().setDividerDrawable(R.color.transparent);
         View indicator = getLayoutInflater().inflate(R.layout.indicator_main_home, null);
-        mTabHost.addTab(mTabHost.newTabSpec("home").setIndicator(indicator), HomeFragment.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("home").setIndicator(indicator), HomeNewFragment.class, null);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_contact, null);
         mTabHost.addTab(mTabHost.newTabSpec("contactList").setIndicator(indicator), ContactListFragment.class, null);

@@ -79,10 +79,15 @@ public class FilterTenderActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        setTitle("招标用工大厅");
+
         setLeftBack(true);
         mType = getIntent().getIntExtra("type", 100);
         isPerson = getIntent().getBooleanExtra("isPersonal", false);
+        if (getIntent().getStringExtra("order").equals("orderHistory")) {
+            setTitle("筛选");
+        } else {
+            setTitle("招标用工大厅");
+        }
         for (BaseDataEntity s : systemTypeList) {
             s.setCheck(false);
         }

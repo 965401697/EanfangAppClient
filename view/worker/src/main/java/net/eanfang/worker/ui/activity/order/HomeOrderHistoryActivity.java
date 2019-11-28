@@ -19,8 +19,6 @@ import net.eanfang.worker.ui.fragment.neworder.HistoryInstallFragment;
 import net.eanfang.worker.ui.fragment.neworder.HistoryMaintenanceFragment;
 import net.eanfang.worker.ui.fragment.neworder.HistoryRepairFragment;
 import net.eanfang.worker.ui.fragment.neworder.HistoryTaskApplyFragment;
-import net.eanfang.worker.ui.fragment.tender.WorkTenderFindFragment;
-import net.eanfang.worker.ui.fragment.tender.WorkTenderFragment;
 import net.eanfang.worker.viewmodle.neworder.HistoryOrderViewModle;
 
 /**
@@ -55,6 +53,7 @@ public class HomeOrderHistoryActivity extends BaseActivity {
         setRightClick("筛选", (v) -> {
             Bundle bundle = new Bundle();
             bundle.putInt("type", 0);
+            bundle.putString("order","orderHistory");
             JumpItent.jump(HomeOrderHistoryActivity.this, FilterTenderActivity.class, bundle, FILTRATE_TYPE_CODE);
         });
         mAdapter = new MyPagerAdapter(getSupportFragmentManager(), mTitles);
@@ -89,9 +88,15 @@ public class HomeOrderHistoryActivity extends BaseActivity {
             QueryEntry queryEntry = (QueryEntry) data.getSerializableExtra("query");
             if (queryEntry != null) {
                 if (currentTab == 0) {
-                    ((WorkTenderFragment) mAdapter.getFragments().get(currentTab)).getTenderData(queryEntry);
-                } else {
-                    ((WorkTenderFindFragment) mAdapter.getFragments().get(currentTab)).getTenderData(queryEntry);
+                    ((HistoryRepairFragment) mAdapter.getFragments().get(currentTab)).getTenderData(queryEntry);
+                } else if (currentTab == 1) {
+                    ((HistoryInstallFragment) mAdapter.getFragments().get(currentTab)).getTenderData(queryEntry);
+                } else if (currentTab == 2) {
+                    ((HistoryDesignFragment) mAdapter.getFragments().get(currentTab)).getTenderData(queryEntry);
+                } else if (currentTab == 3) {
+                    ((HistoryMaintenanceFragment) mAdapter.getFragments().get(currentTab)).getTenderData(queryEntry);
+                } else if (currentTab == 4) {
+                    ((HistoryTaskApplyFragment) mAdapter.getFragments().get(currentTab)).getTenderData(queryEntry);
                 }
             }
         }

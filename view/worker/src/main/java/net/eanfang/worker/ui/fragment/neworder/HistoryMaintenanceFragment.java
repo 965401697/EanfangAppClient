@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.lifecycle.ViewModel;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.util.PermKit;
 
 import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceDetailActivity;
@@ -32,6 +33,9 @@ public class HistoryMaintenanceFragment extends TemplateItemListFragment {
         homeMaintenance.mType = type;
         homeMaintenance.historyOrderViewModle = mHistoryOrderViewModle;
         return homeMaintenance;
+    }
+
+    public void getTenderData(QueryEntry queryEntry) {
     }
 
     @Override
