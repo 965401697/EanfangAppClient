@@ -12,16 +12,18 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.base.kit.V;
 import com.eanfang.biz.model.bean.AllMessageBean;
 import com.eanfang.biz.model.entity.HomeNewsBean;
 import com.eanfang.biz.model.entity.HomeToDoOrderBean;
 import com.eanfang.biz.model.entity.OrgEntity;
+import com.eanfang.biz.rds.base.LViewModelProviders;
 import com.eanfang.config.Config;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
@@ -47,6 +49,7 @@ import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.worker.ui.widget.CompanyListView;
 import net.eanfang.worker.ui.widget.CustomHomeViewPager;
 import net.eanfang.worker.ui.widget.SignCtrlView;
+import net.eanfang.worker.viewmodle.tender.TenderViewModle;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -55,6 +58,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.hutool.core.date.DateUtil;
+import lombok.Getter;
 import q.rorbin.badgeview.QBadgeView;
 
 import static com.eanfang.base.kit.V.v;
@@ -88,6 +92,32 @@ public class HomeNewFragment extends BaseFragment {
     TextView tvWorkReport;
     @BindView(R.id.tv_do_phone)
     TextView tvDoPhone;
+    @BindView(R.id.ll_tender)
+    LinearLayout llTender;
+    @BindView(R.id.ll_find)
+    LinearLayout llFind;
+    @BindView(R.id.ll_security)
+    LinearLayout llSecurity;
+    @BindView(R.id.iv_tender)
+    ImageView ivTender;
+    @BindView(R.id.tv_tender)
+    TextView tvTender;
+    @BindView(R.id.view_tender)
+    View viewTender;
+    @BindView(R.id.iv_find)
+    ImageView ivFind;
+    @BindView(R.id.tv_find)
+    TextView tvFind;
+    @BindView(R.id.view_find)
+    View viewFind;
+    @BindView(R.id.iv_security)
+    ImageView ivSecurity;
+    @BindView(R.id.tv_security)
+    TextView tvSecurity;
+    @BindView(R.id.view_security)
+    View viewSecurity;
+    @BindView(R.id.vp_datastatistics)
+    CustomHomeViewPager vpDatastatistics;
     private BannerView bannerView;
     //头部标题
     private RollTextView rollTextView;
@@ -112,6 +142,9 @@ public class HomeNewFragment extends BaseFragment {
 
 
     private MyPagerAdapter mAdapter;
+    private String[] mTitles = {"标讯", "找活", "安防圈"};
+
+    private TenderViewModle mTenderViewModle;
 
     @Override
     protected void initData(Bundle arguments) {
@@ -130,6 +163,7 @@ public class HomeNewFragment extends BaseFragment {
         initLoopView();
         doHttpNews();
         initNum();
+        initViewPager();
     }
 
     /**
@@ -215,36 +249,79 @@ public class HomeNewFragment extends BaseFragment {
 
     }
 
-    private void initViewPager1() {
-        String[] titles = {"当日维修", "当日安装", "当日设计"};
-        ArrayList<Fragment> fragments = new ArrayList<>();
-        CustomHomeViewPager vpDataStatis = findViewById(R.id.vp_datastatistics);
-
-        fragments.clear();
-        fragments.add(HomeDataStatisticsFragment.getInstance(titles[0], 1));
-        fragments.add(HomeDataStatisticsFragment.getInstance(titles[1], 2));
-        fragments.add(HomeDataStatisticsFragment.getInstance(titles[2], 3));
-
-        mAdapter = new MyPagerAdapter(titles, fragments);
-        vpDataStatis.setAdapter(mAdapter);
-        // 设置不可滑动
-        vpDataStatis.setScanScroll(false);
-        vpDataStatis.setCurrentItem(0);
+    private void initViewPager() {
+        mTenderViewModle = LViewModelProviders.of(getActivity(), TenderViewModle.class);
+        mAdapter = new MyPagerAdapter(getChildFragmentManager(), mTitles);
+        mAdapter.getFragments().add(HomeTenderFragment.newInstance(mTenderViewModle));
+        mAdapter.getFragments().add(HomeFindFragment.getInstance(mTenderViewModle));
+        mAdapter.getFragments().add(HomeSecurityFragment.getInstance());
+        vpDatastatistics.setAdapter(mAdapter);
+        vpDatastatistics.setScanScroll(false);
+        vpDatastatistics.setCurrentItem(0);
     }
-
 
     /**
      * 工作按钮
      */
     private void initIconClick() {
+        // 标讯
+        llTender.setOnClickListener((v) -> {
+            tvTender.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_new_order_back));
+            tvFind.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
+            tvSecurity.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
 
+            viewTender.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryW));
+            viewFind.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
+            viewSecurity.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
+
+            ivTender.setImageResource(R.mipmap.ic_home_tender_pressed);
+            ivFind.setImageResource(R.mipmap.ic_home_find);
+            ivSecurity.setImageResource(R.mipmap.ic_home_security);
+
+            vpDatastatistics.setCurrentItem(0);
+        });
+        // 找活
+        llFind.setOnClickListener((v) -> {
+            tvTender.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
+            tvFind.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_new_order_back));
+            tvSecurity.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
+
+            viewTender.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
+            viewFind.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryW));
+            viewSecurity.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
+
+            ivTender.setImageResource(R.mipmap.ic_home_tender);
+            ivFind.setImageResource(R.mipmap.ic_home_find_pressed);
+            ivSecurity.setImageResource(R.mipmap.ic_home_security);
+
+            vpDatastatistics.setCurrentItem(1);
+
+        });
+        // 安防圈
+        llSecurity.setOnClickListener((v) -> {
+            tvTender.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
+            tvFind.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
+            tvSecurity.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_new_order_back));
+
+
+            viewTender.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
+            viewFind.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
+            viewSecurity.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryW));
+
+            ivTender.setImageResource(R.mipmap.ic_home_tender);
+            ivFind.setImageResource(R.mipmap.ic_home_find);
+            ivSecurity.setImageResource(R.mipmap.ic_home_security_pressed);
+
+            vpDatastatistics.setCurrentItem(2);
+
+        });
         // 电话解决
         tvDoPhone.setOnClickListener((v) -> {
             Bundle bundle = new Bundle();
             bundle.putLong("orderId", mOrderId);
             JumpItent.jump(getActivity(), SolveModeActivity.class, bundle, RepairCtrlActivity.REFREST_ITEM);
             //给客户联系人打电话
-            CallUtils.call(getActivity(), V.v(() -> mOrderPhone));
+            CallUtils.call(getActivity(), v(() -> mOrderPhone));
         });
         //报价
         tvInsidePrice.setOnClickListener((v) -> {
@@ -369,7 +446,9 @@ public class HomeNewFragment extends BaseFragment {
     public void doHttpNews() {
 
         EanfangHttp.get(NewApiService.GET_HOME_ORDER).execute(new EanfangCallback<HomeNewsBean>(getActivity(), false, HomeNewsBean.class, (list -> {
-            initRollTextView(list.getList());
+            if (list != null && list.getList() != null) {
+                initRollTextView(list.getList());
+            }
         })));
 
 
@@ -402,15 +481,26 @@ public class HomeNewFragment extends BaseFragment {
         EventBus.getDefault().post(bean);
     }
 
+    /**
+     * viewpager Adapter
+     */
+    protected class MyPagerAdapter extends FragmentPagerAdapter {
+        @Getter
+        private String[] titles;
+        @Getter
+        private ArrayList<Fragment> fragments;
 
-    private class MyPagerAdapter extends FragmentPagerAdapter {
-        private final String[] titles;
-        private final ArrayList<Fragment> fragments;
+        /**
+         * 普通，主页使用
+         */
+        public MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
 
-        private MyPagerAdapter(String[] titles, ArrayList<Fragment> fragments) {
-            super(getChildFragmentManager());
-            this.titles = titles;
-            this.fragments = fragments;
+        public MyPagerAdapter(FragmentManager fm, String[] mTitles) {
+            super(fm);
+            fragments = new ArrayList<>();
+            this.titles = mTitles;
         }
 
         @Override
