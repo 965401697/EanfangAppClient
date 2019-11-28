@@ -377,7 +377,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
         Bundle bundle = new Bundle();
         bundle.putLong("busRepairOrderId", busRepairOrderId);
         bundle.putBoolean("isVisible", false);
-        if (isPhoneSolve == 0) {
+        if (isPhoneSolve == null || isPhoneSolve == 0) {
             // 电话未解决
             JumpItent.jump(getActivity(), TroubleDetailActivity.class, bundle);
         } else {

@@ -40,6 +40,7 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.CameraActivity;
 import net.eanfang.worker.ui.activity.NewOrderActivity;
+import net.eanfang.worker.ui.activity.WorkspaceActivity;
 import net.eanfang.worker.ui.activity.worksapce.OfferAndPayOrderParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.workreport.WorkReportListActivity;
 import net.eanfang.worker.ui.activity.worksapce.online.ExpertOnlineActivity;
@@ -118,6 +119,10 @@ public class HomeNewFragment extends BaseFragment {
     View viewSecurity;
     @BindView(R.id.vp_datastatistics)
     CustomHomeViewPager vpDatastatistics;
+
+    @BindView(R.id.tv_all_app)
+    TextView tvAllApp;
+
     private BannerView bannerView;
     //头部标题
     private RollTextView rollTextView;
@@ -323,6 +328,10 @@ public class HomeNewFragment extends BaseFragment {
             //给客户联系人打电话
             CallUtils.call(getActivity(), v(() -> mOrderPhone));
         });
+        //全部应用
+        tvAllApp.setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), WorkspaceActivity.class));
+        });
         //报价
         tvInsidePrice.setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), OfferAndPayOrderParentActivity.class));
@@ -422,6 +431,12 @@ public class HomeNewFragment extends BaseFragment {
      * 初始化rolltext显示的文本
      */
     private void initRollTextView(List<String> list) {
+        if (list == null || list.isEmpty()) {
+            findViewById(R.id.ll_home_recommand_ad).setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.ll_home_recommand_ad).setVisibility(View.VISIBLE);
+        }
+
         rollTextView = findViewById(R.id.home_recommand_ad_text);
         List<View> views = new ArrayList<>();
         try {
