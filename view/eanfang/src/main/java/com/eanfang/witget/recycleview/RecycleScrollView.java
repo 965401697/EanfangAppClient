@@ -3,7 +3,6 @@ package com.eanfang.witget.recycleview;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.ViewConfiguration;
 import android.widget.ScrollView;
 
 /**
@@ -13,52 +12,45 @@ import android.widget.ScrollView;
  * @date on 2018/6/7$  10:59$
  */
 public class RecycleScrollView extends ScrollView {
-    private int slop;
-    private int touch;
-
-    public RecycleScrollView(Context context) {
-        super(context);
-        setSlop(context);
-    }
+    private float mLastXIntercept = 0f;
+    private float mLastYIntercept = 0f;
 
     public RecycleScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setSlop(context);
     }
 
-    public RecycleScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        setSlop(context);
-    }
-
-    /**
-     * 是否intercept当前的触摸事件
-     * @param ev 触摸事件
-     * @return true：调用onMotionEvent()方法，并完成滑动操作
-     */
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                //  保存当前touch的纵坐标值
-                touch = (int) ev.getRawY();
+        boolean intercepted = false;
+        float x = ev.getX();
+        float y = ev.getY();
+        int action = ev.getAction() & MotionEvent.ACTION_MASK;
+        switch (action) {
+            case MotionEvent.ACTION_DOWN: {
+                intercepted = false;
+                //初始化mActivePointerId
+                super.onInterceptTouchEvent(ev);
                 break;
-            case MotionEvent.ACTION_MOVE:
-                //  滑动距离大于slop值时，返回true
-                if (Math.abs((int) ev.getRawY() - touch) > slop) {
-                    return true;
+            }
+            case MotionEvent.ACTION_MOVE: {
+                //横坐标位移增量
+                float deltaX = x - mLastXIntercept;
+                //纵坐标位移增量
+                float deltaY = y - mLastYIntercept;
+                if (Math.abs(deltaX) < Math.abs(deltaY)) {
+                    intercepted = true;
+                } else {
+                    intercepted = false;
                 }
                 break;
+            }
+            case MotionEvent.ACTION_UP: {
+                intercepted = false;
+                break;
+            }
         }
-
-        return super.onInterceptTouchEvent(ev);
-    }
-
-    /**
-     * 获取相应context的touch slop值（即在用户滑动之前，能够滑动的以像素为单位的距离）
-     * @param context ScrollView对应的context
-     */
-    private void setSlop(Context context) {
-        slop = ViewConfiguration.get(context).getScaledTouchSlop();
+        mLastXIntercept = x;
+        mLastYIntercept = y;
+        return intercepted;
     }
 }

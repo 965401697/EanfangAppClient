@@ -20,7 +20,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-public class HomeFindFragment extends TemplateItemListFragment {
+public class HomeFindFragment extends HomeTemplateItemListFragment {
 
     @Setter
     @Accessors(chain = true)
@@ -45,11 +45,6 @@ public class HomeFindFragment extends TemplateItemListFragment {
         return mTenderViewModle;
     }
 
-    @Override
-    public void onRefresh() {
-        mTenderViewModle.mFindQueryEntry = null;
-        super.onRefresh();
-    }
 
     public void getTenderData(QueryEntry queryEntry) {
         mTenderViewModle.mFindQueryEntry = queryEntry;

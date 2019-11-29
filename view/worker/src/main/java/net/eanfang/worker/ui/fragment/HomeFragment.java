@@ -194,7 +194,7 @@ public class HomeFragment extends BaseFragment implements SecurityListAdapter.On
         mAdapter = new MyPagerAdapter(this.getChildFragmentManager());
         customHomeViewPager.setAdapter(mAdapter);
         // 设置不可滑动
-        customHomeViewPager.setScanScroll(false);
+//        customHomeViewPager.setScanScroll(false);
         tlDataStatisticsList.setViewPager(customHomeViewPager, mTitles, getActivity(), mFragments);
         customHomeViewPager.setCurrentItem(0);
         tlDataStatisticsList.setCurrentTab(0);

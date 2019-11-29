@@ -1,9 +1,7 @@
 package net.eanfang.worker.ui.fragment;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.lifecycle.ViewModel;
 
@@ -23,6 +21,7 @@ import com.eanfang.util.JumpItent;
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.online.FaultExplainActivity;
+import net.eanfang.worker.ui.activity.worksapce.security.SecurityCreateActivity;
 import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
 import net.eanfang.worker.util.ImagePerviewUtil;
@@ -30,7 +29,7 @@ import net.eanfang.worker.util.ImagePerviewUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class HomeSecurityFragment extends TemplateItemListFragment implements SecurityListAdapter.OnPhotoClickListener {
+public class HomeSecurityFragment extends HomeTemplateItemListFragment implements SecurityListAdapter.OnPhotoClickListener {
 
 
     private SecurityListAdapter securityListAdapter;
@@ -38,21 +37,23 @@ public class HomeSecurityFragment extends TemplateItemListFragment implements Se
 
     private ArrayList<String> picList = new ArrayList<>();
     private String[] pics = null;
+    private Boolean mIsCreate = false;
 
-    public static HomeSecurityFragment getInstance() {
+    public static HomeSecurityFragment getInstance(Boolean isCreate) {
         HomeSecurityFragment homeFindFragment = new HomeSecurityFragment();
+        homeFindFragment.mIsCreate = isCreate;
         return homeFindFragment;
-    }
-
-    @Override
-    protected View initView(LayoutInflater inflater, ViewGroup container) {
-        return super.initView(inflater, container);
     }
 
     @Override
     protected void initAdapter() {
         securityListAdapter = new SecurityListAdapter(false, this);
         securityListAdapter.bindToRecyclerView(mRecyclerView);
+        if (mIsCreate) {
+            templateItemListBinding.ivCreateSecurity.setVisibility(View.VISIBLE);
+        } else {
+            templateItemListBinding.ivCreateSecurity.setVisibility(View.GONE);
+        }
         initSecurity();
         super.initAdapter();
     }
@@ -66,6 +67,9 @@ public class HomeSecurityFragment extends TemplateItemListFragment implements Se
     }
 
     private void initListener() {
+        templateItemListBinding.ivCreateSecurity.setOnClickListener((v) -> {
+            JumpItent.jump(getActivity(), SecurityCreateActivity.class);
+        });
         securityListAdapter.setOnItemClickListener((adapter, view, position) -> {
             doJump(position, false);
         });

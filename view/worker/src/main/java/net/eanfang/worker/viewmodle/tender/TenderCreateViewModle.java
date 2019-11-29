@@ -199,7 +199,7 @@ public class TenderCreateViewModle extends BaseViewModel {
         tenderCreateVo.getZoneId().set(zoneId);
         tenderCreateVo.getBusinessOneCode().set(bussinessOneCode);
         tenderCreateVo.getSystemType().set(systemType);
-        tenderCreateVo.getPredicttime().set(mTenderCreateBinding.etPredictTime.getText().toString().trim());
+        tenderCreateVo.getPredictTime().set(mTenderCreateBinding.etPredictTime.getText().toString().trim());
         tenderCreateVo.getDetailPlace().set(detailPlace);
         tenderCreateVo.getEndTime().set(mTenderCreateBinding.tvStartTime.getText().toString().trim());
         tenderCreateVo.getBudget().set(mTenderCreateBinding.tvBudget.getText().toString());

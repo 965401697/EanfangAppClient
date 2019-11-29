@@ -3,22 +3,23 @@ package net.eanfang.worker.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.ViewModel;
 
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseFragment;
 import com.eanfang.biz.model.bean.AllMessageBean;
 import com.eanfang.biz.model.entity.HomeNewsBean;
 import com.eanfang.biz.model.entity.HomeToDoOrderBean;
@@ -28,26 +29,22 @@ import com.eanfang.config.Config;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.PermKit;
-import com.eanfang.witget.BannerView;
 import com.eanfang.witget.HomeScanPopWindow;
-import com.eanfang.witget.RollTextView;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.databinding.FragmentHomeNewBinding;
 import net.eanfang.worker.ui.activity.CameraActivity;
 import net.eanfang.worker.ui.activity.NewOrderActivity;
 import net.eanfang.worker.ui.activity.worksapce.OfferAndPayOrderParentActivity;
-import net.eanfang.worker.ui.activity.worksapce.oa.workreport.WorkReportListActivity;
 import net.eanfang.worker.ui.activity.worksapce.online.ExpertOnlineActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.SolveModeActivity;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
+import net.eanfang.worker.ui.activity.worksapce.tender.WorkerTenderControlActivity;
 import net.eanfang.worker.ui.widget.CompanyListView;
-import net.eanfang.worker.ui.widget.CustomHomeViewPager;
 import net.eanfang.worker.ui.widget.SignCtrlView;
 import net.eanfang.worker.viewmodle.tender.TenderViewModle;
 
@@ -56,9 +53,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import cn.hutool.core.date.DateUtil;
-import lombok.Getter;
 import q.rorbin.badgeview.QBadgeView;
 
 import static com.eanfang.base.kit.V.v;
@@ -74,53 +69,8 @@ import static com.eanfang.base.kit.V.v;
 
 public class HomeNewFragment extends BaseFragment {
 
-    @BindView(R.id.tv_homeTitle)
-    TextView tvHomeTitle;
-    @BindView(R.id.tv_to_do_order_title)
-    TextView tvToDoOrderTitle;
-    @BindView(R.id.tv_order_address)
-    TextView tvOrderAddress;
-    @BindView(R.id.tv_order_company)
-    TextView tvOrderCompany;
-    @BindView(R.id.ll_to_do_order)
-    LinearLayout llToDoOrder;
-    @BindView(R.id.tv_order_time)
-    TextView tvOrderTime;
-    @BindView(R.id.tv_inside_price)
-    TextView tvInsidePrice;
-    @BindView(R.id.tv_work_report)
-    TextView tvWorkReport;
-    @BindView(R.id.tv_do_phone)
-    TextView tvDoPhone;
-    @BindView(R.id.ll_tender)
-    LinearLayout llTender;
-    @BindView(R.id.ll_find)
-    LinearLayout llFind;
-    @BindView(R.id.ll_security)
-    LinearLayout llSecurity;
-    @BindView(R.id.iv_tender)
-    ImageView ivTender;
-    @BindView(R.id.tv_tender)
-    TextView tvTender;
-    @BindView(R.id.view_tender)
-    View viewTender;
-    @BindView(R.id.iv_find)
-    ImageView ivFind;
-    @BindView(R.id.tv_find)
-    TextView tvFind;
-    @BindView(R.id.view_find)
-    View viewFind;
-    @BindView(R.id.iv_security)
-    ImageView ivSecurity;
-    @BindView(R.id.tv_security)
-    TextView tvSecurity;
-    @BindView(R.id.view_security)
-    View viewSecurity;
-    @BindView(R.id.vp_datastatistics)
-    CustomHomeViewPager vpDatastatistics;
-    private BannerView bannerView;
+    private FragmentHomeNewBinding fragmentHomeNewBinding;
     //头部标题
-    private RollTextView rollTextView;
 
     // 扫码Popwindow
     private HomeScanPopWindow homeScanPopWindow;
@@ -146,17 +96,16 @@ public class HomeNewFragment extends BaseFragment {
 
     private TenderViewModle mTenderViewModle;
 
+
     @Override
-    protected void initData(Bundle arguments) {
+    protected ViewModel initViewModel() {
+        mTenderViewModle = LViewModelProviders.of(getActivity(), TenderViewModle.class);
+        return mTenderViewModle;
     }
 
     @Override
-    protected int setLayoutResouceId() {
-        return R.layout.fragment_home_new;
-    }
-
-    @Override
-    protected void initView() {
+    protected View initView(LayoutInflater inflater, ViewGroup container) {
+        fragmentHomeNewBinding = FragmentHomeNewBinding.inflate(getLayoutInflater());
         homeScanPopWindow = new HomeScanPopWindow(getActivity(), true, scanSelectItemsOnClick);
         homeScanPopWindow.setOnDismissListener(() -> homeScanPopWindow.backgroundAlpha(1.0f));
         initIconClick();
@@ -164,7 +113,11 @@ public class HomeNewFragment extends BaseFragment {
         doHttpNews();
         initNum();
         initViewPager();
+
+        fragmentHomeNewBinding.ivCamera.setOnClickListener(v -> startActivity(new Intent(getActivity(), CameraActivity.class)));
+        return fragmentHomeNewBinding.getRoot();
     }
+
 
     /**
      * 切换公司
@@ -187,9 +140,9 @@ public class HomeNewFragment extends BaseFragment {
                     rotate.setFillAfter(true);
                     selectCompanyPop = new CompanyListView(getActivity(), mList, ((name, url) -> {
                         if ("个人".equals(name)) {
-                            tvHomeTitle.setText(name);
+                            fragmentHomeNewBinding.tvHomeTitle.setText(name);
                         } else {
-                            tvHomeTitle.setText(name);
+                            fragmentHomeNewBinding.tvHomeTitle.setText(name);
                         }
                         selectCompanyPop.dismiss();
                         doHttpOrderNums();
@@ -200,7 +153,7 @@ public class HomeNewFragment extends BaseFragment {
                             selectCompanyPop.backgroundAlpha(1.0f);
                         }
                     });
-                    selectCompanyPop.showAsDropDown(findViewById(R.id.tv_homeTitle));
+                    selectCompanyPop.showAsDropDown(fragmentHomeNewBinding.tvHomeTitle);
                 }));
     }
 
@@ -208,7 +161,7 @@ public class HomeNewFragment extends BaseFragment {
         /**
          * 报价
          * */
-        qBadgeViewQuota.bindTarget(findViewById(R.id.tv_inside_price))
+        qBadgeViewQuota.bindTarget(fragmentHomeNewBinding.tvInsidePrice)
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(5, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
@@ -219,11 +172,14 @@ public class HomeNewFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        fragmentHomeNewBinding.llOne.setFocusable(true);
+        fragmentHomeNewBinding.llOne.setFocusableInTouchMode(true);
+        fragmentHomeNewBinding.llOne.requestFocus();
         String orgName = v(() -> (WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName()));
         if (("个人").equals(orgName)) {
-            tvHomeTitle.setText("易安防");
+            fragmentHomeNewBinding.tvHomeTitle.setText("易安防");
         } else {
-            tvHomeTitle.setText(orgName);
+            fragmentHomeNewBinding.tvHomeTitle.setText(orgName);
         }
         doGetToDoOrder();
         doHttpOrderNums();
@@ -235,29 +191,33 @@ public class HomeNewFragment extends BaseFragment {
     private void doGetToDoOrder() {
         EanfangHttp.get(NewApiService.GET_HOME_TO_DO_ORDER).execute(new EanfangCallback<HomeToDoOrderBean>(getActivity(), false, HomeToDoOrderBean.class, (bean -> {
             if (bean != null) {
-                tvToDoOrderTitle.setText(bean.getMsg());
-                tvOrderAddress.setText(Config.get().getAddressByCode(bean.getOrder().getPlaceCode()) + bean.getOrder().getAddress());
-                tvOrderCompany.setText(bean.getOrder().getContactCompany());
-                tvOrderTime.setText(DateUtil.date(bean.getOrder().getCreateTime()).toString());
+                fragmentHomeNewBinding.tvToDoOrderTitle.setText(bean.getMsg());
+                fragmentHomeNewBinding.tvOrderAddress.setText(Config.get().getAddressByCode(bean.getOrder().getPlaceCode()) + bean.getOrder().getAddress());
+                fragmentHomeNewBinding.tvOrderCompany.setText(bean.getOrder().getContactCompany());
+                fragmentHomeNewBinding.tvOrderTime.setText(DateUtil.date(bean.getOrder().getCreateTime()).toString());
                 mOrderId = bean.getOrder().getId();
                 mOrderPhone = bean.getOrder().getContactPhone();
-                llToDoOrder.setVisibility(View.VISIBLE);
+                fragmentHomeNewBinding.llToDoOrder.setVisibility(View.VISIBLE);
             } else {
-                llToDoOrder.setVisibility(View.GONE);
+                fragmentHomeNewBinding.llToDoOrder.setVisibility(View.GONE);
             }
         })));
 
     }
 
     private void initViewPager() {
-        mTenderViewModle = LViewModelProviders.of(getActivity(), TenderViewModle.class);
-        mAdapter = new MyPagerAdapter(getChildFragmentManager(), mTitles);
-        mAdapter.getFragments().add(HomeTenderFragment.newInstance(mTenderViewModle));
-        mAdapter.getFragments().add(HomeFindFragment.getInstance(mTenderViewModle));
-        mAdapter.getFragments().add(HomeSecurityFragment.getInstance());
-        vpDatastatistics.setAdapter(mAdapter);
-        vpDatastatistics.setScanScroll(false);
-        vpDatastatistics.setCurrentItem(0);
+        ArrayList<Fragment> fragments = new ArrayList<>();
+
+        fragments.clear();
+        fragments.add(HomeTenderFragment.newInstance(mTenderViewModle));
+        fragments.add(HomeFindFragment.getInstance(mTenderViewModle));
+        fragments.add(HomeSecurityFragment.getInstance(true));
+
+        mAdapter = new MyPagerAdapter(mTitles, fragments);
+        fragmentHomeNewBinding.vpHomeBusiness.setAdapter(mAdapter);
+        // 设置不可滑动
+        fragmentHomeNewBinding.vpHomeBusiness.setScanScroll(false);
+        fragmentHomeNewBinding.vpHomeBusiness.setCurrentItem(0);
     }
 
     /**
@@ -265,58 +225,58 @@ public class HomeNewFragment extends BaseFragment {
      */
     private void initIconClick() {
         // 标讯
-        llTender.setOnClickListener((v) -> {
-            tvTender.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_new_order_back));
-            tvFind.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
-            tvSecurity.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
+        fragmentHomeNewBinding.llTender.setOnClickListener((v) -> {
+            fragmentHomeNewBinding.tvTender.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_new_order_back));
+            fragmentHomeNewBinding.tvFind.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
+            fragmentHomeNewBinding.tvSecurity.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
 
-            viewTender.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryW));
-            viewFind.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
-            viewSecurity.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
+            fragmentHomeNewBinding.viewTender.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryW));
+            fragmentHomeNewBinding.viewFind.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
+            fragmentHomeNewBinding.viewSecurity.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
 
-            ivTender.setImageResource(R.mipmap.ic_home_tender_pressed);
-            ivFind.setImageResource(R.mipmap.ic_home_find);
-            ivSecurity.setImageResource(R.mipmap.ic_home_security);
+            fragmentHomeNewBinding.ivTender.setImageResource(R.mipmap.ic_home_tender_pressed);
+            fragmentHomeNewBinding.ivFind.setImageResource(R.mipmap.ic_home_find);
+            fragmentHomeNewBinding.ivSecurity.setImageResource(R.mipmap.ic_home_security);
 
-            vpDatastatistics.setCurrentItem(0);
+            fragmentHomeNewBinding.vpHomeBusiness.setCurrentItem(0);
         });
         // 找活
-        llFind.setOnClickListener((v) -> {
-            tvTender.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
-            tvFind.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_new_order_back));
-            tvSecurity.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
+        fragmentHomeNewBinding.llFind.setOnClickListener((v) -> {
+            fragmentHomeNewBinding.tvTender.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
+            fragmentHomeNewBinding.tvFind.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_new_order_back));
+            fragmentHomeNewBinding.tvSecurity.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
 
-            viewTender.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
-            viewFind.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryW));
-            viewSecurity.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
+            fragmentHomeNewBinding.viewTender.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
+            fragmentHomeNewBinding.viewFind.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryW));
+            fragmentHomeNewBinding.viewSecurity.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
 
-            ivTender.setImageResource(R.mipmap.ic_home_tender);
-            ivFind.setImageResource(R.mipmap.ic_home_find_pressed);
-            ivSecurity.setImageResource(R.mipmap.ic_home_security);
+            fragmentHomeNewBinding.ivTender.setImageResource(R.mipmap.ic_home_tender);
+            fragmentHomeNewBinding.ivFind.setImageResource(R.mipmap.ic_home_find_pressed);
+            fragmentHomeNewBinding.ivSecurity.setImageResource(R.mipmap.ic_home_security);
 
-            vpDatastatistics.setCurrentItem(1);
+            fragmentHomeNewBinding.vpHomeBusiness.setCurrentItem(1);
 
         });
         // 安防圈
-        llSecurity.setOnClickListener((v) -> {
-            tvTender.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
-            tvFind.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
-            tvSecurity.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_new_order_back));
+        fragmentHomeNewBinding.llSecurity.setOnClickListener((v) -> {
+            fragmentHomeNewBinding.tvTender.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
+            fragmentHomeNewBinding.tvFind.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
+            fragmentHomeNewBinding.tvSecurity.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_new_order_back));
 
 
-            viewTender.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
-            viewFind.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
-            viewSecurity.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryW));
+            fragmentHomeNewBinding.viewTender.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
+            fragmentHomeNewBinding.viewFind.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
+            fragmentHomeNewBinding.viewSecurity.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryW));
 
-            ivTender.setImageResource(R.mipmap.ic_home_tender);
-            ivFind.setImageResource(R.mipmap.ic_home_find);
-            ivSecurity.setImageResource(R.mipmap.ic_home_security_pressed);
+            fragmentHomeNewBinding.ivTender.setImageResource(R.mipmap.ic_home_tender);
+            fragmentHomeNewBinding.ivFind.setImageResource(R.mipmap.ic_home_find);
+            fragmentHomeNewBinding.ivSecurity.setImageResource(R.mipmap.ic_home_security_pressed);
 
-            vpDatastatistics.setCurrentItem(2);
+            fragmentHomeNewBinding.vpHomeBusiness.setCurrentItem(2);
 
         });
         // 电话解决
-        tvDoPhone.setOnClickListener((v) -> {
+        fragmentHomeNewBinding.tvDoPhone.setOnClickListener((v) -> {
             Bundle bundle = new Bundle();
             bundle.putLong("orderId", mOrderId);
             JumpItent.jump(getActivity(), SolveModeActivity.class, bundle, RepairCtrlActivity.REFREST_ITEM);
@@ -324,38 +284,35 @@ public class HomeNewFragment extends BaseFragment {
             CallUtils.call(getActivity(), v(() -> mOrderPhone));
         });
         //报价
-        tvInsidePrice.setOnClickListener((v) -> {
+        fragmentHomeNewBinding.tvInsidePrice.setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), OfferAndPayOrderParentActivity.class));
         });
         //工作日报
-        tvWorkReport.setOnClickListener((v) -> {
-            if (!PermKit.get().getWorkReportListPrem()) {
-                return;
-            }
-            Intent intent = new Intent(getActivity(), WorkReportListActivity.class);
-            startActivity(intent);
+        fragmentHomeNewBinding.tvWorkReport.setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), WorkerTenderControlActivity.class));
+//            if (!PermKit.get().getWorkReportListPrem()) {
+//                return;
+//            }
+//            Intent intent = new Intent(getActivity(), WorkReportListActivity.class);
+//            startActivity(intent);
         });
         //切换公司
-        tvHomeTitle.setOnClickListener((v) -> {
+        fragmentHomeNewBinding.tvHomeTitle.setOnClickListener((v) -> {
             doChangeCompany();
         });
         //专家问答
-        findViewById(R.id.tv_onLine).setOnClickListener((v) -> {//wq==
-            if (workerApprove()) {
-                startActivity(new Intent(getActivity(), ExpertOnlineActivity.class));
-            }
+        fragmentHomeNewBinding.tvOnLine.setOnClickListener((v) -> {//wq==
+            startActivity(new Intent(getActivity(), ExpertOnlineActivity.class));
         });
         //签到
-        findViewById(R.id.tv_sign).setOnClickListener((v) -> {
-            if (workerApprove()) {
-                // 检查有无权限
-                List<String> ss = new ArrayList<>();
-                new SignCtrlView(getActivity()).show();
-            }
+        fragmentHomeNewBinding.tvSign.setOnClickListener((v) -> {
+            // 检查有无权限
+            List<String> ss = new ArrayList<>();
+            new SignCtrlView(getActivity()).show();
         });
         //扫描二维码
-        findViewById(R.id.iv_scan).setOnClickListener((v) -> {
-            homeScanPopWindow.showAsDropDown(findViewById(R.id.iv_scan));
+        fragmentHomeNewBinding.ivScan.setOnClickListener((v) -> {
+            homeScanPopWindow.showAsDropDown(fragmentHomeNewBinding.ivScan);
             homeScanPopWindow.backgroundAlpha(0.5f);
         });
     }
@@ -393,17 +350,11 @@ public class HomeNewFragment extends BaseFragment {
         }
     };
 
-    @Override
-    protected void setListener() {
-        findViewById(R.id.iv_camera).setOnClickListener(v -> startActivity(new Intent(getActivity(), CameraActivity.class)));
-    }
-
 
     /**
      * 初始化轮播控件
      */
     private void initLoopView() {
-        bannerView = findViewById(R.id.bv_loop);
         int[] images = {R.mipmap.ic_worker_banner_1, R.mipmap.ic_worker_banner_2, R.mipmap.ic_worker_banner_3, R.mipmap.ic_worker_banner_4, R.mipmap.ic_worker_banner_5};
         List<View> viewList = new ArrayList<>();
         for (int i = 0; i < images.length; i++) {
@@ -414,15 +365,14 @@ public class HomeNewFragment extends BaseFragment {
             image.setImageResource(images[i]);
             viewList.add(image);
         }
-        bannerView.startLoop(true);
-        bannerView.setViewList(viewList);
+        fragmentHomeNewBinding.bvLoop.startLoop(true);
+        fragmentHomeNewBinding.bvLoop.setViewList(viewList);
     }
 
     /**
      * 初始化rolltext显示的文本
      */
     private void initRollTextView(List<String> list) {
-        rollTextView = findViewById(R.id.home_recommand_ad_text);
         List<View> views = new ArrayList<>();
         try {
             for (int i = 0; i < list.size(); i++) {
@@ -436,8 +386,8 @@ public class HomeNewFragment extends BaseFragment {
         } catch (NullPointerException e) {
 
         }
-        rollTextView.setViews(views);
-        rollTextView.setOnItemClickListener((position, view) -> {
+        fragmentHomeNewBinding.homeRecommandAdText.setViews(views);
+        fragmentHomeNewBinding.homeRecommandAdText.setOnItemClickListener((position, view) -> {
 //            showToast("暂无可点");
             startActivity(new Intent(getActivity(), NewOrderActivity.class));
         });
@@ -481,26 +431,15 @@ public class HomeNewFragment extends BaseFragment {
         EventBus.getDefault().post(bean);
     }
 
-    /**
-     * viewpager Adapter
-     */
-    protected class MyPagerAdapter extends FragmentPagerAdapter {
-        @Getter
-        private String[] titles;
-        @Getter
-        private ArrayList<Fragment> fragments;
 
-        /**
-         * 普通，主页使用
-         */
-        public MyPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
+    private class MyPagerAdapter extends FragmentPagerAdapter {
+        private final String[] titles;
+        private final ArrayList<Fragment> fragments;
 
-        public MyPagerAdapter(FragmentManager fm, String[] mTitles) {
-            super(fm);
-            fragments = new ArrayList<>();
-            this.titles = mTitles;
+        private MyPagerAdapter(String[] titles, ArrayList<Fragment> fragments) {
+            super(getChildFragmentManager());
+            this.titles = titles;
+            this.fragments = fragments;
         }
 
         @Override
@@ -518,5 +457,6 @@ public class HomeNewFragment extends BaseFragment {
             return fragments.get(position);
         }
     }
+
 }
 

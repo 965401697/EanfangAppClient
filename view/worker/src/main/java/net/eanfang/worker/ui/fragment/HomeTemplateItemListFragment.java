@@ -7,59 +7,41 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.base.BaseFragment;
 import com.eanfang.biz.model.PageBean;
 
-import net.eanfang.worker.databinding.FragmentTemplateItemListBinding;
+import net.eanfang.worker.databinding.FragmentHomeTemplateItemListBinding;
 
 /**
  * Created by O u r on 2018/5/3.
  */
 
-public abstract class TemplateItemListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+public abstract class HomeTemplateItemListFragment extends BaseFragment implements BaseQuickAdapter.RequestLoadMoreListener {
     public RecyclerView mRecyclerView;
-    public SwipeRefreshLayout mSwipeRefreshLayout;
     public TextView mTvNoData;
 
     public int mPage = 1;
 
-    private FragmentTemplateItemListBinding templateItemListBinding;
+    public FragmentHomeTemplateItemListBinding templateItemListBinding;
 
     private BaseQuickAdapter baseQuickAdapter;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
-        templateItemListBinding = FragmentTemplateItemListBinding.inflate(getLayoutInflater());
+        templateItemListBinding = FragmentHomeTemplateItemListBinding.inflate(getLayoutInflater());
 
         mRecyclerView = templateItemListBinding.rvList;
         mTvNoData = templateItemListBinding.tvNoDatas;
-        mSwipeRefreshLayout = templateItemListBinding.swipreFresh;
+        mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mSwipeRefreshLayout.setOnRefreshListener(this);
         initAdapter(null);
         return templateItemListBinding.getRoot();
     }
 
     @Override
     protected void onLazyLoad() {
-        mPage = 1;
-        getData();
-    }
-
-    /**
-     * 下拉刷新
-     */
-    @Override
-    public void onRefresh() {
-        refresh();
-    }
-
-    public void refresh() {
-        //下拉永远第一页
-//        mTenderViewModle.mQueryEntry = null;
         mPage = 1;
         getData();
     }
@@ -83,7 +65,8 @@ public abstract class TemplateItemListFragment extends BaseFragment implements S
             return;
         }
         baseQuickAdapter.bindToRecyclerView(mRecyclerView);
-        baseQuickAdapter.setOnLoadMoreListener(this, mRecyclerView);
+//        baseQuickAdapter.setOnLoadMoreListener(this, mRecyclerView);
+        baseQuickAdapter.disableLoadMoreIfNotFullPage();
     }
 
 
@@ -97,7 +80,6 @@ public abstract class TemplateItemListFragment extends BaseFragment implements S
             baseQuickAdapter.getData().clear();
             baseQuickAdapter.setNewData(pageBean.getList());
             baseQuickAdapter.notifyDataSetChanged();
-            mSwipeRefreshLayout.setRefreshing(false);
             baseQuickAdapter.loadMoreComplete();
             if (pageBean.getList().size() < 10) {
                 baseQuickAdapter.loadMoreEnd();

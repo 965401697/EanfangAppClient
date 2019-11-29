@@ -5,10 +5,8 @@ import androidx.databinding.ObservableField;
 import com.eanfang.biz.model.vo.BaseVo;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
@@ -88,7 +86,7 @@ public class TenderCreateVo extends BaseVo implements Serializable {
     /**
      * 预计工期（0当天完工，1三天左右，2一周左右，3一个月左右，4三个月左右，5六个月左右，6一年左右，7一年以上）
      */
-    private ObservableField<String> predicttime = new ObservableField<>();
+    private ObservableField<String> predictTime = new ObservableField<>();
     /**
      * 项目预算
      */
