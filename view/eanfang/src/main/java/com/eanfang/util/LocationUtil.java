@@ -85,6 +85,16 @@ public class LocationUtil implements AMap.OnMarkerClickListener,
         instance.initLocation();
     }
 
+    //普通定位方法
+    public static void location(com.eanfang.base.BaseActivity activity, OnLocationed onLocationed) {
+        if (instance == null) {
+            instance = new LocationUtil();
+        }
+        instance.activity = activity;
+        instance.onLocationed = onLocationed;
+        instance.initLocation();
+    }
+
     private void initLocation() {
         mLocationClient = new AMapLocationClient(activity);
         //初始化定位参数

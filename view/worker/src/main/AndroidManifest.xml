@@ -1178,6 +1178,7 @@
         <activity android:name=".ui.activity.NewOrderActivity" />
         <activity android:name=".ui.activity.NewOrderScreenActivity" />
         <activity android:name=".ui.activity.ChooseAreaActivity" />
+        <activity android:name=".ui.activity.WorkspaceActivity" />
     </application>
 
 </manifest>

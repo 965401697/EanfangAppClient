@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_workspace"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_white"
     android:orientation="vertical">
 
+    <include layout="@layout/header_eanfang" />
+
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/ll_company_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,8 +18,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp">w
-
+            android:layout_height="50dp">
             <LinearLayout
                 android:id="@+id/ll_header"
                 android:layout_width="wrap_content"
