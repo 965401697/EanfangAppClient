@@ -31,6 +31,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermKit;
 import com.eanfang.witget.HomeScanPopWindow;
 
 import net.eanfang.worker.R;
@@ -39,11 +40,11 @@ import net.eanfang.worker.databinding.FragmentHomeNewBinding;
 import net.eanfang.worker.ui.activity.CameraActivity;
 import net.eanfang.worker.ui.activity.NewOrderActivity;
 import net.eanfang.worker.ui.activity.worksapce.OfferAndPayOrderParentActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.workreport.WorkReportListActivity;
 import net.eanfang.worker.ui.activity.worksapce.online.ExpertOnlineActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.SolveModeActivity;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
-import net.eanfang.worker.ui.activity.worksapce.tender.WorkerTenderControlActivity;
 import net.eanfang.worker.ui.widget.CompanyListView;
 import net.eanfang.worker.ui.widget.SignCtrlView;
 import net.eanfang.worker.viewmodle.tender.TenderViewModle;
@@ -289,12 +290,11 @@ public class HomeNewFragment extends BaseFragment {
         });
         //工作日报
         fragmentHomeNewBinding.tvWorkReport.setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), WorkerTenderControlActivity.class));
-//            if (!PermKit.get().getWorkReportListPrem()) {
-//                return;
-//            }
-//            Intent intent = new Intent(getActivity(), WorkReportListActivity.class);
-//            startActivity(intent);
+            if (!PermKit.get().getWorkReportListPrem()) {
+                return;
+            }
+            Intent intent = new Intent(getActivity(), WorkReportListActivity.class);
+            startActivity(intent);
         });
         //切换公司
         fragmentHomeNewBinding.tvHomeTitle.setOnClickListener((v) -> {

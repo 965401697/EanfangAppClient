@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.eanfang.witget.recycleview.RecycleScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none">
@@ -582,7 +582,7 @@
 
             </LinearLayout>
 
-        </com.eanfang.witget.recycleview.RecycleScrollView>
+        </androidx.core.widget.NestedScrollView>
 
 
     </LinearLayout>
