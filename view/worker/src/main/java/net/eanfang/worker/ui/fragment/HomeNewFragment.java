@@ -39,6 +39,7 @@ import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.CallUtils;
+import com.eanfang.util.DateKit;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.witget.HomeScanPopWindow;
@@ -48,6 +49,7 @@ import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.databinding.FragmentHomeNewBinding;
 import net.eanfang.worker.ui.activity.CameraActivity;
 import net.eanfang.worker.ui.activity.NewOrderActivity;
+import net.eanfang.worker.ui.activity.WorkspaceActivity;
 import net.eanfang.worker.ui.activity.worksapce.OfferAndPayOrderParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.workreport.WorkReportListActivity;
 import net.eanfang.worker.ui.activity.worksapce.online.ExpertOnlineActivity;
@@ -353,6 +355,11 @@ public class HomeNewFragment extends BaseFragment implements AMapLocationListene
             //给客户联系人打电话
             CallUtils.call(getActivity(), v(() -> mOrderPhone));
         });
+
+        //全部应用
+        fragmentHomeNewBinding.tvAllApp.setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), WorkspaceActivity.class));
+        });
         //报价
         fragmentHomeNewBinding.tvInsidePrice.setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), OfferAndPayOrderParentActivity.class));
@@ -424,7 +431,7 @@ public class HomeNewFragment extends BaseFragment implements AMapLocationListene
      * 初始化轮播控件
      */
     private void initLoopView() {
-        fragmentHomeNewBinding.tvData.setText("星期" + DateUtil.thisDayOfWeek() + "  " + DateUtil.today());
+        fragmentHomeNewBinding.tvData.setText((DateKit.get().weekName() + "  " + DateUtil.date().toDateStr()));
         int[] images = {R.mipmap.ic_worker_banner_1, R.mipmap.ic_worker_banner_2, R.mipmap.ic_worker_banner_3, R.mipmap.ic_worker_banner_4, R.mipmap.ic_worker_banner_5};
         List<View> viewList = new ArrayList<>();
         for (int i = 0; i < images.length; i++) {
@@ -443,6 +450,12 @@ public class HomeNewFragment extends BaseFragment implements AMapLocationListene
      * 初始化rolltext显示的文本
      */
     private void initRollTextView(List<String> list) {
+        if (list == null || list.isEmpty()) {
+            fragmentHomeNewBinding.llHomeRecommandAd.setVisibility(View.GONE);
+        } else {
+            fragmentHomeNewBinding.llHomeRecommandAd.setVisibility(View.VISIBLE);
+        }
+
         List<View> views = new ArrayList<>();
         try {
             for (int i = 0; i < list.size(); i++) {

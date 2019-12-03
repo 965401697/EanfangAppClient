@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.biz.model.bean.QueryEntry;
-import com.eanfang.biz.model.bean.WorkspaceInstallBean;
+import com.eanfang.biz.model.entity.OrderBean;
 import com.eanfang.util.PermKit;
 
 import net.eanfang.worker.ui.adapter.neworder.HomeOrderAdapter;
@@ -41,7 +41,7 @@ public class HistoryInstallFragment extends TemplateItemListFragment {
             if (!PermKit.get().getInstallDetailPrem()) {
                 return;
             }
-            new InstallCtrlItemView(getActivity(), true, ((WorkspaceInstallBean.ListBean) adapter.getData().get(position)).getId()).show();
+            new InstallCtrlItemView(getActivity(), true, ((OrderBean) adapter.getData().get(position)).getId()).show();
 
         }));
 
