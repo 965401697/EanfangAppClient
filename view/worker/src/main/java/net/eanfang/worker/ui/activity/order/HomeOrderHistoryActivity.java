@@ -53,7 +53,7 @@ public class HomeOrderHistoryActivity extends BaseActivity {
         setRightClick("筛选", (v) -> {
             Bundle bundle = new Bundle();
             bundle.putInt("type", 0);
-            bundle.putString("order","orderHistory");
+            bundle.putString("order", "orderHistory");
             JumpItent.jump(HomeOrderHistoryActivity.this, FilterTenderActivity.class, bundle, FILTRATE_TYPE_CODE);
         });
         mAdapter = new MyPagerAdapter(getSupportFragmentManager(), mTitles);

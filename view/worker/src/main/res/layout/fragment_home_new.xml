@@ -132,44 +132,21 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_data"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen_30"
-                        android:text="星期一"
                         android:textColor="@color/roll_title"
                         android:textSize="@dimen/textSize_15" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dimen_30"
-                        android:text="2019-05-66"
-                        android:textColor="@color/roll_title"
-                        android:textSize="@dimen/textSize_15" />
-
-                    <TextView
+                        android:id="@+id/tv_weather"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen_40"
-                        android:text="22°"
                         android:textColor="@color/roll_title"
                         android:textSize="@dimen/textSize_12" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dimen_20"
-                        android:text="多云"
-                        android:textColor="@color/roll_title"
-                        android:textSize="@dimen/textSize_12" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dimen_20"
-                        android:text="西风3级"
-                        android:textColor="@color/roll_title"
-                        android:textSize="@dimen/textSize_12" />
                 </LinearLayout>
 
                 <View

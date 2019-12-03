@@ -91,12 +91,13 @@ public abstract class TemplateItemListFragment extends BaseFragment implements S
 
     protected void getCommenData(PageBean pageBean) {
         if (mPage == 1) {
-            if (pageBean == null) {
+            if (pageBean == null || pageBean.getList().size() <= 0) {
+                mRecyclerView.setVisibility(View.GONE);
+                mTvNoData.setVisibility(View.VISIBLE);
                 return;
             }
             baseQuickAdapter.getData().clear();
             baseQuickAdapter.setNewData(pageBean.getList());
-            baseQuickAdapter.notifyDataSetChanged();
             mSwipeRefreshLayout.setRefreshing(false);
             baseQuickAdapter.loadMoreComplete();
             if (pageBean.getList().size() < 10) {

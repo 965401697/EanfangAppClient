@@ -17,6 +17,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModel;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.services.weather.LocalWeatherForecastResult;
+import com.amap.api.services.weather.LocalWeatherLive;
+import com.amap.api.services.weather.LocalWeatherLiveResult;
+import com.amap.api.services.weather.WeatherSearch;
+import com.amap.api.services.weather.WeatherSearchQuery;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.BaseFragment;
@@ -68,7 +77,7 @@ import static com.eanfang.base.kit.V.v;
  * @desc 首页
  */
 
-public class HomeNewFragment extends BaseFragment {
+public class HomeNewFragment extends BaseFragment implements AMapLocationListener {
 
     private FragmentHomeNewBinding fragmentHomeNewBinding;
     //头部标题
@@ -97,6 +106,11 @@ public class HomeNewFragment extends BaseFragment {
 
     private TenderViewModle mTenderViewModle;
 
+    private WeatherSearchQuery query;
+    private WeatherSearch search;
+    private LocalWeatherLive weatherlive;
+    private AMapLocationClient locationClient = null;
+    private AMapLocationClientOption locationOption = null;
 
     @Override
     protected ViewModel initViewModel() {
@@ -109,6 +123,7 @@ public class HomeNewFragment extends BaseFragment {
         fragmentHomeNewBinding = FragmentHomeNewBinding.inflate(getLayoutInflater());
         homeScanPopWindow = new HomeScanPopWindow(getActivity(), true, scanSelectItemsOnClick);
         homeScanPopWindow.setOnDismissListener(() -> homeScanPopWindow.backgroundAlpha(1.0f));
+        initLocal();
         initIconClick();
         initLoopView();
         doHttpNews();
@@ -119,6 +134,60 @@ public class HomeNewFragment extends BaseFragment {
         return fragmentHomeNewBinding.getRoot();
     }
 
+    @Override
+    public void onLocationChanged(AMapLocation amapLocation) {
+        if (null != amapLocation) {
+            StringBuffer sb = new StringBuffer();
+            //省信息
+            sb.append(amapLocation.getProvince());
+            //城市信息
+            sb.append(amapLocation.getCity());
+            //城区信息
+            sb.append(amapLocation.getDistrict());
+            //街道信息
+            sb.append(amapLocation.getStreet());
+            //街道门牌号信息
+            amapLocation.getStreetNum();
+            //获取当前定位点的AOI信息
+            sb.append(amapLocation.getAoiName());
+            //获取当前室内定位的建筑物Id
+            sb.append(amapLocation.getBuildingId());
+            //获取当前室内定位的楼层
+            sb.append(amapLocation.getFloor());
+            fragmentHomeNewBinding.tvAddress.setText(amapLocation.getCity().substring(0, 2));
+            queryWeather(amapLocation.getCity().substring(0, 2));
+        } else {
+//            LogUtils.e("amapfill", "定位失败");
+        }
+    }
+
+    /**
+     * 查询天气
+     */
+    private void queryWeather(String address) {
+        query = new WeatherSearchQuery(address
+                , WeatherSearchQuery.WEATHER_TYPE_LIVE);
+        search = new WeatherSearch(getActivity());
+        search.setOnWeatherSearchListener(new WeatherSearch.OnWeatherSearchListener() {
+            @Override
+            public void onWeatherLiveSearched(LocalWeatherLiveResult weatherLiveResult, int rCode) {
+                if (rCode == 1000) {
+                    if (weatherLiveResult != null && weatherLiveResult.getLiveResult() != null) {
+                        weatherlive = weatherLiveResult.getLiveResult();
+                        fragmentHomeNewBinding.tvWeather.setText(weatherlive.getWeather() + " " + weatherlive.getTemperature() + "°   " + weatherlive.getWindDirection() + "风   " + weatherlive.getWindPower() + "级");
+                        locationClient.stopLocation();
+                    }
+                }
+            }
+
+            @Override
+            public void onWeatherForecastSearched(LocalWeatherForecastResult localWeatherForecastResult, int i) {
+
+            }
+        });
+        search.setQuery(query);
+        search.searchWeatherAsyn(); //异步搜索
+    }
 
     /**
      * 切换公司
@@ -355,6 +424,7 @@ public class HomeNewFragment extends BaseFragment {
      * 初始化轮播控件
      */
     private void initLoopView() {
+        fragmentHomeNewBinding.tvData.setText("星期" + DateUtil.thisDayOfWeek() + "  " + DateUtil.today());
         int[] images = {R.mipmap.ic_worker_banner_1, R.mipmap.ic_worker_banner_2, R.mipmap.ic_worker_banner_3, R.mipmap.ic_worker_banner_4, R.mipmap.ic_worker_banner_5};
         List<View> viewList = new ArrayList<>();
         for (int i = 0; i < images.length; i++) {
@@ -458,5 +528,94 @@ public class HomeNewFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 开始定位
+     */
+    private void startLocation() {
+        // 设置定位参数
+        locationClient.setLocationOption(locationOption);
+        // 启动定位
+        locationClient.startLocation();
+    }
+
+    /**
+     * 初始化定位
+     */
+    private void initLocal() {
+        //初始化client
+        locationClient = new AMapLocationClient(WorkerApplication.get().getApplicationContext());
+        locationOption = getDefaultOption();
+        //设置定位参数
+        locationClient.setLocationOption(locationOption);
+        // 设置定位监听
+        locationClient.setLocationListener(this);
+        startLocation();
+    }
+
+    /**
+     * 销毁定位
+     */
+    private void destroyLocation() {
+        if (null != locationClient) {
+            /**
+             * 如果AMapLocationClient是在当前Activity实例化的，
+             * 在Activity的onDestroy中一定要执行AMapLocationClient的onDestroy
+             */
+            locationClient.onDestroy();
+            locationClient = null;
+            locationOption = null;
+        }
+    }
+
+    /**
+     * 默认的定位参数
+     */
+    private AMapLocationClientOption getDefaultOption() {
+        AMapLocationClientOption mOption = new AMapLocationClientOption();
+        //可选，设置定位模式，可选的模式有高精度、仅设备、仅网络。默认为高精度模式
+        mOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        //可选，设置是否gps优先，只在高精度模式下有效。默认关闭
+        mOption.setGpsFirst(true);
+        //可选，设置网络请求超时时间。默认为30秒。在仅设备模式下无效
+        mOption.setHttpTimeOut(30000);
+        //可选，设置定位间隔。默认为2秒
+        mOption.setInterval(2000);
+        //可选，设置是否返回逆地理地址信息。默认是true
+        mOption.setNeedAddress(true);
+        //可选，设置是否单次定位。默认是false
+        mOption.setOnceLocation(false);
+        //可选，设置是否等待wifi刷新，默认为false.如果设置为true,会自动变为单次定位，持续定位时不要使用
+        mOption.setOnceLocationLatest(false);
+        //可选， 设置网络请求的协议。可选HTTP或者HTTPS。默认为HTTP
+        AMapLocationClientOption.setLocationProtocol(AMapLocationClientOption.AMapLocationProtocol.HTTP);
+        //可选，设置是否使用传感器。默认是false
+        mOption.setSensorEnable(false);
+        //可选，设置是否开启wifi扫描。默认为true，如果设置为false会同时停止主动刷新，停止以后完全依赖于系统刷新，定位位置可能存在误差
+        mOption.setWifiScan(true);
+        //可选，设置是否使用缓存定位，默认为true
+        mOption.setLocationCacheEnable(true);
+        return mOption;
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        stopLocation();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        destroyLocation();
+    }
+
+    /**
+     * 停止定位
+     */
+    private void stopLocation() {
+        // 停止定位
+        locationClient.stopLocation();
+    }
 }
 
