@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <data>
 
@@ -11,7 +10,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.core.widget.NestedScrollView
+        <com.eanfang.witget.recycleview.RecycleScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none">
@@ -161,9 +160,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_24"
+                    android:layout_marginRight="@dimen/dimen_24"
+                    android:background="@drawable/bg_home_order"
+                    android:elevation="@dimen/dimen_6"
                     android:orientation="horizontal"
                     android:padding="@dimen/dimen_30"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -181,8 +183,16 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_20">
-                    
+                    android:layout_marginTop="@dimen/dimen_30">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_30"
+                        android:text="常用应用"
+                        android:textColor="@color/roll_title"
+                        android:textSize="@dimen/textSize_15" />
+
                     <TextView
                         android:id="@+id/tv_all_app"
                         android:layout_width="wrap_content"
@@ -378,7 +388,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_50"
-                    android:background="@color/white"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -479,7 +488,7 @@
                                     android:id="@+id/view_find"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/dimen_4"
-                                    android:background="@color/color_white" />
+                                    android:background="@color/color_home_view_line" />
                             </LinearLayout>
 
 
@@ -528,12 +537,14 @@
                                     android:id="@+id/view_security"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/dimen_4"
-                                    android:background="@color/color_white" />
+                                    android:background="@color/color_home_view_line" />
                             </LinearLayout>
 
 
                         </LinearLayout>
                     </LinearLayout>
+
+                    <View style="@style/style_common_line_gray" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -567,7 +578,7 @@
 
             </LinearLayout>
 
-        </androidx.core.widget.NestedScrollView>
+        </com.eanfang.witget.recycleview.RecycleScrollView>
 
 
     </LinearLayout>

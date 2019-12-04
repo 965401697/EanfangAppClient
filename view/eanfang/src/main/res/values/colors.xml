@@ -126,4 +126,5 @@
 
     <color name="color_main_header_bg">#FF6419</color>
     <color name="color_workdertail_num">#FF3F3F</color>
+    <color name="color_home_view_line">#fafafa</color>
 </resources>

@@ -303,8 +303,8 @@ public class HomeNewFragment extends BaseFragment implements AMapLocationListene
             fragmentHomeNewBinding.tvSecurity.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
 
             fragmentHomeNewBinding.viewTender.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryW));
-            fragmentHomeNewBinding.viewFind.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
-            fragmentHomeNewBinding.viewSecurity.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
+            fragmentHomeNewBinding.viewFind.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_home_view_line));
+            fragmentHomeNewBinding.viewSecurity.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_home_view_line));
 
             fragmentHomeNewBinding.ivTender.setImageResource(R.mipmap.ic_home_tender_pressed);
             fragmentHomeNewBinding.ivFind.setImageResource(R.mipmap.ic_home_find);
@@ -318,9 +318,9 @@ public class HomeNewFragment extends BaseFragment implements AMapLocationListene
             fragmentHomeNewBinding.tvFind.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_new_order_back));
             fragmentHomeNewBinding.tvSecurity.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
 
-            fragmentHomeNewBinding.viewTender.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
+            fragmentHomeNewBinding.viewTender.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_home_view_line));
             fragmentHomeNewBinding.viewFind.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryW));
-            fragmentHomeNewBinding.viewSecurity.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
+            fragmentHomeNewBinding.viewSecurity.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_home_view_line));
 
             fragmentHomeNewBinding.ivTender.setImageResource(R.mipmap.ic_home_tender);
             fragmentHomeNewBinding.ivFind.setImageResource(R.mipmap.ic_home_find_pressed);
@@ -336,8 +336,8 @@ public class HomeNewFragment extends BaseFragment implements AMapLocationListene
             fragmentHomeNewBinding.tvSecurity.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_new_order_back));
 
 
-            fragmentHomeNewBinding.viewTender.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
-            fragmentHomeNewBinding.viewFind.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_white));
+            fragmentHomeNewBinding.viewTender.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_home_view_line));
+            fragmentHomeNewBinding.viewFind.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_home_view_line));
             fragmentHomeNewBinding.viewSecurity.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryW));
 
             fragmentHomeNewBinding.ivTender.setImageResource(R.mipmap.ic_home_tender);
