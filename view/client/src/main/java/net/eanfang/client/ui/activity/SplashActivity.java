@@ -47,6 +47,14 @@ public class SplashActivity extends BaseActivity {
     private boolean isSkip = false;
     //是否执行了token登录
     private boolean isLogin = false;
+
+    /**
+     * 0没有执行完
+     * 1跳登录
+     * 2跳主页
+     */
+    private int jumpType = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_splash);
@@ -61,9 +69,16 @@ public class SplashActivity extends BaseActivity {
         loginRepo = new LoginRepo(new LoginDs(new BaseViewModel()));
         tv = findViewById(R.id.tv_countDown);
         tv.setOnClickListener((v) -> {
-            isSkip = true;
-            tv.setText("加载中...");
-            loginByToken();
+//            isSkip = true;
+//            tv.setText("加载中...");
+//            loginByToken();
+            if (jumpType == 1){
+                goLogin();
+            }else if (jumpType == 2){
+                goMain();
+            }else{
+                tv.setText("加载中...");
+            }
         });
         init();
     }
@@ -85,9 +100,9 @@ public class SplashActivity extends BaseActivity {
                     public void onNext(Long aLong) {
                         if (!isSkip) {
                             tv.setText(StrUtil.format("跳过({})", aLong));
-                            if (aLong == 3 && !isLogin) {
-                                loginByToken();
-                            }
+//                            if (aLong == 3 && !isLogin) {
+//                                loginByToken();
+//                            }
                         }
                     }
 
@@ -98,11 +113,16 @@ public class SplashActivity extends BaseActivity {
 
                     @Override
                     public void onComplete() {
-                        if (!isSkip) {
+                        if (jumpType == 1){
+                            goLogin();
+                        }else if (jumpType == 2){
+                            goMain();
+                        }else{
                             tv.setText("加载中...");
                         }
                     }
                 });
+        loginByToken();
     }
 
     @Override
@@ -125,7 +145,6 @@ public class SplashActivity extends BaseActivity {
             return;
         }
         beginCountDown();
-
     }
 
     private void goMain() {
@@ -150,13 +169,16 @@ public class SplashActivity extends BaseActivity {
         loginRepo.loginToken().observe(this, (bean) -> {
             if (bean != null && !StrUtil.isEmpty(bean.getToken())) {
                 CacheKit.get().put(LoginBean.class.getName(), bean, CacheMod.All);
-                goMain();
+//                goMain();
+                jumpType = 2;
             } else {
-                goLogin();
+//                goLogin();
+                jumpType = 1;
             }
         });
         loginRepo.onError("loginByToken").observe(this, (bean) -> {
-            goLogin();
+//            goLogin();
+            jumpType = 1;
         });
 
     }
