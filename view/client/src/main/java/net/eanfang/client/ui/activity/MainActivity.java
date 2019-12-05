@@ -130,12 +130,12 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
-        mainRepo = new MainRepo(new MainDs(new BaseViewModel()));
         init();
     }
 
     private void init() {
         ThreadUtil.execAsync(() -> {
+            mainRepo = new MainRepo(new MainDs(new BaseViewModel()));
             initXinGe();
             getBaseData();
             getConst();
