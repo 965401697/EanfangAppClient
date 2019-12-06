@@ -34,7 +34,6 @@ public abstract class HomeTemplateItemListFragment extends BaseFragment implemen
 
         mRecyclerView = templateItemListBinding.rvList;
         mTvNoData = templateItemListBinding.tvNoDatas;
-        mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         initAdapter(null);
         return templateItemListBinding.getRoot();
@@ -65,7 +64,7 @@ public abstract class HomeTemplateItemListFragment extends BaseFragment implemen
             return;
         }
         baseQuickAdapter.bindToRecyclerView(mRecyclerView);
-//        baseQuickAdapter.setOnLoadMoreListener(this, mRecyclerView);
+        baseQuickAdapter.setOnLoadMoreListener(this, mRecyclerView);
         baseQuickAdapter.disableLoadMoreIfNotFullPage();
     }
 

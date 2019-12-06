@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModel;
+import androidx.viewpager.widget.ViewPager;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -244,9 +245,6 @@ public class HomeNewFragment extends BaseFragment implements AMapLocationListene
     @Override
     public void onResume() {
         super.onResume();
-        fragmentHomeNewBinding.llOne.setFocusable(true);
-        fragmentHomeNewBinding.llOne.setFocusableInTouchMode(true);
-        fragmentHomeNewBinding.llOne.requestFocus();
         String orgName = v(() -> (WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName()));
         if (("个人").equals(orgName)) {
             fragmentHomeNewBinding.tvHomeTitle.setText("易安防");
@@ -287,8 +285,7 @@ public class HomeNewFragment extends BaseFragment implements AMapLocationListene
 
         mAdapter = new MyPagerAdapter(mTitles, fragments);
         fragmentHomeNewBinding.vpHomeBusiness.setAdapter(mAdapter);
-        // 设置不可滑动
-        fragmentHomeNewBinding.vpHomeBusiness.setScanScroll(false);
+        fragmentHomeNewBinding.vpHomeBusiness.setOffscreenPageLimit(fragments.size());
         fragmentHomeNewBinding.vpHomeBusiness.setCurrentItem(0);
     }
 
@@ -391,6 +388,66 @@ public class HomeNewFragment extends BaseFragment implements AMapLocationListene
             homeScanPopWindow.showAsDropDown(fragmentHomeNewBinding.ivScan);
             homeScanPopWindow.backgroundAlpha(0.5f);
         });
+        fragmentHomeNewBinding.vpHomeBusiness.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        fragmentHomeNewBinding.tvTender.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_new_order_back));
+                        fragmentHomeNewBinding.tvFind.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
+                        fragmentHomeNewBinding.tvSecurity.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
+
+                        fragmentHomeNewBinding.viewTender.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryW));
+                        fragmentHomeNewBinding.viewFind.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_home_view_line));
+                        fragmentHomeNewBinding.viewSecurity.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_home_view_line));
+
+                        fragmentHomeNewBinding.ivTender.setImageResource(R.mipmap.ic_home_tender_pressed);
+                        fragmentHomeNewBinding.ivFind.setImageResource(R.mipmap.ic_home_find);
+                        fragmentHomeNewBinding.ivSecurity.setImageResource(R.mipmap.ic_home_security);
+                        break;
+                    case 1:
+                        fragmentHomeNewBinding.tvTender.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
+                        fragmentHomeNewBinding.tvFind.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_new_order_back));
+                        fragmentHomeNewBinding.tvSecurity.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
+
+                        fragmentHomeNewBinding.viewTender.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_home_view_line));
+                        fragmentHomeNewBinding.viewFind.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryW));
+                        fragmentHomeNewBinding.viewSecurity.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_home_view_line));
+
+                        fragmentHomeNewBinding.ivTender.setImageResource(R.mipmap.ic_home_tender);
+                        fragmentHomeNewBinding.ivFind.setImageResource(R.mipmap.ic_home_find_pressed);
+                        fragmentHomeNewBinding.ivSecurity.setImageResource(R.mipmap.ic_home_security);
+                        break;
+                    case 2:
+                        fragmentHomeNewBinding.tvTender.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
+                        fragmentHomeNewBinding.tvFind.setTextColor(ContextCompat.getColor(getActivity(), R.color.roll_title));
+                        fragmentHomeNewBinding.tvSecurity.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_new_order_back));
+
+
+                        fragmentHomeNewBinding.viewTender.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_home_view_line));
+                        fragmentHomeNewBinding.viewFind.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_home_view_line));
+                        fragmentHomeNewBinding.viewSecurity.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryW));
+
+                        fragmentHomeNewBinding.ivTender.setImageResource(R.mipmap.ic_home_tender);
+                        fragmentHomeNewBinding.ivFind.setImageResource(R.mipmap.ic_home_find);
+                        fragmentHomeNewBinding.ivSecurity.setImageResource(R.mipmap.ic_home_security_pressed);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
     }
 
     View.OnClickListener scanSelectItemsOnClick = new View.OnClickListener() {
