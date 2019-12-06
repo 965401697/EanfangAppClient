@@ -55,7 +55,7 @@ ext {
             ossBucket        : "\"eanfang\"",
             ossEndpoint      : "\"https://oss-cn-beijing.aliyuncs.com\"",
             javaVersion      : JavaVersion.VERSION_1_8,
-            debugMod         : "true",
+            debugMod         : "false",
             localApiHost     : "\"http://192.168.0.222:8080\"",
             betaApiHost      : "\"http://api.beta.eanfang.net\"",
             proApiHost       : "\"https://api.eanfang.net\"",
