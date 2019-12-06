@@ -49,6 +49,7 @@ public class HomeSecurityFragment extends HomeTemplateItemListFragment implement
     protected void initAdapter() {
         securityListAdapter = new SecurityListAdapter(false, this);
         securityListAdapter.bindToRecyclerView(mRecyclerView);
+        securityListAdapter.setOnLoadMoreListener(this, mRecyclerView);
         if (mIsCreate) {
             templateItemListBinding.ivCreateSecurity.setVisibility(View.VISIBLE);
         } else {
@@ -62,7 +63,6 @@ public class HomeSecurityFragment extends HomeTemplateItemListFragment implement
      * 安防圈
      */
     private void initSecurity() {
-        doGetSecurityData();
         initListener();
     }
 
@@ -141,31 +141,52 @@ public class HomeSecurityFragment extends HomeTemplateItemListFragment implement
         }
     }
 
-
-    private void doGetSecurityData() {
+    private void doGetSecurityData(int mPage) {
         QueryEntry mQueryEntry = new QueryEntry();
-        mQueryEntry.setPage(1);
-        mQueryEntry.setSize(3);
-        EanfangHttp.post(NewApiService.SECURITY_RECOMMEND)
+        mQueryEntry.setPage(mPage);
+        mQueryEntry.setSize(10);
+        EanfangHttp.post(NewApiService.SECURITY_HOT)
                 .upJson(JsonUtils.obj2String(mQueryEntry))
-                .execute(new EanfangCallback<SecurityListBean>(getActivity(), false, SecurityListBean.class) {
-
+                .execute(new EanfangCallback<SecurityListBean>(getActivity(), true, SecurityListBean.class) {
                     @Override
                     public void onSuccess(SecurityListBean bean) {
-                        securityListAdapter.getData().clear();
-                        securityListAdapter.setNewData(bean.getList());
-                        if (bean.getList().size() > 0) {
-                            mTvNoData.setVisibility(View.GONE);
+                        if (mPage == 1) {
+                            securityListAdapter.getData().clear();
+                            securityListAdapter.setNewData(bean.getList());
+                            securityListAdapter.notifyDataSetChanged();
+                            securityListAdapter.loadMoreComplete();
+                            if (bean.getList().size() < 10) {
+                                securityListAdapter.loadMoreEnd();
+                            }
+
+                            if (bean.getList().size() > 0) {
+                                mTvNoData.setVisibility(View.GONE);
+                            } else {
+                                mTvNoData.setVisibility(View.VISIBLE);
+                            }
+
                         } else {
-                            mTvNoData.setVisibility(View.VISIBLE);
+                            securityListAdapter.addData(bean.getList());
+                            securityListAdapter.loadMoreComplete();
+                            if (bean.getList().size() < 10) {
+                                securityListAdapter.loadMoreEnd();
+                            }
                         }
+
                     }
+
                 });
     }
 
     @Override
     protected void getData() {
+        doGetSecurityData(mPage);
+    }
 
+    @Override
+    public void onLoadMoreRequested() {
+        mPage++;
+        getData();
     }
 
     @Override
