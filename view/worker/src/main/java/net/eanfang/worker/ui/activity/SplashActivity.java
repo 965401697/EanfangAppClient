@@ -89,45 +89,45 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void beginCountDown() {
-        Observable.interval(0, 1, TimeUnit.SECONDS)
-                .take(5)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(count -> 5 - count)
-                .subscribe(new Observer<Long>() {
-
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Long aLong) {
-                        if (!isSkip) {
-                            tv.setText(StrUtil.format("跳过({})", aLong));
-//                            if (aLong == 3 && !isLogin) {
-//                                loginByToken();
-//                            }
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        if (jumpType == 1){
-                            goLogin();
-                        }else if (jumpType == 2){
-                            goMain();
-                        }else{
-                            tv.setText("加载中...");
-                        }
-                    }
-                });
-        loginByToken();
+//        Observable.interval(0, 1, TimeUnit.SECONDS)
+//                .take(5)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .map(count -> 5 - count)
+//                .subscribe(new Observer<Long>() {
+//
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(Long aLong) {
+//                        if (!isSkip) {
+//                            tv.setText(StrUtil.format("跳过({})", aLong));
+////                            if (aLong == 3 && !isLogin) {
+////                                loginByToken();
+////                            }
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                        if (jumpType == 1){
+//                            goLogin();
+//                        }else if (jumpType == 2){
+//                            goMain();
+//                        }else{
+//                            tv.setText("加载中...");
+//                        }
+//                    }
+//                });
+//        loginByToken();
     }
 
 
@@ -147,8 +147,8 @@ public class SplashActivity extends BaseActivity {
             goMain();
             return;
         }
-        beginCountDown();
-
+//        beginCountDown();
+        loginByToken();
     }
 
     private void goMain() {
@@ -174,15 +174,15 @@ public class SplashActivity extends BaseActivity {
         loginRepo.loginToken().observe(this, (bean) -> {
             if (bean != null && !StrUtil.isEmpty(bean.getToken())) {
                 CacheKit.get().put(LoginBean.class.getName(), bean, CacheMod.All);
-//                goMain();
+                goMain();
                 jumpType = 2;
             } else {
-//                goLogin();
+                goLogin();
                 jumpType = 1;
             }
         });
         loginRepo.onError("loginByToken").observe(this, (bean) -> {
-//            goLogin();
+            goLogin();
             jumpType = 1;
         });
     }
