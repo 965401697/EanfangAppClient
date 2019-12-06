@@ -113,7 +113,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                 p.removeAllViewsInLayout();
             }
         }
-        if (WorkerApplication.get().getUserId().equals(WorkerApplication.get().getCompanyEntity().getOrgUnitEntity().getAdminUserId())) {
+        if (WorkerApplication.get().getCompanyEntity() != null && WorkerApplication.get().getCompanyEntity().getOrgUnitEntity() != null && WorkerApplication.get().getUserId().equals(WorkerApplication.get().getCompanyEntity().getOrgUnitEntity().getAdminUserId())) {
             // 管理员
             orderBinding.llAdmin.setVisibility(View.VISIBLE);
             orderBinding.swipreFresh.setVisibility(View.GONE);
