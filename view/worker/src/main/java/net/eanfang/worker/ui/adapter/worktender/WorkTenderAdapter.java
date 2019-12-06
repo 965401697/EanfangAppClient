@@ -53,19 +53,6 @@ public class WorkTenderAdapter extends BaseQuickAdapter<IfbOrderEntity, BaseView
             } else {
                 helper.setText(R.id.tv_cutoff_time, "已过期");
             }
-//
-//            //剩余时间
-//            long currentTime = System.currentTimeMillis() / 1000;
-//            long remainTime = DateUtil.parse(endTime).getTime() - currentTime;
-//            if (remainTime > 0) {
-//                int oneDay = 24 * 60 * 60;
-//                int day = (int) (remainTime / oneDay);
-//                int oneHour = 60 * 60;
-//                int hour = (int) ((remainTime % oneDay) / oneHour);
-//                int oneMin = 60;
-//                int min = (int) (((remainTime % oneDay) % oneHour)) / oneMin;
-//                helper.setText(R.id.tv_cutoff_time, mContext.getString(R.string.text_tender_count_down, day, hour, min));
-//            }
         }
     }
 }

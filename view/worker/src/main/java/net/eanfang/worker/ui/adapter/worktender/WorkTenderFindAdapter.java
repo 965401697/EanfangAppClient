@@ -2,15 +2,11 @@ package net.eanfang.worker.ui.adapter.worktender;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.base.kit.V;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.config.Config;
 import com.eanfang.util.DateKit;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
-
-import java.util.Calendar;
 
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUnit;
@@ -52,18 +48,6 @@ public class WorkTenderFindAdapter extends BaseQuickAdapter<TaskPublishEntity, B
                 int min = (int) DateUtil.date().between(DateKit.get(endTime).offset(DateField.DAY_OF_YEAR, -day).offset(DateField.HOUR, -hour).date, DateUnit.MINUTE);
                 helper.setText(R.id.tv_cutoff_time, mContext.getString(R.string.text_tender_count_down, day, hour, min));
             }
-//            //剩余时间
-//            long currentTime = System.currentTimeMillis() / 1000;
-//            long remainTime = DateUtil.parse(endTime).getTime() - currentTime;
-//            if (remainTime > 0) {
-//                int oneDay = 24 * 60 * 60;
-//                int day = (int) (remainTime / oneDay);
-//                int oneHour = 60 * 60;
-//                int hour = (int) ((remainTime % oneDay) / oneHour);
-//                int oneMin = 60;
-//                int min = (int) (((remainTime % oneDay) % oneHour)) / oneMin;
-//                helper.setText(R.id.tv_cutoff_time, mContext.getString(R.string.text_tender_count_down, day, hour, min));
-//            }
         }
         helper.addOnClickListener(R.id.tv_offer);
     }
