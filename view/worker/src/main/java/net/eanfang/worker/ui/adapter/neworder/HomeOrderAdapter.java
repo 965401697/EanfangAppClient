@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.biz.model.entity.OrderBean;
 import com.eanfang.biz.model.entity.WorkerOrderOerationEntity;
 import com.eanfang.config.Config;
+import com.eanfang.config.Constant;
 import com.eanfang.util.GetConstDataUtils;
 
 import net.eanfang.worker.R;
@@ -71,13 +72,20 @@ public class HomeOrderAdapter extends BaseQuickAdapter<OrderBean, BaseViewHolder
             }
         }
 
-        // 时间
-        helper.setText(R.id.tv_time, DateUtil.date(item.getCreateTime()).toString());
-
-
-        helper.setText(R.id.tv_do_first, orderOerationEntity.getOperationLeft());
-        helper.setText(R.id.tv_do_second, orderOerationEntity.getOperationRight());
-        helper.setGone(R.id.tv_do_first, orderOerationEntity.isShowOperationLeft());
+        if (item.getCreateTime() != null) {
+            // 时间
+            helper.setText(R.id.tv_time, DateUtil.date(item.getCreateTime()).toString());
+        }
+        if (item.getType() == Constant.OrderType.REPAIR.ordinal()) {
+            helper.setGone(R.id.tv_do_first, true);
+            helper.setGone(R.id.tv_do_second, true);
+            helper.setText(R.id.tv_do_first, orderOerationEntity.getOperationLeft());
+            helper.setText(R.id.tv_do_second, orderOerationEntity.getOperationRight());
+            helper.setGone(R.id.tv_do_first, orderOerationEntity.isShowOperationLeft());
+        } else {
+            helper.setGone(R.id.tv_do_first, false);
+            helper.setGone(R.id.tv_do_second, false);
+        }
         //原代码判断status为5的时候判断item.getClientEvaluateId()<=0展示否则不展示第二按钮
 //        helper.setGone(R.id.tv_do_second, orderOerationEntity.isShowOperationRight() || (custom && status == 5 &&
 //                (item.getClientEvaluateId() == null || item.getClientEva luateId() <= 0)));

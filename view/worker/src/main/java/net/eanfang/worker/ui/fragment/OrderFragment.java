@@ -96,6 +96,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                     .setBadgeNumber(orderList.size());
             orderBinding.swipreFresh.setRefreshing(false);
             homeOrderAdapter.setNewData(orderList);
+            orderBinding.tvNoDatas.setVisibility(View.GONE);
         } else {
             orderBinding.swipreFresh.setRefreshing(false);
             orderBinding.rvList.setVisibility(View.GONE);
@@ -175,7 +176,9 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             }));
             homeOrderAdapter.setOnItemChildClickListener(((adapter, view, position) -> {
                 OrderBean item = homeOrderAdapter.getData().get(position);
-                switchCase(item, view);
+                if (item.getType() == Constant.OrderType.REPAIR.ordinal()) {
+                    switchCase(item, view);
+                }
             }));
         }
 

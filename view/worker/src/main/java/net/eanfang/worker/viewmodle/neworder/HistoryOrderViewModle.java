@@ -48,7 +48,7 @@ public class HistoryOrderViewModle extends BaseViewModel {
             mQueryEntry = new QueryEntry();
         }
         //正在公告 0   已过期 1
-        mQueryEntry.getEquals().put("status", "1");
+//        mQueryEntry.getEquals().put("status", "1");
         mQueryEntry.setPage(mPage);
         switch (mType) {
             case "repair":
